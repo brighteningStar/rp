@@ -1975,33 +1975,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -37468,19 +37441,7 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-8" }, [
-              _c("div", { staticClass: "icheck-primary" }, [
-                _c("input", { attrs: { type: "checkbox", id: "remember" } }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "remember" } }, [
-                  _vm._v(
-                    "\n                                Remember Me\n                            "
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-4" }, [
+            _c("div", { staticClass: "col-12" }, [
               _c(
                 "button",
                 {
@@ -37491,42 +37452,6 @@ var staticRenderFns = [
               )
             ])
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "social-auth-links text-center mb-3" }, [
-          _c("p", [_vm._v("- OR -")]),
-          _vm._v(" "),
-          _c(
-            "a",
-            { staticClass: "btn btn-block btn-primary", attrs: { href: "#" } },
-            [
-              _c("i", { staticClass: "fab fa-facebook mr-2" }),
-              _vm._v(" Sign in using Facebook\n                ")
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            { staticClass: "btn btn-block btn-danger", attrs: { href: "#" } },
-            [
-              _c("i", { staticClass: "fab fa-google-plus mr-2" }),
-              _vm._v(" Sign in using Google+\n                ")
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "mb-1" }, [
-          _c("a", { attrs: { href: "forgot-password.html" } }, [
-            _vm._v("I forgot my password")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "mb-0" }, [
-          _c(
-            "a",
-            { staticClass: "text-center", attrs: { href: "register.html" } },
-            [_vm._v("Register a new membership")]
-          )
         ])
       ])
     ])
