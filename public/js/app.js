@@ -1992,7 +1992,9 @@ __webpack_require__.r(__webpack_exports__);
     onSubmit: function onSubmit() {
       var _this = this;
 
-      axios.post('/login', this.$data).then()["catch"](function (error) {
+      axios.post('/login', this.$data).then(function (response) {
+        window.location.href = '/';
+      })["catch"](function (error) {
         return _this.errors.record(error.response.data.errors);
       });
     }
@@ -2079,7 +2081,9 @@ __webpack_require__.r(__webpack_exports__);
     onSubmit: function onSubmit() {
       var _this = this;
 
-      axios.post('/register', this.$data).then()["catch"](function (error) {
+      axios.post('/register', this.$data).then(function (response) {
+        window.location.href = '/';
+      })["catch"](function (error) {
         return _this.errors.record(error.response.data.errors);
       });
     }

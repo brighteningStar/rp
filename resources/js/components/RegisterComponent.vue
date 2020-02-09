@@ -57,10 +57,10 @@
 
         data() {
             return {
-                name:'',
-                email:'',
-                password:'',
-                password_confirmation:'',
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: '',
                 errors: new Errors()
             };
         },
@@ -68,8 +68,10 @@
         methods: {
             onSubmit() {
                 axios.post('/register', this.$data)
-                .then()
-                .catch(error => this.errors.record(error.response.data.errors))
+                    .then(function (response) {
+                        window.location.href = '/';
+                    })
+                    .catch(error => this.errors.record(error.response.data.errors))
             }
         },
 
