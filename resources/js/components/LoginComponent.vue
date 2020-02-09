@@ -25,7 +25,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block" :disabled="errors.any()">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block" :disabled="errors.any()">Sign In <loading v-if="loading"></loading></button>
+
                     </div>
                     <!-- /.col -->
                 </div>
@@ -44,17 +45,24 @@
             return {
                 email: '',
                 password: '',
-                errors: new Errors()
+                errors: new Errors(),
+                loading:false,
             };
         },
 
         methods: {
             onSubmit() {
+                let self = this;
+                self.loading = true;
                 axios.post('/login', this.$data)
                     .then(function (response) {
                         window.location.href = '/';
                     })
-                    .catch(error => this.errors.record(error.response.data.errors))
+                    .catch(function (error) {
+                        // handle error
+                        self.loading = false;
+                        self.errors.record(error.response.data.errors)
+                    })
             }
         },
 
