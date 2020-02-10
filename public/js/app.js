@@ -2013,8 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
       self.loading = true;
       axios.post('/login', this.$data).then(function (response) {
         window.location.href = '/';
-      }) //.catch(error => this.errors.record(error.response.data.errors))
-      ["catch"](function (error) {
+      })["catch"](function (error) {
         // handle error
         self.loading = false;
         self.errors.record(error.response.data.errors);
@@ -2106,8 +2105,7 @@ __webpack_require__.r(__webpack_exports__);
       self.loading = true;
       axios.post('/register', this.$data).then(function (response) {
         window.location.href = '/';
-      }) //.catch(error => this.errors.record(error.response.data.errors))
-      ["catch"](function (error) {
+      })["catch"](function (error) {
         // handle error
         self.loading = false;
         self.errors.record(error.response.data.errors);
@@ -37536,10 +37534,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("i", {
-    staticClass: "fa fa-spinner fa-spin",
-    staticStyle: { "text-align": "center", margin: "auto", "font-size": "17px" }
-  })
+  return _c("i", { staticClass: "fa fa-spinner fa-spin loading-icon" })
 }
 var staticRenderFns = []
 render._withStripped = true
