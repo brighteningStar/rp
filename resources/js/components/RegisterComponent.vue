@@ -1,5 +1,6 @@
 <template>
     <div class="card">
+        <loading v-if="form.loading"></loading>
         <div class="card-body register-card-body">
             <p class="login-box-msg">Register a new membership</p>
 
@@ -42,7 +43,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block">Register <loading v-if="form.loading"></loading></button>
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
                     </div>
                 </div>
             </form>

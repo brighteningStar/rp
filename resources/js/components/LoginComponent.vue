@@ -1,6 +1,8 @@
 <template>
     <div class="card">
+        <loading v-if="form.loading"></loading>
         <div class="card-body login-card-body">
+
             <p class="login-box-msg">Sign in to start your session</p>
 
             <form action="#" method="post" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
@@ -25,9 +27,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block" :disabled="form.errors.any()">Sign In
-                            <loading v-if="form.loading"></loading>
-                        </button>
+                        <button type="submit" class="btn btn-primary btn-block" :disabled="form.errors.any()">Sign In</button>
 
                     </div>
                     <!-- /.col -->

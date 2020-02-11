@@ -1,5 +1,7 @@
 <template>
-    <i class="fa fa-spinner fa-spin loading-icon"></i>
+    <div class="overlay d-flex justify-content-center align-items-center">
+        <i class="fas fa-2x fa-sync fa-spin"></i>
+    </div>
 </template>
 <style>
 
