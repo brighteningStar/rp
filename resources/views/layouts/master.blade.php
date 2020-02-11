@@ -28,12 +28,15 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
-    @include('layouts.nav')
-    @include('layouts.sidebar')
-    @yield('content')
-    @include('layouts.footer')
+<div id="app">
+    <div class="wrapper">
+        @include('layouts.nav')
+        @include('layouts.sidebar')
+        @yield('content')
+        @include('layouts.footer')
+    </div>
 </div>
+
 <!-- ./wrapper -->
 
 <!-- jQuery -->
@@ -67,8 +70,9 @@
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
+{{--<script src="dist/js/pages/dashboard.js"></script>--}}
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
