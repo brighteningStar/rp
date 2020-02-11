@@ -3,29 +3,31 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">Sign in to start your session</p>
 
-            <form action="#" method="post" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
+            <form action="#" method="post" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email" v-model="email" name="email">
+                    <input type="email" class="form-control" placeholder="Email" v-model="form.email" name="email">
 
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
                         </div>
                     </div>
-                    <span class="error invalid-feedback" v-if="errors.has('email')" v-text="errors.get('email')"></span>
+                    <span class="error invalid-feedback" v-if="form.errors.has('email')" v-text="form.errors.get('email')"></span>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password" v-model="password" name="password">
+                    <input type="password" class="form-control" placeholder="Password" v-model="form.password" name="password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
                         </div>
                     </div>
-                    <span class="error invalid-feedback" v-if="errors.has('password')" v-text="errors.get('password')"></span>
+                    <span class="error invalid-feedback" v-if="form.errors.has('password')" v-text="form.errors.get('password')"></span>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block" :disabled="errors.any()">Sign In <loading v-if="loading"></loading></button>
+                        <button type="submit" class="btn btn-primary btn-block" :disabled="form.errors.any()">Sign In
+                            <loading v-if="form.loading"></loading>
+                        </button>
 
                     </div>
                     <!-- /.col -->
@@ -37,32 +39,24 @@
 </template>
 
 <script type="text/babel">
-    import {Errors} from '../Errors';
+    import {Form} from "../Form";
 
     export default {
 
         data() {
             return {
-                email: '',
-                password: '',
-                errors: new Errors(),
-                loading:false,
+                form: new Form({
+                    email: '',
+                    password: '',
+                }),
             };
         },
 
         methods: {
             onSubmit() {
-                let self = this;
-                self.loading = true;
-                axios.post('/login', this.$data)
-                    .then(function (response) {
-                        window.location.href = '/';
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        self.loading = false;
-                        self.errors.record(error.response.data.errors)
-                    })
+                this.form.post('/login')
+                    .then(data => window.location.href = '/')
+                    .catch(errors => console.log(errors));
             }
         },
 

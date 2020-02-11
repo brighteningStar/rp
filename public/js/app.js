@@ -1958,7 +1958,9 @@ module.exports = {};
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Errors */ "./resources/js/Errors.js");
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Form */ "./resources/js/Form.js");
+//
+//
 //
 //
 //
@@ -2001,22 +2003,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      email: '',
-      password: '',
-      errors: new _Errors__WEBPACK_IMPORTED_MODULE_0__["Errors"](),
-      loading: false
+      form: new _Form__WEBPACK_IMPORTED_MODULE_0__["Form"]({
+        email: '',
+        password: ''
+      })
     };
   },
   methods: {
     onSubmit: function onSubmit() {
-      var self = this;
-      self.loading = true;
-      axios.post('/login', this.$data).then(function (response) {
-        window.location.href = '/';
-      })["catch"](function (error) {
-        // handle error
-        self.loading = false;
-        self.errors.record(error.response.data.errors);
+      this.form.post('/login').then(function (data) {
+        return window.location.href = '/';
+      })["catch"](function (errors) {
+        return console.log(errors);
       });
     }
   },
@@ -2034,7 +2032,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Errors */ "./resources/js/Errors.js");
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Form */ "./resources/js/Form.js");
 //
 //
 //
@@ -2091,24 +2089,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      name: '',
-      email: '',
-      password: '',
-      password_confirmation: '',
-      errors: new _Errors__WEBPACK_IMPORTED_MODULE_0__["Errors"](),
-      loading: false
+      form: new _Form__WEBPACK_IMPORTED_MODULE_0__["Form"]({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      })
     };
   },
   methods: {
     onSubmit: function onSubmit() {
-      var self = this;
-      self.loading = true;
-      axios.post('/register', this.$data).then(function (response) {
-        window.location.href = '/';
-      })["catch"](function (error) {
-        // handle error
-        self.loading = false;
-        self.errors.record(error.response.data.errors);
+      this.form.post('/register').then(function (data) {
+        return window.location.href = '/';
+      })["catch"](function (errors) {
+        return console.log(errors);
       });
     }
   },
@@ -37574,7 +37568,7 @@ var render = function() {
               return _vm.onSubmit($event)
             },
             keydown: function($event) {
-              return _vm.errors.clear($event.target.name)
+              return _vm.form.errors.clear($event.target.name)
             }
           }
         },
@@ -37585,29 +37579,31 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.email,
-                  expression: "email"
+                  value: _vm.form.email,
+                  expression: "form.email"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "email", placeholder: "Email", name: "email" },
-              domProps: { value: _vm.email },
+              domProps: { value: _vm.form.email },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.email = $event.target.value
+                  _vm.$set(_vm.form, "email", $event.target.value)
                 }
               }
             }),
             _vm._v(" "),
             _vm._m(0),
             _vm._v(" "),
-            _vm.errors.has("email")
+            _vm.form.errors.has("email")
               ? _c("span", {
                   staticClass: "error invalid-feedback",
-                  domProps: { textContent: _vm._s(_vm.errors.get("email")) }
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("email"))
+                  }
                 })
               : _vm._e()
           ]),
@@ -37618,8 +37614,8 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.password,
-                  expression: "password"
+                  value: _vm.form.password,
+                  expression: "form.password"
                 }
               ],
               staticClass: "form-control",
@@ -37628,23 +37624,25 @@ var render = function() {
                 placeholder: "Password",
                 name: "password"
               },
-              domProps: { value: _vm.password },
+              domProps: { value: _vm.form.password },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.password = $event.target.value
+                  _vm.$set(_vm.form, "password", $event.target.value)
                 }
               }
             }),
             _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
-            _vm.errors.has("password")
+            _vm.form.errors.has("password")
               ? _c("span", {
                   staticClass: "error invalid-feedback",
-                  domProps: { textContent: _vm._s(_vm.errors.get("password")) }
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("password"))
+                  }
                 })
               : _vm._e()
           ]),
@@ -37655,9 +37653,12 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-primary btn-block",
-                  attrs: { type: "submit", disabled: _vm.errors.any() }
+                  attrs: { type: "submit", disabled: _vm.form.errors.any() }
                 },
-                [_vm._v("Sign In "), _vm.loading ? _c("loading") : _vm._e()],
+                [
+                  _vm._v("Sign In\n                        "),
+                  _vm.form.loading ? _c("loading") : _vm._e()
+                ],
                 1
               )
             ])
@@ -37726,7 +37727,7 @@ var render = function() {
               return _vm.onSubmit($event)
             },
             keydown: function($event) {
-              return _vm.errors.clear($event.target.name)
+              return _vm.form.errors.clear($event.target.name)
             }
           }
         },
@@ -37737,29 +37738,29 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.name,
-                  expression: "name"
+                  value: _vm.form.name,
+                  expression: "form.name"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", placeholder: "Full name", name: "name" },
-              domProps: { value: _vm.name },
+              domProps: { value: _vm.form.name },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.name = $event.target.value
+                  _vm.$set(_vm.form, "name", $event.target.value)
                 }
               }
             }),
             _vm._v(" "),
             _vm._m(0),
             _vm._v(" "),
-            _vm.errors.has("name")
+            _vm.form.errors.has("name")
               ? _c("span", {
                   staticClass: "error invalid-feedback",
-                  domProps: { textContent: _vm._s(_vm.errors.get("name")) }
+                  domProps: { textContent: _vm._s(_vm.form.errors.get("name")) }
                 })
               : _vm._e()
           ]),
@@ -37770,29 +37771,31 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.email,
-                  expression: "email"
+                  value: _vm.form.email,
+                  expression: "form.email"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "email", placeholder: "Email", name: "email" },
-              domProps: { value: _vm.email },
+              domProps: { value: _vm.form.email },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.email = $event.target.value
+                  _vm.$set(_vm.form, "email", $event.target.value)
                 }
               }
             }),
             _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
-            _vm.errors.has("email")
+            _vm.form.errors.has("email")
               ? _c("span", {
                   staticClass: "error invalid-feedback",
-                  domProps: { textContent: _vm._s(_vm.errors.get("email")) }
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("email"))
+                  }
                 })
               : _vm._e()
           ]),
@@ -37803,8 +37806,8 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.password,
-                  expression: "password"
+                  value: _vm.form.password,
+                  expression: "form.password"
                 }
               ],
               staticClass: "form-control",
@@ -37813,23 +37816,25 @@ var render = function() {
                 placeholder: "Password",
                 name: "password"
               },
-              domProps: { value: _vm.password },
+              domProps: { value: _vm.form.password },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.password = $event.target.value
+                  _vm.$set(_vm.form, "password", $event.target.value)
                 }
               }
             }),
             _vm._v(" "),
             _vm._m(2),
             _vm._v(" "),
-            _vm.errors.has("password")
+            _vm.form.errors.has("password")
               ? _c("span", {
                   staticClass: "error invalid-feedback",
-                  domProps: { textContent: _vm._s(_vm.errors.get("password")) }
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.get("password"))
+                  }
                 })
               : _vm._e()
           ]),
@@ -37840,8 +37845,8 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.password_confirmation,
-                  expression: "password_confirmation"
+                  value: _vm.form.password_confirmation,
+                  expression: "form.password_confirmation"
                 }
               ],
               staticClass: "form-control",
@@ -37850,24 +37855,30 @@ var render = function() {
                 placeholder: "Retype password",
                 name: "password_confirmation"
               },
-              domProps: { value: _vm.password_confirmation },
+              domProps: { value: _vm.form.password_confirmation },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.password_confirmation = $event.target.value
+                  _vm.$set(
+                    _vm.form,
+                    "password_confirmation",
+                    $event.target.value
+                  )
                 }
               }
             }),
             _vm._v(" "),
             _vm._m(3),
             _vm._v(" "),
-            _vm.errors.has("password_confirmation")
+            _vm.form.errors.has("password_confirmation")
               ? _c("span", {
                   staticClass: "error invalid-feedback",
                   domProps: {
-                    textContent: _vm._s(_vm.errors.get("password_confirmation"))
+                    textContent: _vm._s(
+                      _vm.form.errors.get("password_confirmation")
+                    )
                   }
                 })
               : _vm._e()
@@ -37881,7 +37892,10 @@ var render = function() {
                   staticClass: "btn btn-primary btn-block",
                   attrs: { type: "submit" }
                 },
-                [_vm._v("Register "), _vm.loading ? _c("loading") : _vm._e()],
+                [
+                  _vm._v("Register "),
+                  _vm.form.loading ? _c("loading") : _vm._e()
+                ],
                 1
               )
             ])
@@ -50136,7 +50150,12 @@ function () {
   }, {
     key: "clear",
     value: function clear(field) {
-      delete this.errors[field];
+      if (field) {
+        delete this.errors[field];
+        return true;
+      }
+
+      this.errors = {};
     }
   }, {
     key: "has",
@@ -50151,6 +50170,97 @@ function () {
   }]);
 
   return Errors;
+}();
+
+/***/ }),
+
+/***/ "./resources/js/Form.js":
+/*!******************************!*\
+  !*** ./resources/js/Form.js ***!
+  \******************************/
+/*! exports provided: Form */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Form", function() { return Form; });
+/* harmony import */ var _Errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Errors */ "./resources/js/Errors.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var Form =
+/*#__PURE__*/
+function () {
+  function Form(data) {
+    _classCallCheck(this, Form);
+
+    this.originalData = data;
+
+    for (var field in data) {
+      this[field] = data[field];
+    }
+
+    this.errors = new _Errors__WEBPACK_IMPORTED_MODULE_0__["Errors"]();
+    this.loading = false;
+  }
+
+  _createClass(Form, [{
+    key: "reset",
+    value: function reset() {
+      for (var field in this.originalData) {
+        this[field] = '';
+      }
+
+      this.errors.clear();
+    }
+  }, {
+    key: "data",
+    value: function data() {
+      var data = {};
+
+      for (var property in this.originalData) {
+        data[property] = this[property];
+      }
+
+      return data;
+    }
+  }, {
+    key: "post",
+    value: function post($uri) {
+      var _this = this;
+
+      this.loading = true;
+      return new Promise(function (resolve, reject) {
+        axios.post($uri, _this.data()).then(function (response) {
+          _this.onSuccess(response.data);
+
+          resolve(response.data);
+        })["catch"](function (errors) {
+          _this.onFail(errors.response.data.errors);
+
+          reject(errors.response.data.errors);
+        });
+      });
+    }
+  }, {
+    key: "onSuccess",
+    value: function onSuccess(data) {
+      this.loading = false;
+      this.reset();
+    }
+  }, {
+    key: "onFail",
+    value: function onFail(errors) {
+      this.loading = false;
+      this.errors.record(errors);
+    }
+  }]);
+
+  return Form;
 }();
 
 /***/ }),
@@ -50551,8 +50661,8 @@ Vue.component('loading', __webpack_require__(/*! ./components/Loading.vue */ "./
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/stock/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/stock/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/adda/Projects/stock/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/adda/Projects/stock/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

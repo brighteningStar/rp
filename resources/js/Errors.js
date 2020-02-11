@@ -15,7 +15,12 @@ export class Errors {
     }
 
     clear( field) {
-        delete this.errors[field];
+        if (field) {
+            delete this.errors[field];
+            return true;
+        }
+
+        this.errors = {};
     }
 
     has(field) {
