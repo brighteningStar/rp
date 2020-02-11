@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    stock
+    <title>Dashboard</title>
 @endsection
 @section('page_heading')
 
