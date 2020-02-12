@@ -16,15 +16,15 @@ class RolePermissionSeeder extends Seeder
         $superAdmin = Role::firstOrCreate(['name' => 'super_admin']);
         $admin = Role::firstOrCreate(['name' => 'admin']);
 
-        $adminPermissions = [
+        $allPermissions = [
             [Permission::firstOrCreate(['name' => 'view_all_users']),'super_admin'],
             [Permission::firstOrCreate(['name' => 'create_new_user']),'super_admin'],
-            [Permission::firstOrCreate(['name' => 'edit_users']),'super_admin'],
-            [Permission::firstOrCreate(['name' => 'delete_users']),'super_admin'],
-            [Permission::firstOrCreate(['name' => 'create_stock']),'admin'],
+            [Permission::firstOrCreate(['name' => 'edit_user']),'admin'],
+            [Permission::firstOrCreate(['name' => 'delete_user']),'super_admin'],
+            [Permission::firstOrCreate(['name' => 'view_dashboard']),'admin'],
         ];
 
-        foreach ($adminPermissions as $permission){
+        foreach ($allPermissions as $permission){
             $perm = $permission[0];
             $type = $permission[1];
             if($type=='admin'){
@@ -33,16 +33,6 @@ class RolePermissionSeeder extends Seeder
                 }
             }
         }
-
-        $allUsers = \App\Models\User::all();
-        foreach ($allUsers as $user){
-            $user->assignRole('super_admin');
-        }
-
-
-
-
-
 
     }
 }

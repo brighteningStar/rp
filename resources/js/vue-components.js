@@ -4,3 +4,4 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
 Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 Vue.component('loading', require('./components/Loading.vue').default);
+Vue.component('app-navigation', require('./components/Navigation.vue').default);
