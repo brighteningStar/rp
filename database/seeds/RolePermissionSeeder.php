@@ -22,6 +22,10 @@ class RolePermissionSeeder extends Seeder
             [Permission::firstOrCreate(['name' => 'edit_user']),'admin'],
             [Permission::firstOrCreate(['name' => 'delete_user']),'super_admin'],
             [Permission::firstOrCreate(['name' => 'view_dashboard']),'admin'],
+            [Permission::firstOrCreate(['name' => 'view_all_colors']),'admin'],
+            [Permission::firstOrCreate(['name' => 'edit_color']),'admin'],
+            [Permission::firstOrCreate(['name' => 'delete_color']),'admin'],
+            [Permission::firstOrCreate(['name' => 'create_new_color']),'admin'],
         ];
 
         foreach ($allPermissions as $permission){

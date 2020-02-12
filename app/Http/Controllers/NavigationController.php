@@ -19,27 +19,26 @@ class NavigationController extends Controller
                 'children' => null,
             ),
             'users' => array(
-                'route' => null,
-                'permission' => null,
+                'route' => route('users.index'),
+                'permission' => 'view_all_users',
                 'title' => 'Users',
                 'icon' => 'fas fa-users',
+                'children' => null,
+            ),
+            'forms' => array(
+                'route' => null,
+                'permission' => null,
+                'title' => 'Forms',
+                'icon' => 'far fa-file',
                 'children' => array(
                     'view_users' => array(
-                        'route' => route('users.index'),
-                        'permission' => 'view_all_users',
-                        'title' => 'View Users',
-                        'icon' => 'far fa-circle',
+                        'route' => route('colors.index'),
+                        'permission' => 'view_all_colors',
+                        'title' => 'Colors',
+                        'icon' => 'fas fa-palette',
                         'children' => null,
                     ),
-                    'create_user' => array(
-                        'route' => route('users.create'),
-                        'permission' => 'create_new_user',
-                        'title' => 'Create New User',
-                        'icon' => 'far fa-circle',
-                        'children' => null,
-                    )
                 ),
-
             )
         );
     }
