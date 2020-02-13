@@ -1,9 +1,10 @@
 <template>
-    <div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-color-modal">
+    <section class="content">
+        <div class="container-fluid">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
             Create Color
         </button>
-        <div class="modal fade" id="create-color-modal">
+        <div class="modal fade" id="modal-xl">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -31,7 +32,9 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
+        <table-vue uri="/get-colors"></table-vue>
     </div>
+    </section>
 </template>
 
 <script>

@@ -85,4 +85,16 @@ class ColorController extends Controller
     {
         //
     }
+
+
+    public function getColors()
+    {
+        $columns = [ 'name' ];
+        $colors   = Color::all();
+
+        return [
+            'columns' => $columns,
+            'items'   => $colors
+        ];
+    }
 }

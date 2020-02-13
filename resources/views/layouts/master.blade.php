@@ -34,27 +34,13 @@
     <div class="wrapper">
         @include('layouts.nav')
         @include('layouts.sidebar')
-        <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0 text-dark">@yield('page_heading')</h1>
-                        </div><!-- /.col -->
-
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <section class="content">
-                <div class="container-fluid">
-                    @yield('content')
-                </div>
-            </section>
+        <div class="content-wrapper" style="min-height: 1200.88px;">
+            @yield('content')
         </div>
         @include('layouts.footer')
+        {{--        </div>--}}
     </div>
 </div>
-
 <!-- ./wrapper -->
 
 <!-- jQuery -->
