@@ -31,7 +31,7 @@ class NavigationController extends Controller
                 'title' => 'Forms',
                 'icon' => 'far fa-file',
                 'children' => array(
-                    'view_users' => array(
+                    'view_colors' => array(
                         'route' => route('colors.index'),
                         'permission' => 'view_all_colors',
                         'title' => 'Colors',

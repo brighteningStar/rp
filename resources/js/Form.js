@@ -54,6 +54,23 @@ export class Form {
         });
     }
 
+    put($uri) {
+        this.loading = true;
+        return new Promise((resolve, reject) => {
+            axios.put($uri, this.data())
+                .then(response => {
+                    this.onSuccess(response.data);
+
+                    resolve(response.data);
+                })
+                .catch(errors => {
+                    this.onFail(errors.response.data.errors);
+
+                    reject(errors.response.data.errors);
+                })
+        });
+    }
+
 
     onSuccess(data) {
         this.loading = false;

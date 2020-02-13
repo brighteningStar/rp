@@ -49,22 +49,33 @@
 
         methods: {
             openModal(itemId ) {
-                Event.$emit('openModal', {itemId});
-            }
+                Event.$emit('editModal', {itemId});
+            },
+
+            loadTable(){
+                this.loading = true;
+                axios.get(this.uri)
+                    .then(function (response) {
+                        this.loading = false;
+                        this.items = response.data.items;
+                        this.columns = response.data.columns;
+                    }.bind(this))
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            },
+        },
+
+        created() {
+            let self = this;
+            Event.$on('reloadTable', (data) => {
+                self.loadTable();
+            });
         },
 
 
         mounted() {
-            this.loading = true;
-            axios.get(this.uri)
-                .then(function (response) {
-                    this.loading = false;
-                    this.items = response.data.items;
-                    this.columns = response.data.columns;
-                }.bind(this))
-                .catch(function (error) {
-                    console.log(error);
-                })
+            this.loadTable();
         }
     }
 </script>

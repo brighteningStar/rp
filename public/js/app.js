@@ -2298,20 +2298,29 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     openModal: function openModal(itemId) {
-      Event.$emit('openModal', {
+      Event.$emit('editModal', {
         itemId: itemId
+      });
+    },
+    loadTable: function loadTable() {
+      this.loading = true;
+      axios.get(this.uri).then(function (response) {
+        this.loading = false;
+        this.items = response.data.items;
+        this.columns = response.data.columns;
+      }.bind(this))["catch"](function (error) {
+        console.log(error);
       });
     }
   },
-  mounted: function mounted() {
-    this.loading = true;
-    axios.get(this.uri).then(function (response) {
-      this.loading = false;
-      this.items = response.data.items;
-      this.columns = response.data.columns;
-    }.bind(this))["catch"](function (error) {
-      console.log(error);
+  created: function created() {
+    var self = this;
+    Event.$on('reloadTable', function (data) {
+      self.loadTable();
     });
+  },
+  mounted: function mounted() {
+    this.loadTable();
   }
 });
 
@@ -2423,10 +2432,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/color/CreateColor.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/color/CreateColor.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/ColorComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/ColorComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2472,18 +2481,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       form: new _Form__WEBPACK_IMPORTED_MODULE_0__["Form"]({
         name: ''
-      })
+      }),
+      title: 'Create New Color',
+      method: 'create',
+      editID: null
     };
   },
   methods: {
     onSubmit: function onSubmit() {
+      if (this.method == 'create') {
+        this.createColor();
+      } else {
+        this.updateColor();
+      }
+    },
+    createColor: function createColor() {
       this.form.post('/colors').then(function (response) {
+        Event.$emit('reloadTable');
+        $("[data-dismiss=modal]").trigger({
+          type: "click"
+        });
+      })["catch"](function (errors) {
+        return console.log(errors);
+      });
+    },
+    updateColor: function updateColor() {
+      this.form.put('/colors/' + this.editID).then(function (response) {
+        Event.$emit('reloadTable');
         $("[data-dismiss=modal]").trigger({
           type: "click"
         });
@@ -2494,8 +2525,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var self = this;
-    $('#create-color-modal').on('hidden.bs.modal', function () {
+    $('#modal-xl').on('hidden.bs.modal', function () {
       self.form.reset();
+      self.title = "Create New Color";
+      self.method = "create";
+      this.editID = null;
+    });
+  },
+  created: function created() {
+    var _this = this;
+
+    Event.$on('editModal', function (data) {
+      var colorID = data.itemId;
+      _this.title = "Update Color";
+      _this.method = "update";
+      _this.editID = colorID;
+      axios.get('/colors/' + colorID).then(function (response) {
+        this.loading = false;
+        this.form.name = response.data.name;
+      }.bind(_this))["catch"](function (error) {
+        console.log(error);
+      });
     });
   }
 });
@@ -39638,10 +39688,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/color/CreateColor.vue?vue&type=template&id=0652ca80&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/color/CreateColor.vue?vue&type=template&id=0652ca80& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/ColorComponent.vue?vue&type=template&id=5740faa5&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/forms/ColorComponent.vue?vue&type=template&id=5740faa5& ***!
+  \***********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -39668,7 +39718,7 @@ var render = function() {
               "data-target": "#modal-xl"
             }
           },
-          [_vm._v("\n        Create Color\n    ")]
+          [_vm._v("\n            Create Color\n        ")]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "modal fade", attrs: { id: "modal-xl" } }, [
@@ -39681,7 +39731,7 @@ var render = function() {
                   _vm.form.loading ? _c("loading") : _vm._e(),
                   _vm._v(" "),
                   _c("h4", { staticClass: "modal-title" }, [
-                    _vm._v("Create New Color")
+                    _vm._v(_vm._s(_vm.title))
                   ]),
                   _vm._v(" "),
                   _vm._m(0)
@@ -39746,6 +39796,8 @@ var render = function() {
             ])
           ])
         ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-4 col-md-12" }),
         _vm._v(" "),
         _c("table-vue", { attrs: { uri: "/get-colors" } })
       ],
@@ -52093,6 +52145,24 @@ function () {
       });
     }
   }, {
+    key: "put",
+    value: function put($uri) {
+      var _this2 = this;
+
+      this.loading = true;
+      return new Promise(function (resolve, reject) {
+        axios.put($uri, _this2.data()).then(function (response) {
+          _this2.onSuccess(response.data);
+
+          resolve(response.data);
+        })["catch"](function (errors) {
+          _this2.onFail(errors.response.data.errors);
+
+          reject(errors.response.data.errors);
+        });
+      });
+    }
+  }, {
     key: "onSuccess",
     value: function onSuccess(data) {
       this.loading = false;
@@ -52770,17 +52840,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/color/CreateColor.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/color/CreateColor.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/forms/ColorComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/forms/ColorComponent.vue ***!
+  \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateColor_vue_vue_type_template_id_0652ca80___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateColor.vue?vue&type=template&id=0652ca80& */ "./resources/js/components/color/CreateColor.vue?vue&type=template&id=0652ca80&");
-/* harmony import */ var _CreateColor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateColor.vue?vue&type=script&lang=js& */ "./resources/js/components/color/CreateColor.vue?vue&type=script&lang=js&");
+/* harmony import */ var _ColorComponent_vue_vue_type_template_id_5740faa5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ColorComponent.vue?vue&type=template&id=5740faa5& */ "./resources/js/components/forms/ColorComponent.vue?vue&type=template&id=5740faa5&");
+/* harmony import */ var _ColorComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ColorComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/forms/ColorComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -52790,9 +52860,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CreateColor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateColor_vue_vue_type_template_id_0652ca80___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateColor_vue_vue_type_template_id_0652ca80___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _ColorComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ColorComponent_vue_vue_type_template_id_5740faa5___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ColorComponent_vue_vue_type_template_id_5740faa5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -52802,38 +52872,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/color/CreateColor.vue"
+component.options.__file = "resources/js/components/forms/ColorComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/color/CreateColor.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/color/CreateColor.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/forms/ColorComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/forms/ColorComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateColor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateColor.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/color/CreateColor.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateColor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ColorComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/ColorComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/color/CreateColor.vue?vue&type=template&id=0652ca80&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/color/CreateColor.vue?vue&type=template&id=0652ca80& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/forms/ColorComponent.vue?vue&type=template&id=5740faa5&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/forms/ColorComponent.vue?vue&type=template&id=5740faa5& ***!
+  \*****************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateColor_vue_vue_type_template_id_0652ca80___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateColor.vue?vue&type=template&id=0652ca80& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/color/CreateColor.vue?vue&type=template&id=0652ca80&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateColor_vue_vue_type_template_id_0652ca80___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorComponent_vue_vue_type_template_id_5740faa5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ColorComponent.vue?vue&type=template&id=5740faa5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/forms/ColorComponent.vue?vue&type=template&id=5740faa5&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorComponent_vue_vue_type_template_id_5740faa5___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateColor_vue_vue_type_template_id_0652ca80___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ColorComponent_vue_vue_type_template_id_5740faa5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -52850,11 +52920,11 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 Vue.component('login-component', __webpack_require__(/*! ./components/LoginComponent.vue */ "./resources/js/components/LoginComponent.vue")["default"]);
 Vue.component('register-component', __webpack_require__(/*! ./components/RegisterComponent.vue */ "./resources/js/components/RegisterComponent.vue")["default"]);
 Vue.component('app-navigation', __webpack_require__(/*! ./components/Navigation.vue */ "./resources/js/components/Navigation.vue")["default"]);
-Vue.component('create-color-form', __webpack_require__(/*! ./components/color/CreateColor.vue */ "./resources/js/components/color/CreateColor.vue")["default"]);
 Vue.component('user-component', __webpack_require__(/*! ./components/UserComponent.vue */ "./resources/js/components/UserComponent.vue")["default"]);
 Vue.component('loading', __webpack_require__(/*! ./components/Loading.vue */ "./resources/js/components/Loading.vue")["default"]);
 Vue.component('modal', __webpack_require__(/*! ./components/Modal.vue */ "./resources/js/components/Modal.vue")["default"]);
 Vue.component('table-vue', __webpack_require__(/*! ./components/Table.vue */ "./resources/js/components/Table.vue")["default"]);
+Vue.component('color-component', __webpack_require__(/*! ./components/forms/ColorComponent.vue */ "./resources/js/components/forms/ColorComponent.vue")["default"]);
 
 /***/ }),
 
