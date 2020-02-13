@@ -30,10 +30,14 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div id="app">
     <div class="wrapper">
+
         @include('layouts.nav')
         @include('layouts.sidebar')
-        @yield('content')
+        <div class="content-wrapper" style="min-height: 1200.88px;">
+            @yield('content')
+        </div>
         @include('layouts.footer')
+        {{--        </div>--}}
     </div>
 </div>
 
