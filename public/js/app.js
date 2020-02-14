@@ -2449,7 +2449,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var userID = data.itemId;
       axios.get('/user/' + userID).then(function (response) {
         this.loading = false;
-        this.assignResponseToForm(response.data);
+        this.form.copyDataToForm(response.data);
       }.bind(_this))["catch"](function (error) {
         console.log(error);
       });
@@ -52144,11 +52144,7 @@ function () {
     _classCallCheck(this, Form);
 
     this.originalData = data;
-
-    for (var field in data) {
-      this[field] = data[field];
-    }
-
+    this.copyDataToForm(data);
     this.errors = new _Errors__WEBPACK_IMPORTED_MODULE_0__["Errors"]();
     this.loading = false;
   }
@@ -52202,6 +52198,13 @@ function () {
     value: function onFail(errors) {
       this.loading = false;
       this.errors.record(errors);
+    }
+  }, {
+    key: "copyDataToForm",
+    value: function copyDataToForm(data) {
+      for (var field in data) {
+        this[field] = data[field];
+      }
     }
   }]);
 

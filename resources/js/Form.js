@@ -6,9 +6,7 @@ export class Form {
 
         this.originalData = data;
 
-        for (let field in data) {
-            this[field] = data[field];
-        }
+        this.copyDataToForm(data);
 
         this.errors = new Errors();
 
@@ -64,6 +62,12 @@ export class Form {
     onFail(errors) {
         this.loading = false;
         this.errors.record(errors)
+    }
+
+    copyDataToForm(data) {
+        for (let field in data) {
+            this[field] = data[field];
+        }
     }
 
 }

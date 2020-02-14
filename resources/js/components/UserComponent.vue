@@ -95,7 +95,7 @@
                 axios.get('/user/' + userID)
                     .then(function (response) {
                         this.loading = false;
-                        this.assignResponseToForm(response.data);
+                        this.form.copyDataToForm(response.data);
                     }.bind(this))
                     .catch(function (error) {
                         console.log(error);
