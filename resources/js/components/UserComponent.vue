@@ -80,13 +80,22 @@
             };
         },
 
+        methods: {
+
+            assignResponseToForm(data) {
+                for (let [key] of Object.entries(data)) {
+                    this.form[key] = data[key];
+                }
+            }
+        },
+
         created() {
             Event.$on('openModal', (data) => {
                 let userID = data.itemId;
-                axios.get('/user/'+userID)
+                axios.get('/user/' + userID)
                     .then(function (response) {
                         this.loading = false;
-                        this.form.name = response.data.name;
+                        this.assignResponseToForm(response.data);
                     }.bind(this))
                     .catch(function (error) {
                         console.log(error);
