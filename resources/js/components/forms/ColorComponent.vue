@@ -98,7 +98,7 @@
                 axios.get('/colors/'+colorID)
                     .then(function (response) {
                         this.loading = false;
-                        this.form.name = response.data.name;
+                        this.form.copyDataToForm(response.data);
                     }.bind(this))
                     .catch(function (error) {
                         console.log(error);
