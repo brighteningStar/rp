@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Color;
+use App\Services\ColorService;
 use Illuminate\Http\Request;
 
 class ColorController extends Controller
 {
+    protected $service;
+
+    public function __construct(ColorService $colorService)
+    {
+        $this->service = $colorService;
+
+    }
 
     public function index()
     {
@@ -19,13 +27,13 @@ class ColorController extends Controller
         $request->validate([
             'name' => 'required|unique:colors,name',
         ]);
-        Color::create(['name' => $request->get('name')]);
+        $this->service->create($request->all());
     }
 
 
     public function show($id)
     {
-        return Color::find($id);
+        return $this->service->find($id);
     }
 
 
@@ -34,8 +42,8 @@ class ColorController extends Controller
         $request->validate([
             'name' => 'required|unique:users,name,'.$id,
         ]);
-        Color::where('id', $id)
-            ->update(['name' => $request->get('name')]);
+        $where = array('id'=>$id);
+        $this->service->update($request, $where);
     }
 
 
@@ -47,12 +55,6 @@ class ColorController extends Controller
 
     public function getColors()
     {
-        $columns = [ 'name' ];
-        $colors   = Color::all();
-
-        return [
-            'columns' => $columns,
-            'items'   => $colors
-        ];
+        return $this->service->getAll();
     }
 }

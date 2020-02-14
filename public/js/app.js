@@ -38897,7 +38897,7 @@ var render = function() {
     _c(
       "ul",
       {
-        staticClass: "nav nav-pills nav-sidebar flex-column",
+        staticClass: "nav nav-pills nav-sidebar flex-column nav-child-indent",
         attrs: {
           "data-widget": "treeview",
           role: "menu",
