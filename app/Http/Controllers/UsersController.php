@@ -22,10 +22,23 @@ class UsersController extends Controller
      *
      * @return mixed
      */
-    public function index()
+    public function index( Request $request )
     {
         $columns = [ 'name', 'email' ];
-        $users   = User::all();
+
+        $keyword = $request->get( 'q', null );
+
+        if ( $keyword != '' ) {
+            $users = User::whereRaw( "users.name like ?", "%$keyword%" )
+                         ->paginate(15);
+
+            return [
+                'columns' => $columns,
+                'items'   => $users
+            ];
+        }
+
+        $users = User::paginate(15);
 
         return [
             'columns' => $columns,
@@ -36,6 +49,6 @@ class UsersController extends Controller
 
     public function edit( $id )
     {
-        return User::find($id);
+        return User::find( $id );
     }
 }

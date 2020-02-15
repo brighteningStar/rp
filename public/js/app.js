@@ -2303,16 +2303,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['uri'],
   data: function data() {
     return {
       items: [],
       columns: [],
-      loading: false
+      loading: false,
+      q: '',
+      previousPage: '',
+      nextPage: '',
+      currentPage: 1
     };
   },
   methods: {
@@ -2323,13 +2324,47 @@ __webpack_require__.r(__webpack_exports__);
     },
     loadTable: function loadTable() {
       this.loading = true;
-      axios.get(this.uri).then(function (response) {
+      axios.get(this.formUrl()).then(function (response) {
         this.loading = false;
-        this.items = response.data.items;
+        this.items = response.data.items.data;
         this.columns = response.data.columns;
+        this.nextPage = this.getPageNumber('page', response.data.items.next_page_url);
+        this.previousPage = this.getPageNumber('page', response.data.items.prev_page_url);
       }.bind(this))["catch"](function (error) {
         console.log(error);
       });
+    },
+    search: function search() {
+      if (this.validateSearchQuery(this.q)) {
+        this.loadTable();
+      }
+    },
+    moveForward: function moveForward() {
+      this.currentPage = this.nextPage ? this.nextPage : this.currentPage;
+      this.loadTable();
+    },
+    moveBack: function moveBack() {
+      this.currentPage = this.previousPage ? this.previousPage : this.currentPage;
+      this.loadTable();
+    },
+    getPageNumber: function getPageNumber(param, url) {
+      var href = url; //this expression is to get the query strings
+
+      var reg = new RegExp('[?&]' + param + '=([^&#]*)', 'i');
+      var queryString = reg.exec(href);
+      return queryString ? queryString[1] : null;
+    },
+    validateSearchQuery: function validateSearchQuery(q) {
+      return !(q && q.length < 3);
+    },
+    formUrl: function formUrl() {
+      var queryString = this.q;
+
+      if (queryString && queryString.length < 3) {
+        return this.uri + '/?q=&page=' + this.currentPage;
+      }
+
+      return this.uri + '/?q=' + this.q + '&page=' + this.currentPage;
     }
   },
   created: function created() {
@@ -39271,7 +39306,40 @@ var render = function() {
         [
           _vm.loading ? _c("loading") : _vm._e(),
           _vm._v(" "),
-          _vm._m(0),
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [_vm._v("Users")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-tools" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.q,
+                      expression: "q"
+                    }
+                  ],
+                  staticClass: "form-control float-right input-lg",
+                  attrs: { type: "text", name: "q", placeholder: "Search" },
+                  domProps: { value: _vm.q },
+                  on: {
+                    keyup: function($event) {
+                      return _vm.search()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.q = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -39352,7 +39420,97 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _vm._m(1)
+              _c(
+                "nav",
+                {
+                  staticStyle: { "margin-top": "16px", "margin-right": "10px" },
+                  attrs: { "aria-label": "Page navigation example" }
+                },
+                [
+                  _c(
+                    "ul",
+                    {
+                      staticClass:
+                        "pagination justify-content-center pagination-md"
+                    },
+                    [
+                      _c("li", { staticClass: "page-item" }, [
+                        _c(
+                          "button",
+                          {
+                            class: {
+                              "disable-link": !_vm.previousPage,
+                              "page-link": _vm.previousPage
+                            },
+                            attrs: {
+                              href: "#",
+                              "aria-label": "Previous",
+                              name: "previousPage",
+                              disabled: !this.previousPage
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.moveBack()
+                              }
+                            },
+                            model: {
+                              value: _vm.previousPage,
+                              callback: function($$v) {
+                                _vm.previousPage = $$v
+                              },
+                              expression: "previousPage"
+                            }
+                          },
+                          [
+                            _vm._m(1),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "sr-only" }, [
+                              _vm._v("Previous")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "page-item" }, [
+                        _c(
+                          "button",
+                          {
+                            class: {
+                              "disable-link": !_vm.nextPage,
+                              "page-link": _vm.nextPage
+                            },
+                            attrs: {
+                              href: "#",
+                              "aria-label": "Next",
+                              name: "nextPage",
+                              disabled: !this.nextPage
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.moveForward()
+                              }
+                            },
+                            model: {
+                              value: _vm.nextPage,
+                              callback: function($$v) {
+                                _vm.nextPage = $$v
+                              },
+                              expression: "nextPage"
+                            }
+                          },
+                          [
+                            _vm._m(2),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "sr-only" }, [
+                              _vm._v("Next")
+                            ])
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              )
             ]
           )
         ],
@@ -39366,97 +39524,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("Users")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-tools" }, [
-        _c("div", { staticClass: "input-group" }, [
-          _c("input", {
-            staticClass: "form-control float-right input-lg",
-            attrs: { type: "text", name: "table_search", placeholder: "Search" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-append" }, [
-            _c(
-              "button",
-              { staticClass: "btn btn-default", attrs: { type: "submit" } },
-              [_c("i", { staticClass: "fas fa-search" })]
-            )
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-default", attrs: { type: "submit" } },
+        [_c("i", { staticClass: "fas fa-search" })]
+      )
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "nav",
-      {
-        staticStyle: { "margin-top": "16px", "margin-right": "10px" },
-        attrs: { "aria-label": "Page navigation example" }
-      },
-      [
-        _c(
-          "ul",
-          { staticClass: "pagination justify-content-end pagination-md" },
-          [
-            _c("li", { staticClass: "page-item" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "page-link",
-                  attrs: { href: "#", "aria-label": "Previous" }
-                },
-                [
-                  _c("span", { attrs: { "aria-hidden": "true" } }, [
-                    _vm._v("«")
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item" }, [
-              _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                _vm._v("1")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item" }, [
-              _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                _vm._v("2")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item" }, [
-              _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                _vm._v("3")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "page-item" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "page-link",
-                  attrs: { href: "#", "aria-label": "Next" }
-                },
-                [
-                  _c("span", { attrs: { "aria-hidden": "true" } }, [
-                    _vm._v("»")
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
-                ]
-              )
-            ])
-          ]
-        )
-      ]
-    )
+    return _c("span", { attrs: { "aria-hidden": "true" } }, [
+      _c("i", { staticClass: "fas fa-angle-double-left" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { attrs: { "aria-hidden": "true" } }, [
+      _c("i", { staticClass: "fas fa-angle-double-right" })
+    ])
   }
 ]
 render._withStripped = true
@@ -53048,8 +53138,8 @@ Vue.component('color-component', __webpack_require__(/*! ./components/forms/Colo
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/stock/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/stock/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/adda/Projects/stock/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/adda/Projects/stock/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
