@@ -33,7 +33,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/get-colors"></table-vue>
+            <table-vue uri="/forms/colors/get"></table-vue>
         </div>
     </section>
 </template>
@@ -62,7 +62,7 @@
             },
 
             createColor(){
-                this.form.post('/colors')
+                this.form.post('/forms/colors')
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -71,7 +71,7 @@
             },
 
             updateColor(){
-                this.form.put('/colors/'+this.editID)
+                this.form.put('/forms/colors/'+this.editID)
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -95,7 +95,7 @@
                 this.title = "Update Color";
                 this.method = "update";
                 this.editID = colorID;
-                axios.get('/colors/'+colorID)
+                axios.get('/forms/colors/'+colorID)
                     .then(function (response) {
                         this.loading = false;
                         this.form.copyDataToForm(response.data);

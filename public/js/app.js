@@ -2540,7 +2540,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     createColor: function createColor() {
-      this.form.post('/colors').then(function (response) {
+      this.form.post('/forms/colors').then(function (response) {
         Event.$emit('reloadTable');
         $("[data-dismiss=modal]").trigger({
           type: "click"
@@ -2550,7 +2550,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateColor: function updateColor() {
-      this.form.put('/colors/' + this.editID).then(function (response) {
+      this.form.put('/forms/colors/' + this.editID).then(function (response) {
         Event.$emit('reloadTable');
         $("[data-dismiss=modal]").trigger({
           type: "click"
@@ -2577,7 +2577,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.title = "Update Color";
       _this.method = "update";
       _this.editID = colorID;
-      axios.get('/colors/' + colorID).then(function (response) {
+      axios.get('/forms/colors/' + colorID).then(function (response) {
         this.loading = false;
         this.form.copyDataToForm(response.data);
       }.bind(_this))["catch"](function (error) {
@@ -39898,7 +39898,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "mt-4 col-md-12" }),
         _vm._v(" "),
-        _c("table-vue", { attrs: { uri: "/get-colors" } })
+        _c("table-vue", { attrs: { uri: "/forms/colors/get" } })
       ],
       1
     )

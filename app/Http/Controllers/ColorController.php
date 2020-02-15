@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Color;
 use App\Services\ColorService;
 use Illuminate\Http\Request;
 
@@ -53,7 +52,7 @@ class ColorController extends Controller
     }
 
 
-    public function getColors()
+    public function get()
     {
         return $this->service->getAll();
     }
