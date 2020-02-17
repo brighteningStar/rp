@@ -30,7 +30,7 @@ class UsersController extends Controller
 
         if ( $keyword != '' ) {
             $users = User::whereRaw( "users.name like ?", "%$keyword%" )
-                         ->paginate(15);
+                         ->paginate(3);
 
             return [
                 'columns' => $columns,
@@ -38,7 +38,7 @@ class UsersController extends Controller
             ];
         }
 
-        $users = User::paginate(15);
+        $users = User::paginate(3);
 
         return [
             'columns' => $columns,

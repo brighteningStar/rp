@@ -8,14 +8,15 @@
 
 namespace App\Services;
 
-use App\Models\Color;
 
-class ColorService extends ServiceAbstract
+use App\Models\FaultType;
+
+class FaultTypeService extends ServiceAbstract
 {
 
     public function model()
     {
-        return Color::class;
+        return FaultType::class;
     }
 
     public function getAll($columns = null)
@@ -24,15 +25,15 @@ class ColorService extends ServiceAbstract
         $keyword = request()->get( 'q', null );
 
         if ( $keyword != '' ) {
-            $colors = $this->model->whereRaw( "colors.name like ?", "%$keyword%" );
+            $faults = $this->model->whereRaw( "fault_types.name like ?", "%$keyword%" );
         }
         else {
-            $colors = $this->model;
+            $faults = $this->model;
         }
 
         return [
             'columns' => $columns,
-            'items'   => $colors->paginate(10)
+            'items'   => $faults->paginate(10)
         ];
     }
 

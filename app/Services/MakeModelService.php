@@ -8,14 +8,14 @@
 
 namespace App\Services;
 
-use App\Models\Color;
+use App\Models\MakeModel;
 
-class ColorService extends ServiceAbstract
+class MakeModelService extends ServiceAbstract
 {
 
     public function model()
     {
-        return Color::class;
+        return MakeModel::class;
     }
 
     public function getAll($columns = null)
@@ -24,15 +24,15 @@ class ColorService extends ServiceAbstract
         $keyword = request()->get( 'q', null );
 
         if ( $keyword != '' ) {
-            $colors = $this->model->whereRaw( "colors.name like ?", "%$keyword%" );
+            $makeModels = $this->model->whereRaw( "make_models.name like ?", "%$keyword%" );
         }
         else {
-            $colors = $this->model;
+            $makeModels = $this->model;
         }
 
         return [
             'columns' => $columns,
-            'items'   => $colors->paginate(10)
+            'items'   => $makeModels->paginate(10)
         ];
     }
 

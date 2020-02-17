@@ -2,7 +2,7 @@
     <section class="content">
         <div class="container-fluid">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
-                Create Color
+                Create Capacity
             </button>
             <div class="modal fade" id="modal-xl">
                 <div class="modal-dialog modal-lg">
@@ -20,6 +20,10 @@
                                     <input type="text" class="form-control" placeholder="Name" name="name" v-model="form.name">
                                     <span class="error invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
                                 </div>
+                                <div class="input-group mb-3">
+                                    <make-select></make-select>
+                                </div>
+
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -33,7 +37,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/colors/get" title="Colors"></table-vue>
+            <table-vue uri="/forms/capacities/get" title="Capacities"></table-vue>
         </div>
     </section>
 </template>
@@ -46,7 +50,7 @@
                 form: new Form({
                     name: '',
                 }),
-                title:'Create New Color',
+                title:'Create New Capacity',
                 method:'create',
                 editID:null,
             };
@@ -54,15 +58,15 @@
         methods: {
             onSubmit() {
                 if(this.method=='create'){
-                    this.createColor();
+                    this.createCapacity();
                 } else {
-                    this.updateColor();
+                    this.updateCapacity();
                 }
 
             },
 
-            createColor(){
-                this.form.post('/forms/colors')
+            createCapacity(){
+                this.form.post('/forms/capacities')
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -70,8 +74,8 @@
                     .catch(errors => console.log(errors));
             },
 
-            updateColor(){
-                this.form.put('/forms/colors/'+this.editID)
+            updateCapacity(){
+                this.form.put('/forms/capacities/'+this.editID)
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -83,7 +87,7 @@
             let self = this;
             $('#modal-xl').on('hidden.bs.modal', function () {
                 self.form.reset();
-                self.title = "Create New Color";
+                self.title = "Create New Capacity";
                 self.method = "create";
                 this.editID = null;
             });
@@ -92,10 +96,10 @@
         created() {
             Event.$on('editModal', (data) => {
                 let colorID = data.itemId;
-                this.title = "Update Color";
+                this.title = "Update Capacity";
                 this.method = "update";
                 this.editID = colorID;
-                axios.get('/forms/colors/'+colorID)
+                axios.get('/forms/capacities/'+colorID)
                     .then(function (response) {
                         this.loading = false;
                         this.form.copyDataToForm(response.data);

@@ -72,7 +72,7 @@ abstract class ServiceAbstract {
 
     public function getAll($columns = null) {
         $columns = is_null($columns)?$this->model->getFillable():$columns;
-        $items = $this->model->paginate(3);
+        $items = $this->model->paginate(10);
         return [
             'columns' => $columns,
             'items'   => $items

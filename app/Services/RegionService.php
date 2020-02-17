@@ -8,14 +8,14 @@
 
 namespace App\Services;
 
-use App\Models\Color;
+use App\Models\Region;
 
-class ColorService extends ServiceAbstract
+class RegionService extends ServiceAbstract
 {
 
     public function model()
     {
-        return Color::class;
+        return Region::class;
     }
 
     public function getAll($columns = null)
@@ -24,15 +24,15 @@ class ColorService extends ServiceAbstract
         $keyword = request()->get( 'q', null );
 
         if ( $keyword != '' ) {
-            $colors = $this->model->whereRaw( "colors.name like ?", "%$keyword%" );
+            $regions = $this->model->whereRaw( "regions.name like ?", "%$keyword%" );
         }
         else {
-            $colors = $this->model;
+            $regions = $this->model;
         }
 
         return [
             'columns' => $columns,
-            'items'   => $colors->paginate(10)
+            'items'   => $regions->paginate(10)
         ];
     }
 

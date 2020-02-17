@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Forms;
 
-use App\Models\Color;
-use App\Services\ColorService;
+use App\Http\Controllers\Controller;
+use App\Services\FaultTypeService;
 use Illuminate\Http\Request;
 
-class ColorController extends Controller
+class FaultTypeController extends Controller
 {
     protected $service;
 
-    public function __construct(ColorService $colorService)
+    public function __construct(FaultTypeService $faultTypeService)
     {
-        $this->service = $colorService;
+        $this->service = $faultTypeService;
 
     }
 
     public function index()
     {
-        return view('forms.colors.index');
+        return view('forms.faultTypes.index');
     }
 
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:colors,name',
+            'name' => 'required|unique:fault_types,name',
         ]);
         $this->service->create($request->all());
     }
@@ -40,7 +40,7 @@ class ColorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:users,name,'.$id,
+            'name' => 'required|unique:fault_types,name,'.$id,
         ]);
         $where = array('id'=>$id);
         $this->service->update($request, $where);
@@ -53,7 +53,7 @@ class ColorController extends Controller
     }
 
 
-    public function getColors()
+    public function get()
     {
         return $this->service->getAll();
     }

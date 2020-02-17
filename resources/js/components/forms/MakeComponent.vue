@@ -2,7 +2,7 @@
     <section class="content">
         <div class="container-fluid">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
-                Create Color
+                Create Make
             </button>
             <div class="modal fade" id="modal-xl">
                 <div class="modal-dialog modal-lg">
@@ -33,7 +33,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/colors/get" title="Colors"></table-vue>
+            <table-vue uri="/forms/makes/get" title="Make"></table-vue>
         </div>
     </section>
 </template>
@@ -46,7 +46,7 @@
                 form: new Form({
                     name: '',
                 }),
-                title:'Create New Color',
+                title:'Create New Make',
                 method:'create',
                 editID:null,
             };
@@ -54,15 +54,15 @@
         methods: {
             onSubmit() {
                 if(this.method=='create'){
-                    this.createColor();
+                    this.createMake();
                 } else {
-                    this.updateColor();
+                    this.updateMake();
                 }
 
             },
 
-            createColor(){
-                this.form.post('/forms/colors')
+            createMake(){
+                this.form.post('/forms/makes')
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -70,8 +70,8 @@
                     .catch(errors => console.log(errors));
             },
 
-            updateColor(){
-                this.form.put('/forms/colors/'+this.editID)
+            updateMake(){
+                this.form.put('/forms/makes/'+this.editID)
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -83,7 +83,7 @@
             let self = this;
             $('#modal-xl').on('hidden.bs.modal', function () {
                 self.form.reset();
-                self.title = "Create New Color";
+                self.title = "Create New Make";
                 self.method = "create";
                 this.editID = null;
             });
@@ -92,10 +92,10 @@
         created() {
             Event.$on('editModal', (data) => {
                 let colorID = data.itemId;
-                this.title = "Update Color";
+                this.title = "Update Make";
                 this.method = "update";
                 this.editID = colorID;
-                axios.get('/forms/colors/'+colorID)
+                axios.get('/forms/makes/'+colorID)
                     .then(function (response) {
                         this.loading = false;
                         this.form.copyDataToForm(response.data);
