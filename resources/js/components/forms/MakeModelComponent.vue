@@ -2,7 +2,7 @@
     <section class="content">
         <div class="container-fluid">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
-                Create Color
+                Create Model
             </button>
             <div class="modal fade" id="modal-xl">
                 <div class="modal-dialog modal-lg">
@@ -20,6 +20,10 @@
                                     <input type="text" class="form-control" placeholder="Name" name="name" v-model="form.name">
                                     <span class="error invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
                                 </div>
+                                <div class="input-group mb-3">
+                                    <make-select v-model="form.make_id"></make-select>
+                                    <span class="error invalid-feedback" v-if="form.errors.has('make_id')" v-text="form.errors.get('make_id')"></span>
+                                </div>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -33,7 +37,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/colors/get" title="Colors"></table-vue>
+            <table-vue uri="/forms/make-models/get" title="Models"></table-vue>
         </div>
     </section>
 </template>
@@ -45,8 +49,9 @@
             return {
                 form: new Form({
                     name: '',
+                    make_id: '',
                 }),
-                title:'Create New Color',
+                title:'Create New Model',
                 method:'create',
                 editID:null,
             };
@@ -54,15 +59,15 @@
         methods: {
             onSubmit() {
                 if(this.method=='create'){
-                    this.createColor();
+                    this.createItem();
                 } else {
-                    this.updateColor();
+                    this.updateItem();
                 }
 
             },
 
-            createColor(){
-                this.form.post('/forms/colors')
+            createItem(){
+                this.form.post('/forms/make-models')
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -70,8 +75,8 @@
                     .catch(errors => console.log(errors));
             },
 
-            updateColor(){
-                this.form.put('/forms/colors/'+this.editID)
+            updateItem(){
+                this.form.put('/forms/make-models/'+this.editID)
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -83,7 +88,7 @@
             let self = this;
             $('#modal-xl').on('hidden.bs.modal', function () {
                 self.form.reset();
-                self.title = "Create New Color";
+                self.title = "Create New Model";
                 self.method = "create";
                 this.editID = null;
             });
@@ -95,7 +100,7 @@
                 this.title = "Update Color";
                 this.method = "update";
                 this.editID = colorID;
-                axios.get('/forms/colors/'+colorID)
+                axios.get('/forms/make-models/'+colorID)
                     .then(function (response) {
                         this.loading = false;
                         this.form.copyDataToForm(response.data);

@@ -8,14 +8,15 @@
 
 namespace App\Services;
 
-use App\Models\Color;
 
-class ColorService extends ServiceAbstract
+use App\Models\Grade;
+
+class GradeService extends ServiceAbstract
 {
 
     public function model()
     {
-        return Color::class;
+        return Grade::class;
     }
 
     public function getAll($columns = null)
@@ -24,15 +25,15 @@ class ColorService extends ServiceAbstract
         $keyword = request()->get( 'q', null );
 
         if ( $keyword != '' ) {
-            $colors = $this->model->whereRaw( "colors.name like ?", "%$keyword%" );
+            $grades = $this->model->whereRaw( "grades.name like ?", "%$keyword%" );
         }
         else {
-            $colors = $this->model;
+            $grades = $this->model;
         }
 
         return [
             'columns' => $columns,
-            'items'   => $colors->paginate(10)
+            'items'   => $grades->paginate(10)
         ];
     }
 

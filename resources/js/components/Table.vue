@@ -4,7 +4,7 @@
             <div class="card">
                 <loading v-if="loading"></loading>
                 <div class="card-header">
-                    <h3 class="card-title">Users</h3>
+                    <h3 class="card-title">{{title}}</h3>
                     <div class="card-tools">
                         <div class="input-group">
                             <input type="text" name="q" class="form-control float-right input-lg" placeholder="Search" @keyup="search()" v-model="q">
@@ -18,8 +18,8 @@
                     <table class="table table-head-fixed text-nowrap table-striped table-bordered">
                         <thead>
                         <tr>
-                            <th scope="col" v-for="(column, index) in columns" :key="index"> {{column}}</th>
-                            <th>action</th>
+                            <th scope="col" v-for="(column, index) in columns" :key="index"> {{capitalize(column)}}</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -53,7 +53,7 @@
 
 <script>
     export default {
-        props: ['uri'],
+        props: ['uri', 'title'],
 
         data() {
             return {
@@ -125,6 +125,10 @@
                 }
 
                 return this.uri + '/?q=' + this.q + '&page=' + this.currentPage;
+            },
+
+            capitalize(s){
+                return s[0].toUpperCase() + s.slice(1);
             },
         },
 
