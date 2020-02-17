@@ -12,6 +12,9 @@ Route::group(['middleware' => ["auth"]], function () {
 
     Route::get('navigation', 'NavigationController@index')->name('navigation');
 
+    Route::get( '/stock', 'StockController@index' )->name( 'stock.index' );
+    Route::post( '/process-excel', 'StockController@processExcel' )->name( 'stock.excel' );
+
     Route::prefix('forms')->group(function () {
 
         Route::get( '/colors/get', 'Forms\ColorController@get' )->name( 'colors.get' );

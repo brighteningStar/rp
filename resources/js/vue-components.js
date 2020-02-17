@@ -2,16 +2,14 @@
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-Vue.component('login-component', require('./components/LoginComponent.vue').default);
-Vue.component('register-component', require('./components/RegisterComponent.vue').default);
-
+// element components
 Vue.component('app-navigation', require('./components/Navigation.vue').default);
 Vue.component('user-component', require('./components/UserComponent.vue').default);
 Vue.component('loading', require('./components/Loading.vue').default);
 Vue.component('modal', require('./components/Modal.vue').default);
 Vue.component('table-vue', require('./components/Table.vue').default);
 
-
+// form components
 Vue.component('color-component', require('./components/forms/ColorComponent.vue').default);
 Vue.component('capacity-component', require('./components/forms/CapacityComponent.vue').default);
 Vue.component('make-component', require('./components/forms/MakeComponent.vue').default);
@@ -22,5 +20,13 @@ Vue.component('supplier-component', require('./components/forms/SupplierComponen
 Vue.component('region-component', require('./components/forms/RegionComponent.vue').default);
 Vue.component('make-model-component', require('./components/forms/MakeModelComponent.vue').default);
 
-
+//selects
 Vue.component('make-select', require('./components/selects/MakeSelect.vue').default);
+
+// app components
+Vue.component('stock-component', require('./components/stock/StockComponent.vue').default);
+Vue.component('login-component', require('./components/LoginComponent.vue').default);
+Vue.component('register-component', require('./components/RegisterComponent.vue').default);
+
+
+
