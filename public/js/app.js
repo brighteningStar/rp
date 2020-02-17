@@ -3694,12 +3694,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 module.exports = {
+  props: ['value'],
   data: function data() {
     return {
       load: false,
       items: [],
       makeSelected: ''
     };
+  },
+  methods: {
+    updateValue: function updateValue() {
+      this.$emit('input', this.$refs.make.value);
+    }
   },
   mounted: function mounted() {
     this.load = true;
@@ -3711,8 +3717,8 @@ module.exports = {
     });
   },
   watch: {
-    makeSelected: function makeSelected() {
-      this.$emit('input', this.makeSelected);
+    value: function value(val) {
+      this.$refs.make.value = val;
     }
   }
 };
@@ -42923,28 +42929,11 @@ var render = function() {
         _c(
           "select",
           {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.makeSelected,
-                expression: "makeSelected"
-              }
-            ],
+            ref: "make",
             staticClass: "form-control",
             on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.makeSelected = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
+              input: function($event) {
+                return _vm.updateValue()
               }
             }
           },
@@ -56854,14 +56843,14 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-Vue.component('login-component', __webpack_require__(/*! ./components/LoginComponent.vue */ "./resources/js/components/LoginComponent.vue")["default"]);
-Vue.component('register-component', __webpack_require__(/*! ./components/RegisterComponent.vue */ "./resources/js/components/RegisterComponent.vue")["default"]);
+Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]); // element components
+
 Vue.component('app-navigation', __webpack_require__(/*! ./components/Navigation.vue */ "./resources/js/components/Navigation.vue")["default"]);
 Vue.component('user-component', __webpack_require__(/*! ./components/UserComponent.vue */ "./resources/js/components/UserComponent.vue")["default"]);
 Vue.component('loading', __webpack_require__(/*! ./components/Loading.vue */ "./resources/js/components/Loading.vue")["default"]);
 Vue.component('modal', __webpack_require__(/*! ./components/Modal.vue */ "./resources/js/components/Modal.vue")["default"]);
-Vue.component('table-vue', __webpack_require__(/*! ./components/Table.vue */ "./resources/js/components/Table.vue")["default"]);
+Vue.component('table-vue', __webpack_require__(/*! ./components/Table.vue */ "./resources/js/components/Table.vue")["default"]); // form components
+
 Vue.component('color-component', __webpack_require__(/*! ./components/forms/ColorComponent.vue */ "./resources/js/components/forms/ColorComponent.vue")["default"]);
 Vue.component('capacity-component', __webpack_require__(/*! ./components/forms/CapacityComponent.vue */ "./resources/js/components/forms/CapacityComponent.vue")["default"]);
 Vue.component('make-component', __webpack_require__(/*! ./components/forms/MakeComponent.vue */ "./resources/js/components/forms/MakeComponent.vue")["default"]);
@@ -56870,9 +56859,13 @@ Vue.component('fault-type-component', __webpack_require__(/*! ./components/forms
 Vue.component('customer-component', __webpack_require__(/*! ./components/forms/CustomerComponent.vue */ "./resources/js/components/forms/CustomerComponent.vue")["default"]);
 Vue.component('supplier-component', __webpack_require__(/*! ./components/forms/SupplierComponent.vue */ "./resources/js/components/forms/SupplierComponent.vue")["default"]);
 Vue.component('region-component', __webpack_require__(/*! ./components/forms/RegionComponent.vue */ "./resources/js/components/forms/RegionComponent.vue")["default"]);
-Vue.component('make-model-component', __webpack_require__(/*! ./components/forms/MakeModelComponent.vue */ "./resources/js/components/forms/MakeModelComponent.vue")["default"]);
-Vue.component('make-select', __webpack_require__(/*! ./components/selects/MakeSelect.vue */ "./resources/js/components/selects/MakeSelect.vue")["default"]);
+Vue.component('make-model-component', __webpack_require__(/*! ./components/forms/MakeModelComponent.vue */ "./resources/js/components/forms/MakeModelComponent.vue")["default"]); //selects
+
+Vue.component('make-select', __webpack_require__(/*! ./components/selects/MakeSelect.vue */ "./resources/js/components/selects/MakeSelect.vue")["default"]); // app components
+
 Vue.component('stock-component', __webpack_require__(/*! ./components/stock/StockComponent.vue */ "./resources/js/components/stock/StockComponent.vue")["default"]);
+Vue.component('login-component', __webpack_require__(/*! ./components/LoginComponent.vue */ "./resources/js/components/LoginComponent.vue")["default"]);
+Vue.component('register-component', __webpack_require__(/*! ./components/RegisterComponent.vue */ "./resources/js/components/RegisterComponent.vue")["default"]);
 
 /***/ }),
 

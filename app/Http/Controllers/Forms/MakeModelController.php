@@ -57,6 +57,6 @@ class MakeModelController extends Controller
 
     public function get()
     {
-        return $this->service->getAll();
+        return $this->service->getAll(['name','make name']);
     }
 }
