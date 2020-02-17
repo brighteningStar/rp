@@ -15,5 +15,6 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::resource('colors', 'ColorController');
     Route::get( '/get-colors', 'ColorController@getColors' )->name( 'colors.get' );
 
-
+    Route::get( '/stock', 'StockController@index' )->name( 'stock.index' );
+    Route::post( '/process-excel', 'StockController@processExcel' )->name( 'stock.excel' );
 });
