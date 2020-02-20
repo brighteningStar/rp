@@ -74,5 +74,11 @@ class UserService extends ServiceAbstract
         $user->assignRole($role->name);
     }
 
+    public function updateProfile(Request $request, array $where){
+        $user = $this->model->where($where)->first();
+        $user->update($request->all());
+        return $user;
+    }
+
 
 }

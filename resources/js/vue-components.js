@@ -28,6 +28,8 @@ Vue.component('role-select', require('./components/selects/RoleSelect.vue').defa
 Vue.component('stock-component', require('./components/stock/StockComponent.vue').default);
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
 Vue.component('register-component', require('./components/RegisterComponent.vue').default);
+Vue.component('update-profile-component', require('./components/Profile.vue').default);
+Vue.component('update-password-component', require('./components/ChangePassword.vue').default);
 
 
 
