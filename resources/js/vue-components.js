@@ -22,6 +22,7 @@ Vue.component('make-model-component', require('./components/forms/MakeModelCompo
 
 //selects
 Vue.component('make-select', require('./components/selects/MakeSelect.vue').default);
+Vue.component('role-select', require('./components/selects/RoleSelect.vue').default);
 
 // app components
 Vue.component('stock-component', require('./components/stock/StockComponent.vue').default);

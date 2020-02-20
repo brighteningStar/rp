@@ -7,8 +7,10 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ["auth"]], function () {
 
-    Route::get( '/users', 'UsersController@index' )->name( 'users.index' );
-    Route::get( '/user/{id}', 'UsersController@edit' )->name( 'users' );
+    Route::get( '/users/get', 'UsersController@get' )->name( 'users.get' );
+    Route::resource('users', 'UsersController');
+
+    Route::get( '/roles/get', 'RolesController@get' )->name( 'roles.get' );
 
     Route::get('navigation', 'NavigationController@index')->name('navigation');
 

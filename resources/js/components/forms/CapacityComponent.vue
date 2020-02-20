@@ -49,6 +49,7 @@
             return {
                 form: new Form({
                     name: '',
+                    loading:false
                 }),
                 title:'Create New Capacity',
                 method:'create',
@@ -99,9 +100,10 @@
                 this.title = "Update Capacity";
                 this.method = "update";
                 this.editID = colorID;
+                this.form.loading = true;
                 axios.get('/forms/capacities/'+colorID)
                     .then(function (response) {
-                        this.loading = false;
+                        this.form.loading = false;
                         this.form.copyDataToForm(response.data);
                     }.bind(this))
                     .catch(function (error) {

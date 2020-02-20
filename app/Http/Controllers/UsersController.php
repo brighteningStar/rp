@@ -2,53 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected $service;
+
+    public function __construct(UserService $userService)
     {
-        $this->middleware( 'auth' );
+        $this->service = $userService;
+
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return mixed
-     */
-    public function index( Request $request )
+    public function index()
     {
-        $columns = [ 'name', 'email' ];
-
-        $keyword = $request->get( 'q', null );
-
-        if ( $keyword != '' ) {
-            $users = User::whereRaw( "users.name like ?", "%$keyword%" )
-                         ->paginate(3);
-
-            return [
-                'columns' => $columns,
-                'items'   => $users
-            ];
-        }
-
-        $users = User::paginate(3);
-
-        return [
-            'columns' => $columns,
-            'items'   => $users
-        ];
+        return view('users.index');
     }
 
 
-    public function edit( $id )
+    public function store(Request $request)
     {
-        return User::find( $id );
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'role_id' => 'required'
+        ]);
+        $this->service->create($request->all());
     }
+
+
+    public function show($id)
+    {
+        return $this->service->find($id);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'role_id' => 'required'
+        ]);
+        $where = array('id'=>$id);
+        $this->service->update($request, $where);
+    }
+
+
+    public function destroy($id)
+    {
+        //
+    }
+
+
+    public function get()
+    {
+        return $this->service->getAll(['id', 'name', 'email', 'role']);
+    }
+
 }

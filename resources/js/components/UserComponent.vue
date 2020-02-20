@@ -1,17 +1,21 @@
 <template>
     <section class="content">
         <div class="container-fluid">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
+                Create User
+            </button>
             <div class="modal fade" id="modal-xl">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <loading v-if="loading"></loading>
                         <div class="modal-header">
-                            <h4 class="modal-title">Extra Large Modal</h4>
+                            <loading v-if="form.loading"></loading>
+                            <h4 class="modal-title">{{title}}</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="#" method="post" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+                        <form action="#" method="post" @submit.prevent="onSubmit">
+
                             <div class="modal-body">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Full name" name="name" v-model="form.name">
@@ -22,6 +26,7 @@
                                     </div>
                                     <span class="error invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
                                 </div>
+
                                 <div class="input-group mb-3">
                                     <input type="email" class="form-control" placeholder="Email" name="email" v-model="form.email">
                                     <div class="input-group-append">
@@ -31,70 +36,94 @@
                                     </div>
                                     <span class="error invalid-feedback" v-if="form.errors.has('email')" v-text="form.errors.get('email')"></span>
                                 </div>
+
                                 <div class="input-group mb-3">
-                                    <input type="password" class="form-control" placeholder="Password" name="password" v-model="form.password">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-lock"></span>
-                                        </div>
-                                    </div>
-                                    <span class="error invalid-feedback" v-if="form.errors.has('password')" v-text="form.errors.get('password')"></span>
+                                    <role-select v-model.sync="form.role_id"></role-select>
+                                    <span class="error invalid-feedback" v-if="form.errors.has('role_id')" v-text="form.errors.get('role_id')"></span>
                                 </div>
-                                <div class="input-group mb-3">
-                                    <input type="password" class="form-control" placeholder="Retype password" name="password_confirmation" v-model="form.password_confirmation">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-lock"></span>
-                                        </div>
-                                    </div>
-                                    <span class="error invalid-feedback" v-if="form.errors.has('password_confirmation')" v-text="form.errors.get('password_confirmation')"></span>
-                                </div>
+
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </form>
+
                     </div>
+                    <!-- /.modal-content -->
                 </div>
+                <!-- /.modal-dialog -->
             </div>
-            <table-vue uri="/users"></table-vue>
+            <div class="mt-4 col-md-12"></div>
+            <table-vue uri="/users/get" title="Users"></table-vue>
         </div>
     </section>
 </template>
 
 <script>
-    import {Form} from "../Form";
-
+    import {Form} from "../Form"
     export default {
-
         data() {
             return {
                 form: new Form({
                     name: '',
                     email: '',
-                    password: '',
-                    password_confirmation: '',
+                    role_id: '',
+                    loading:false,
                 }),
-                loading: true
+                title:'Create New User',
+                method:'create',
+                editID:null,
             };
         },
-
         methods: {
-
-            assignResponseToForm(data) {
-                for (let [key] of Object.entries(data)) {
-                    this.form[key] = data[key];
+            onSubmit() {
+                if(this.method=='create'){
+                    this.createItem();
+                } else {
+                    this.updateItem();
                 }
-            }
+
+            },
+
+            createItem(){
+                this.form.post('/users')
+                    .then(function (response) {
+                        Event.$emit('reloadTable');
+                        $("[data-dismiss=modal]").trigger({ type: "click" });
+                    })
+                    .catch(errors => console.log(errors));
+            },
+
+            updateItem(){
+                this.form.put('/users/'+this.editID)
+                    .then(function (response) {
+                        Event.$emit('reloadTable');
+                        $("[data-dismiss=modal]").trigger({ type: "click" });
+                    })
+                    .catch(errors => console.log(errors));
+            },
+        },
+        mounted() {
+            let self = this;
+            $('#modal-xl').on('hidden.bs.modal', function () {
+                self.form.reset();
+                self.title = "Create New User";
+                self.method = "create";
+                this.editID = null;
+            });
         },
 
         created() {
-            Event.$on('openModal', (data) => {
-                let userID = data.itemId;
-                axios.get('/user/' + userID)
+            Event.$on('editModal', (data) => {
+                let colorID = data.itemId;
+                this.title = "Update User";
+                this.method = "update";
+                this.editID = colorID;
+                this.form.loading = true;
+                axios.get('/users/'+colorID)
                     .then(function (response) {
-                        this.loading = false;
+                        this.form.loading = false;
                         this.form.copyDataToForm(response.data);
                     }.bind(this))
                     .catch(function (error) {
@@ -102,9 +131,5 @@
                     })
             });
         },
-
-        mounted() {
-
-        }
     }
 </script>
