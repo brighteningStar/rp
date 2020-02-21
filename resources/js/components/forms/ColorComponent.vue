@@ -45,6 +45,7 @@
             return {
                 form: new Form({
                     name: '',
+                    loading:false
                 }),
                 title:'Create New Color',
                 method:'create',
@@ -95,9 +96,10 @@
                 this.title = "Update Color";
                 this.method = "update";
                 this.editID = colorID;
+                this.form.loading = true;
                 axios.get('/forms/colors/'+colorID)
                     .then(function (response) {
-                        this.loading = false;
+                        this.form.loading = false;
                         this.form.copyDataToForm(response.data);
                     }.bind(this))
                     .catch(function (error) {

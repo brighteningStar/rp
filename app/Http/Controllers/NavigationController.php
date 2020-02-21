@@ -19,7 +19,7 @@ class NavigationController extends Controller
                 'children' => null,
             ),
             'users' => array(
-                'route' => '#',
+                'route' => route('users.index'),
                 'permission' => 'view_all_users',
                 'title' => 'Users',
                 'icon' => 'fas fa-users',

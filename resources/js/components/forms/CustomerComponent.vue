@@ -85,6 +85,7 @@
                     email: '',
                     phone: '',
                     address: '',
+                    loading:false,
                 }),
                 title:'Create New Customer',
                 method:'create',
@@ -135,9 +136,10 @@
                 this.title = "Update Customer";
                 this.method = "update";
                 this.editID = colorID;
+                this.form.loading = true;
                 axios.get('/forms/customers/'+colorID)
                     .then(function (response) {
-                        this.loading = false;
+                        this.form.loading = false;
                         this.form.copyDataToForm(response.data);
                     }.bind(this))
                     .catch(function (error) {

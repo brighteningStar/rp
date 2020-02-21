@@ -7,10 +7,17 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ["auth"]], function () {
 
-    Route::get( '/users', 'UsersController@index' )->name( 'users.index' );
-    Route::get( '/user/{id}', 'UsersController@edit' )->name( 'users' );
+    Route::get( '/users/get', 'UsersController@get' )->name( 'users.get' );
+    Route::resource('users', 'UsersController');
+
+    Route::get( '/roles/get', 'RolesController@get' )->name( 'roles.get' );
 
     Route::get('navigation', 'NavigationController@index')->name('navigation');
+
+    Route::get('profile', 'UsersController@profile')->name('profile');
+    Route::post( 'update-profile/{id}', 'UsersController@updateProfile' )->name( 'profile.update' );
+    Route::post( 'update-password/{id}', 'UsersController@updatePassword' )->name( 'password.update' );
+
 
     Route::get( '/stock', 'StockController@index' )->name( 'stock.index' );
     Route::post( '/process-excel', 'StockController@processExcel' )->name( 'stock.excel' );
