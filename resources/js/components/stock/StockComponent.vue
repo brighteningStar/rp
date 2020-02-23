@@ -63,8 +63,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>So Date</label>
-                                                <datepicker class="v-datepicker-custom" :format="dateFormatter" :value="stockHeading.so_date" name="so_date"
-                                                            v-model="stockHeading.so_date"></datepicker>
+                                                <datepicker class="v-datepicker-custom" :format="dateFormatter" :value="stockHeading.so_date" name="so_date" v-model="stockHeading.so_date"></datepicker>
                                             </div>
                                         </div>
                                         <div class="col-2">
@@ -81,8 +80,7 @@
                                                 </div>
                                                 <v-select :options="regions.options" v-model="stockHeading.region">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.region" v-bind="attributes" v-on="events"
-                                                               @keypress="search('regions', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.region" v-bind="attributes" v-on="events" @keypress="search('regions', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
                                             </div>
@@ -90,10 +88,11 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>Local/Imported</label>
-                                                <select class="form-control select2" style="width: 100%;">
-                                                    <option selected="selected" value="local">Local</option>
-                                                    <option value="imported">Imported</option>
-                                                </select>
+                                                <v-select :options="local_imported.options" label="title" v-model="local_imported.selected">
+                                                    <template #search="{attributes, events}">
+                                                        <input class="vs__search" :required="!local_imported.selected" v-bind="attributes" v-on="events"/>
+                                                    </template>
+                                                </v-select>
                                             </div>
                                         </div>
                                     </div>
@@ -101,8 +100,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>Invoice Date</label>
-                                                <datepicker class="v-datepicker-custom" :format="dateFormatter" :value="stockHeading.invoice_date" name="invoice_date"
-                                                            v-model="stockHeading.invoice_date"></datepicker>
+                                                <datepicker class="v-datepicker-custom" :format="dateFormatter" :value="stockHeading.invoice_date" name="invoice_date" v-model="stockHeading.invoice_date"></datepicker>
                                             </div>
                                         </div>
                                         <div class="col-2">
@@ -119,8 +117,7 @@
                                                 </div>
                                                 <v-select :options="bill_to.options" v-model="stockHeading.bill_to">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.bill_to" v-bind="attributes" v-on="events"
-                                                               @keypress="search('shipping_billings', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.bill_to" v-bind="attributes" v-on="events" @keypress="search('shipping_billings', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
                                             </div>
@@ -133,8 +130,7 @@
                                                 </div>
                                                 <v-select :options="ship_to.options" v-model="stockHeading.ship_to">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.ship_to" v-bind="attributes" v-on="events"
-                                                               @keypress="search('shipping_billings', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.ship_to" v-bind="attributes" v-on="events" @keypress="search('shipping_billings', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
                                             </div>
@@ -147,10 +143,107 @@
                                                 </div>
                                                 <v-select :options="suppliers.options" v-model="stockHeading.supplier">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.supplier" v-bind="attributes" v-on="events"
-                                                               @keypress="search('suppliers', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.supplier" v-bind="attributes" v-on="events" @keypress="search('suppliers', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="detail-section mt-5">
+                                    <h4>Detail Section</h4>
+                                    <hr>
+                                    <div class="detail-section-row">
+                                        <div class="row">
+                                            <a href="#" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Sys ID</label>
+                                                    <input type="email" class="form-control" id="invoice-no" placeholder="Sys ID">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">IMEI Number</label>
+                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="IMEI Number">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Serial Number</label>
+                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Serial Number">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Make</label>
+                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Make">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Model</label>
+                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Model">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Stock Status</label>
+                                                    <select class="form-control select2" style="width: 100%;">
+                                                        <option selected="selected">In Stock</option>
+                                                        <option>Sold</option>
+                                                        <option>RMA</option>
+                                                        <option>Suppler Credit</option>
+                                                        <option>Damaged</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section-row mt-2">
+                                        <div class="row">
+                                            <a href="#" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Sys ID</label>
+                                                    <input type="email" class="form-control" id="invoice-no" placeholder="Sys ID">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">IMEI Number</label>
+                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="IMEI Number">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Serial Number</label>
+                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Serial Number">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Make</label>
+                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Make">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Model</label>
+                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Model">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Stock Status</label>
+                                                    <select class="form-control select2" style="width: 100%;">
+                                                        <option selected="selected">In Stock</option>
+                                                        <option>Sold</option>
+                                                        <option>RMA</option>
+                                                        <option>Suppler Credit</option>
+                                                        <option>Damaged</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -206,6 +299,10 @@
                     options: [],
                     spinner: false,
                 },
+                local_imported: {
+                    options: ['local', 'imported'],
+                    selected: ''
+                }
             }
         },
 
@@ -256,7 +353,7 @@
                 })
                     .then(function (response) {
                         this.loading = false;
-                        this.fileName = 'Choose File'; 
+                        this.fileName = 'Choose File';
                         this.showUploadForm = false;
                         this.mapResponseToHeading(response.data.heading);
                     }.bind(this))

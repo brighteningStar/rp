@@ -4289,6 +4289,99 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4325,6 +4418,10 @@ __webpack_require__.r(__webpack_exports__);
       bill_to: {
         options: [],
         spinner: false
+      },
+      local_imported: {
+        options: ['local', 'imported'],
+        selected: ''
       }
     };
   },
@@ -44465,7 +44562,68 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _vm._m(3)
+                          _c("div", { staticClass: "col-2" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", [_vm._v("Local/Imported")]),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  attrs: {
+                                    options: _vm.local_imported.options,
+                                    label: "title"
+                                  },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "search",
+                                        fn: function(ref) {
+                                          var attributes = ref.attributes
+                                          var events = ref.events
+                                          return [
+                                            _c(
+                                              "input",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "vs__search",
+                                                    attrs: {
+                                                      required: !_vm
+                                                        .local_imported.selected
+                                                    }
+                                                  },
+                                                  "input",
+                                                  attributes,
+                                                  false
+                                                ),
+                                                events
+                                              )
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    false,
+                                    1482349854
+                                  ),
+                                  model: {
+                                    value: _vm.local_imported.selected,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.local_imported,
+                                        "selected",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "local_imported.selected"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
@@ -44805,7 +44963,9 @@ var render = function() {
                             )
                           ])
                         ])
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(3)
                     ]),
                     _vm._v(" "),
                     _vm._m(4)
@@ -44851,24 +45011,253 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", [_vm._v("Local/Imported")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "form-control select2",
-            staticStyle: { width: "100%" }
-          },
-          [
-            _c("option", { attrs: { selected: "selected", value: "local" } }, [
-              _vm._v("Local")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "imported" } }, [_vm._v("Imported")])
-          ]
-        )
+    return _c("div", { staticClass: "detail-section mt-5" }, [
+      _c("h4", [_vm._v("Detail Section")]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "detail-section-row" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("a", { staticClass: "delete-detail-row", attrs: { href: "#" } }, [
+            _c("i", { staticClass: "far fa-times-circle" })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Sys ID")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "invoice-no",
+                  placeholder: "Sys ID"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("IMEI Number")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "exampleInputEmail1",
+                  placeholder: "IMEI Number"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Serial Number")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "exampleInputEmail1",
+                  placeholder: "Serial Number"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Make")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "exampleInputEmail1",
+                  placeholder: "Make"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Model")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "exampleInputEmail1",
+                  placeholder: "Model"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Stock Status")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control select2",
+                  staticStyle: { width: "100%" }
+                },
+                [
+                  _c("option", { attrs: { selected: "selected" } }, [
+                    _vm._v("In Stock")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Sold")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("RMA")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Suppler Credit")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Damaged")])
+                ]
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "detail-section-row mt-2" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("a", { staticClass: "delete-detail-row", attrs: { href: "#" } }, [
+            _c("i", { staticClass: "far fa-times-circle" })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Sys ID")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "invoice-no",
+                  placeholder: "Sys ID"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("IMEI Number")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "exampleInputEmail1",
+                  placeholder: "IMEI Number"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Serial Number")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "exampleInputEmail1",
+                  placeholder: "Serial Number"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Make")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "exampleInputEmail1",
+                  placeholder: "Make"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Model")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "email",
+                  id: "exampleInputEmail1",
+                  placeholder: "Model"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                _vm._v("Stock Status")
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  staticClass: "form-control select2",
+                  staticStyle: { width: "100%" }
+                },
+                [
+                  _c("option", { attrs: { selected: "selected" } }, [
+                    _vm._v("In Stock")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Sold")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("RMA")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Suppler Credit")]),
+                  _vm._v(" "),
+                  _c("option", [_vm._v("Damaged")])
+                ]
+              )
+            ])
+          ])
+        ])
       ])
     ])
   },
