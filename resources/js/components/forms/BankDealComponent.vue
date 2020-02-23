@@ -2,7 +2,7 @@
     <section class="content">
         <div class="container-fluid">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
-                Create Capacity
+                Create Bank Deal
             </button>
             <div class="modal fade" id="modal-xl">
                 <div class="modal-dialog modal-lg">
@@ -16,9 +16,20 @@
                         </div>
                         <form action="#" method="post" @submit.prevent="onSubmit">
                             <div class="modal-body">
+
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Name" name="name" v-model="form.name">
-                                    <span class="error invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
+                                    <input type="text" class="form-control" placeholder="Deal Number" name="deal_number" v-model="form.deal_number">
+                                    <span class="error invalid-feedback" v-if="form.errors.has('deal_number')" v-text="form.errors.get('deal_number')"></span>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Exchange Rate" name="exchange_rate" v-model="form.exchange_rate">
+                                    <span class="error invalid-feedback" v-if="form.errors.has('exchange_rate')" v-text="form.errors.get('exchange_rate')"></span>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Deal Amount" name="deal_amount" v-model="form.deal_amount">
+                                    <span class="error invalid-feedback" v-if="form.errors.has('deal_amount')" v-text="form.errors.get('deal_amount')"></span>
                                 </div>
 
                             </div>
@@ -34,7 +45,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/capacities/get" title="Capacities"></table-vue>
+            <table-vue uri="/forms/bank-deals/get" title="Bank Deals"></table-vue>
         </div>
     </section>
 </template>
@@ -45,10 +56,12 @@
         data() {
             return {
                 form: new Form({
-                    name: '',
+                    deal_number: '',
+                    exchange_rate: '',
+                    deal_amount: '',
                     loading:false
                 }),
-                title:'Create New Capacity',
+                title:'Create New Bank Deal',
                 method:'create',
                 editID:null,
             };
@@ -56,15 +69,15 @@
         methods: {
             onSubmit() {
                 if(this.method=='create'){
-                    this.createCapacity();
+                    this.createItem();
                 } else {
-                    this.updateCapacity();
+                    this.updateItem();
                 }
 
             },
 
-            createCapacity(){
-                this.form.post('/forms/capacities')
+            createItem(){
+                this.form.post('/forms/bank-deals')
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -72,8 +85,8 @@
                     .catch(errors => console.log(errors));
             },
 
-            updateCapacity(){
-                this.form.put('/forms/capacities/'+this.editID)
+            updateItem(){
+                this.form.put('/forms/bank-deals/'+this.editID)
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -85,7 +98,7 @@
             let self = this;
             $('#modal-xl').on('hidden.bs.modal', function () {
                 self.form.reset();
-                self.title = "Create New Capacity";
+                self.title = "Create New Bank Deal";
                 self.method = "create";
                 this.editID = null;
             });
@@ -94,11 +107,11 @@
         created() {
             Event.$on('editModal', (data) => {
                 let colorID = data.itemId;
-                this.title = "Update Capacity";
+                this.title = "Update Bank Deal";
                 this.method = "update";
                 this.editID = colorID;
                 this.form.loading = true;
-                axios.get('/forms/capacities/'+colorID)
+                axios.get('/forms/bank-deals/'+colorID)
                     .then(function (response) {
                         this.form.loading = false;
                         this.form.copyDataToForm(response.data);
