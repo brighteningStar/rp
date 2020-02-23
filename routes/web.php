@@ -51,6 +51,9 @@ Route::group(['middleware' => ["auth"]], function () {
         Route::get( 'make-models/get', 'Forms\MakeModelController@get' )->name( 'make-models.get' );
         Route::resource('make-models', 'Forms\MakeModelController');
 
+        Route::get( 'shipping-billings/get', 'Forms\ShippingBillingsController@get' )->name( 'shipping-billings.get' );
+        Route::resource('shipping-billings', 'Forms\ShippingBillingsController');
+
     });
 
 });

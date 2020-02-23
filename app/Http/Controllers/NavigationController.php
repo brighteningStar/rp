@@ -94,6 +94,13 @@ class NavigationController extends Controller
                         'icon' => 'far fa-circle',
                         'children' => null,
                     ),
+                    'view_shipping_billings' => array(
+                        'route' => route('shipping-billings.index'),
+                        'permission' => 'view_all_shipping_billings',
+                        'title' => 'Shipping Billings',
+                        'icon' => 'far fa-circle',
+                        'children' => null,
+                    ),
                 ),
             )
         );
