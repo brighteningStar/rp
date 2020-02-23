@@ -37,5 +37,9 @@ Vue.component('register-component', require('./components/RegisterComponent.vue'
 Vue.component('update-profile-component', require('./components/Profile.vue').default);
 Vue.component('update-password-component', require('./components/ChangePassword.vue').default);
 
+//sales components
+Vue.component('sales-component', require('./components/sales/SalesComponent.vue').default);
+Vue.component('create-sales-item', require('./components/sales/CreateSalesItem.vue').default);
+
 
 

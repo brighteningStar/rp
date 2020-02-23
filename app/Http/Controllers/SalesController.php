@@ -20,6 +20,10 @@ class SalesController extends Controller
         return view('sales.index');
     }
 
+    public function create(){
+        return view('sales.create');
+    }
+
 
     public function store(Request $request)
     {
