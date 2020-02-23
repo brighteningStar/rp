@@ -25,6 +25,13 @@ class NavigationController extends Controller
                 'icon' => 'fas fa-users',
                 'children' => null,
             ),
+            'stock' => array(
+                'route' => route('stock.index'),
+                'permission' => 'view_stocks',
+                'title' => 'Stocks',
+                'icon' => 'fas fa-store',
+                'children' => null,
+            ),
             'forms' => array(
                 'route' => null,
                 'permission' => null,

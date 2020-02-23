@@ -73,6 +73,8 @@ class RolePermissionSeeder extends Seeder
             [Permission::firstOrCreate(['name' => 'delete_shipping_billing']),'admin'],
             [Permission::firstOrCreate(['name' => 'create_new_shipping_billing']),'admin'],
             [Permission::firstOrCreate(['name' => 'view_all_shipping_billings']),'admin'],
+
+            [Permission::firstOrCreate(['name' => 'view_stocks']),'admin'],
         ];
 
         foreach ($allPermissions as $permission){
