@@ -3,22 +3,22 @@
 namespace App\Http\Controllers\Forms;
 
 use App\Http\Controllers\Controller;
-use App\Services\MakeModelService;
+use App\Services\ShippingBillingService;
 use Illuminate\Http\Request;
 
-class MakeModelController extends Controller
+class ShippingBillingsController extends Controller
 {
     protected $service;
 
-    public function __construct(MakeModelService $makemodelService)
+    public function __construct(ShippingBillingService $shippingBillingService)
     {
-        $this->service = $makemodelService;
+        $this->service = $shippingBillingService;
 
     }
 
     public function index()
     {
-        return view('forms.makeModels.index');
+        return view('forms.shipping-billings.index');
     }
 
 
@@ -26,7 +26,8 @@ class MakeModelController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'make_id' => 'required',
+            'address' => 'required',
+            'address_type' => 'required|in:ship_to,bill_to',
         ]);
         $this->service->create($request->all());
     }
@@ -42,7 +43,8 @@ class MakeModelController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'make_id' => 'required',
+            'address' => 'required',
+            'address_type' => 'required|in:ship_to,bill_to',
         ]);
         $where = array('id'=>$id);
         $this->service->update($request, $where);
@@ -57,6 +59,6 @@ class MakeModelController extends Controller
 
     public function get()
     {
-        return $this->service->getAll(['name','make name']);
+        return $this->service->getAll(['name','address','address type']);
     }
 }

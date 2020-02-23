@@ -21,7 +21,7 @@
                                     <span class="error invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
                                 </div>
                                 <div class="input-group mb-3">
-                                    <make-select v-model="form.make_id"></make-select>
+                                    <make-select v-model.sync="form.make_id"></make-select>
                                     <span class="error invalid-feedback" v-if="form.errors.has('make_id')" v-text="form.errors.get('make_id')"></span>
                                 </div>
                             </div>
@@ -50,6 +50,7 @@
                 form: new Form({
                     name: '',
                     make_id: '',
+                    loading:false,
                 }),
                 title:'Create New Model',
                 method:'create',
@@ -100,9 +101,10 @@
                 this.title = "Update Color";
                 this.method = "update";
                 this.editID = colorID;
+                this.form.loading = true;
                 axios.get('/forms/make-models/'+colorID)
                     .then(function (response) {
-                        this.loading = false;
+                        this.form.loading = false;
                         this.form.copyDataToForm(response.data);
                     }.bind(this))
                     .catch(function (error) {

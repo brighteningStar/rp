@@ -256,7 +256,7 @@
                 })
                     .then(function (response) {
                         this.loading = false;
-                        this.fileName = 'Choose File';
+                        this.fileName = 'Choose File'; 
                         this.showUploadForm = false;
                         this.mapResponseToHeading(response.data.heading);
                     }.bind(this))

@@ -19,7 +19,7 @@ class NavigationController extends Controller
                 'children' => null,
             ),
             'users' => array(
-                'route' => '#',
+                'route' => route('users.index'),
                 'permission' => 'view_all_users',
                 'title' => 'Users',
                 'icon' => 'fas fa-users',
@@ -91,6 +91,13 @@ class NavigationController extends Controller
                         'route' => route('regions.index'),
                         'permission' => 'view_all_regions',
                         'title' => 'Regions',
+                        'icon' => 'far fa-circle',
+                        'children' => null,
+                    ),
+                    'view_shipping_billings' => array(
+                        'route' => route('shipping-billings.index'),
+                        'permission' => 'view_all_shipping_billings',
+                        'title' => 'Shipping Billings',
                         'icon' => 'far fa-circle',
                         'children' => null,
                     ),

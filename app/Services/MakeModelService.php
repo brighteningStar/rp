@@ -24,10 +24,15 @@ class MakeModelService extends ServiceAbstract
         $keyword = request()->get( 'q', null );
 
         if ( $keyword != '' ) {
-            $makeModels = $this->model->whereRaw( "make_models.name like ?", "%$keyword%" );
+            $makeModels = $this->model->select('make_models.id as id', 'make_models.name as name', 'make.name as make name')
+                ->join('make', 'make.id', '=', 'make_models.make_id')
+                ->whereRaw( "make_models.name like ?", "%$keyword%" )
+                ->orWhereRaw( "make.name like ?", "%$keyword%" );
         }
         else {
-            $makeModels = $this->model;
+            $makeModels = $this->model->select('make_models.id as id', 'make_models.name as name', 'make.name as make name')
+                ->join('make', 'make.id', '=', 'make_models.make_id')
+            ;
         }
 
         return [

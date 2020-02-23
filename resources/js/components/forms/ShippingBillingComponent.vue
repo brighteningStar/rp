@@ -2,7 +2,7 @@
     <section class="content">
         <div class="container-fluid">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
-                Create Customer
+                Create Shipping Billing
             </button>
             <div class="modal fade" id="modal-xl">
                 <div class="modal-dialog modal-lg">
@@ -16,47 +16,26 @@
                         </div>
                         <form action="#" method="post" @submit.prevent="onSubmit">
                             <div class="modal-body">
-
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Full name" name="name" v-model="form.name">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-user"></span>
-                                        </div>
-                                    </div>
+                                    <input type="text" class="form-control" placeholder="Name" name="name" v-model="form.name">
                                     <span class="error invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <input type="email" class="form-control" placeholder="Email" name="email" v-model="form.email">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-envelope"></span>
-                                        </div>
-                                    </div>
-                                    <span class="error invalid-feedback" v-if="form.errors.has('email')" v-text="form.errors.get('email')"></span>
-                                </div>
-
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Phone" name="phone" v-model="form.phone">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-phone"></span>
-                                        </div>
-                                    </div>
-                                    <span class="error invalid-feedback" v-if="form.errors.has('phone')" v-text="form.errors.get('phone')"></span>
-                                </div>
-
-                                <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Address" name="address" v-model="form.address">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-home"></span>
-                                        </div>
-                                    </div>
                                     <span class="error invalid-feedback" v-if="form.errors.has('address')" v-text="form.errors.get('address')"></span>
                                 </div>
 
+                                <div class="input-group mb-3">
+                                    <label style="width:100%;">Select Address Type
+                                        <select class="form-control" v-model="form.address_type">
+                                            <option value="">Please Select</option>
+                                            <option value="bill_to">Bill To</option>
+                                            <option value="ship_to">Ship To</option>
+                                        </select>
+                                    </label>
+                                    <span class="error invalid-feedback" v-if="form.errors.has('address_type')" v-text="form.errors.get('address_type')"></span>
+                                </div>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -70,7 +49,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/customers/get" title="Customers"></table-vue>
+            <table-vue uri="/forms/shipping-billings/get" title="Shipping Billing"></table-vue>
         </div>
     </section>
 </template>
@@ -82,12 +61,11 @@
             return {
                 form: new Form({
                     name: '',
-                    email: '',
-                    phone: '',
                     address: '',
-                    loading:false,
+                    address_type: '',
+                    loading:false
                 }),
-                title:'Create New Customer',
+                title:'Create New Shipping Billing',
                 method:'create',
                 editID:null,
             };
@@ -103,7 +81,7 @@
             },
 
             createItem(){
-                this.form.post('/forms/customers')
+                this.form.post('/forms/shipping-billings')
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -112,7 +90,7 @@
             },
 
             updateItem(){
-                this.form.put('/forms/customers/'+this.editID)
+                this.form.put('/forms/shipping-billings/'+this.editID)
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -124,7 +102,7 @@
             let self = this;
             $('#modal-xl').on('hidden.bs.modal', function () {
                 self.form.reset();
-                self.title = "Create New Customer";
+                self.title = "Create New Shipping Billing";
                 self.method = "create";
                 this.editID = null;
             });
@@ -133,11 +111,11 @@
         created() {
             Event.$on('editModal', (data) => {
                 let colorID = data.itemId;
-                this.title = "Update Customer";
+                this.title = "Update Region";
                 this.method = "update";
                 this.editID = colorID;
                 this.form.loading = true;
-                axios.get('/forms/customers/'+colorID)
+                axios.get('/forms/shipping-billings/'+colorID)
                     .then(function (response) {
                         this.form.loading = false;
                         this.form.copyDataToForm(response.data);

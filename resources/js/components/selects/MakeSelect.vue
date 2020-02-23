@@ -1,7 +1,7 @@
 <template>
         <loading  v-if="load" ></loading>
         <label style="width:100%;" v-else="">Select Make
-            <select class="form-control" v-model="makeSelected">
+            <select class="form-control" ref="make" @input="updateValue()">
                 <option value="">Please Select</option>
                 <option v-for="item in items" :value="item.id">{{item.name}}</option>
             </select>
@@ -10,11 +10,17 @@
 
 <script>
     module.exports = {
+        props: ['value'],
         data(){
             return{
                 load: false,
                 items:[],
                 makeSelected: ''
+            }
+        },
+        methods: {
+            updateValue() {
+                this.$emit('input', this.$refs.make.value);
             }
         },
         mounted() {
@@ -30,8 +36,8 @@
 
         },
         watch: {
-            makeSelected: function() {
-                this.$emit('input', this.makeSelected);
+            value: function(val) {
+                this.$refs.make.value = val;
             }
         }
     }
