@@ -24,6 +24,7 @@ Vue.component('supplier-component', require('./components/forms/SupplierComponen
 Vue.component('region-component', require('./components/forms/RegionComponent.vue').default);
 Vue.component('make-model-component', require('./components/forms/MakeModelComponent.vue').default);
 Vue.component('shipping-billing-component', require('./components/forms/ShippingBillingComponent.vue').default);
+Vue.component('bank-deal-component', require('./components/forms/BankDealComponent.vue').default);
 
 //selects
 Vue.component('make-select', require('./components/selects/MakeSelect.vue').default);

@@ -24,6 +24,9 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::post( '/stock', 'StockController@store' )->name( 'stock.store' );
     Route::get( '/search', 'AttributesController@search' )->name( 'attribute.search' );
 
+    Route::get( '/sales/get', 'SalesController@get' )->name( 'sales.get' );
+    Route::resource( 'sales', 'SalesController' );
+
     Route::prefix('forms')->group(function () {
 
         Route::get( '/colors/get', 'Forms\ColorController@get' )->name( 'colors.get' );
@@ -55,6 +58,9 @@ Route::group(['middleware' => ["auth"]], function () {
 
         Route::get( 'shipping-billings/get', 'Forms\ShippingBillingsController@get' )->name( 'shipping-billings.get' );
         Route::resource('shipping-billings', 'Forms\ShippingBillingsController');
+
+        Route::get( 'bank-deals/get', 'Forms\BankDealsController@get' )->name( 'bank-deals.get' );
+        Route::resource('bank-deals', 'Forms\BankDealsController');
 
     });
 
