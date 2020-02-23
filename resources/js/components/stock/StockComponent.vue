@@ -153,42 +153,42 @@
                                 <div class="detail-section mt-5">
                                     <h4>Detail Section</h4>
                                     <hr>
-                                    <div class="detail-section-row">
+                                    <div class="detail-section-row mt-2" v-for="(item, serialNo) in detailSection" :key="serialNo">
                                         <div class="row">
                                             <a href="#" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Sys ID</label>
-                                                    <input type="email" class="form-control" id="invoice-no" placeholder="Sys ID">
+                                                    <label>Sys ID</label>
+                                                    <input type="text" class="form-control" placeholder="Sys ID" v-model="detailSection[serialNo]['sys_id']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">IMEI Number</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="IMEI Number">
+                                                    <label>IMEI Number</label>
+                                                    <input type="text" class="form-control" placeholder="IMEI Number" v-model="detailSection[serialNo]['imei']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Serial Number</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Serial Number">
+                                                    <label>Serial Number</label>
+                                                    <input type="text" class="form-control" placeholder="Serial Number" v-model="detailSection[serialNo]['serial_no']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Make</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Make">
+                                                    <label>Make</label>
+                                                    <input type="text" class="form-control" placeholder="Make" v-model="detailSection[serialNo]['make']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Model</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Model">
+                                                    <label>Model</label>
+                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['model']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Stock Status</label>
+                                                    <label>Stock Status</label>
                                                     <select class="form-control select2" style="width: 100%;">
                                                         <option selected="selected">In Stock</option>
                                                         <option>Sold</option>
@@ -199,50 +199,81 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="detail-section-row mt-2">
                                         <div class="row">
                                             <a href="#" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Sys ID</label>
-                                                    <input type="email" class="form-control" id="invoice-no" placeholder="Sys ID">
+                                                    <label>Color</label>
+                                                    <input type="text" class="form-control" placeholder="Sys ID" v-model="detailSection[serialNo]['color']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">IMEI Number</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="IMEI Number">
+                                                    <label>Grade</label>
+                                                    <input type="text" class="form-control" placeholder="IMEI Number" v-model="detailSection[serialNo]['grade']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Serial Number</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Serial Number">
+                                                    <label>Capacity</label>
+                                                    <input type="text" class="form-control" placeholder="Serial Number" v-model="detailSection[serialNo]['capacity']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Make</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Make">
+                                                    <label>Part No</label>
+                                                    <input type="text" class="form-control" placeholder="Make" v-model="detailSection[serialNo]['part_no']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Model</label>
-                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Model">
+                                                    <label>Stock ID</label>
+                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['stock_id']">
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Stock Status</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                        <option selected="selected">In Stock</option>
-                                                        <option>Sold</option>
-                                                        <option>RMA</option>
-                                                        <option>Suppler Credit</option>
-                                                        <option>Damaged</option>
-                                                    </select>
+                                                    <label>Quantity Per Invoice</label>
+                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['quantity_per_inv']">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <a href="#" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Price AED</label>
+                                                    <input type="text" class="form-control" placeholder="Sys ID" v-model="detailSection[serialNo]['price_aed']">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Price USD</label>
+                                                    <input type="text" class="form-control" placeholder="IMEI Number" v-model="detailSection[serialNo]['price_usd']">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Custom Duty</label>
+                                                    <input type="text" class="form-control" placeholder="Serial Number" v-model="detailSection[serialNo]['custom_duty']">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Freight</label>
+                                                    <input type="text" class="form-control" placeholder="Make" v-model="detailSection[serialNo]['freight']">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Total Cost</label>
+                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['total_cost']">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Bank Deal#</label>
+                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['bank_deal_no']">
                                                 </div>
                                             </div>
                                         </div>
@@ -271,6 +302,7 @@
                 file: '',
                 uploadPercentage: 0,
                 loading: false,
+                detailSection: [],
                 stockHeading: {
                     invoice_no: '',
                     declaration_no: '',
@@ -356,6 +388,8 @@
                         this.fileName = 'Choose File';
                         this.showUploadForm = false;
                         this.mapResponseToHeading(response.data.heading);
+                        console.log(response.data.detail);
+                        this.detailSection = response.data.detail;
                     }.bind(this))
                     .catch(function (errors) {
                         this.loading = false;
@@ -375,6 +409,7 @@
             },
 
             onSubmitStock() {
+                console.log(this.detailSection);
                 axios.post('/stock', this.stockHeading)
                     .then(response => {
                         console.log(response);

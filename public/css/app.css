@@ -10937,10 +10937,14 @@ a.text-dark:focus {
   position: relative;
   border: 1px solid #c3c3c3;
   padding: 10px;
+  border-radius: 20px;
+  transition: transform 0.2s;
+  /* Animation */
 }
 
 .detail-section-row:hover {
   background-color: #c3c3c3;
+  transform: scale(1.02);
 }
 
 .delete-detail-row {

@@ -56,8 +56,8 @@ class StockController extends Controller
                         throw new AttributeNotFound( 'Shipping and Billing with name ' . trim( $result['bill_to'] ) . ' not found', 404 );
                     }
 
-                    $serialNo                 = preg_replace( '/^\p{Z}+|\p{Z}+$/u', '', $result['serial_no'] );
-                    $processedData['heading'] = [
+                    $serialNo                           = preg_replace( '/^\p{Z}+|\p{Z}+$/u', '', $result['serial_no'] );
+                    $processedData['heading']           = [
                         'so_date'        => trim( $result['so_date']->format( 'Y-m-d' ) ),
                         'so_number'      => trim( $result['so_number'] ),
                         'invoice_date'   => trim( $result['inv_date']->format( 'Y-m-d' ) ),
@@ -69,7 +69,10 @@ class StockController extends Controller
                         'ship_to'        => $shippingBilling,
                         'supplier'       => $supplier,
                     ];
-                    $processedData[$serialNo] = [
+                    $processedData['detail'][$serialNo] = [
+                        'sys_id'           => '',
+                        'imei'             => '',
+                        'serial_no'        => $serialNo,
                         'make'             => trim( $result['make'] ),
                         'model'            => trim( $result['model'] ),
                         'capacity'         => trim( $result['capacity'] ),

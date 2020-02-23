@@ -4382,6 +4382,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4391,6 +4422,7 @@ __webpack_require__.r(__webpack_exports__);
       file: '',
       uploadPercentage: 0,
       loading: false,
+      detailSection: [],
       stockHeading: {
         invoice_no: '',
         declaration_no: '',
@@ -4466,6 +4498,8 @@ __webpack_require__.r(__webpack_exports__);
         this.fileName = 'Choose File';
         this.showUploadForm = false;
         this.mapResponseToHeading(response.data.heading);
+        console.log(response.data.detail);
+        this.detailSection = response.data.detail;
       }.bind(this))["catch"](function (errors) {
         this.loading = false;
         this.uploadPercentage = 0;
@@ -4481,6 +4515,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     onSubmitStock: function onSubmitStock() {
+      console.log(this.detailSection);
       axios.post('/stock', this.stockHeading).then(function (response) {
         console.log(response);
       })["catch"](function (errors) {
@@ -44965,10 +45000,784 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(3)
+                      _c(
+                        "div",
+                        { staticClass: "detail-section mt-5" },
+                        [
+                          _c("h4", [_vm._v("Detail Section")]),
+                          _vm._v(" "),
+                          _c("hr"),
+                          _vm._v(" "),
+                          _vm._l(_vm.detailSection, function(item, serialNo) {
+                            return _c(
+                              "div",
+                              {
+                                key: serialNo,
+                                staticClass: "detail-section-row mt-2"
+                              },
+                              [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(3, true),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Sys ID")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "sys_id"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['sys_id']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Sys ID"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "sys_id"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "sys_id",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("IMEI Number")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "imei"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['imei']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "IMEI Number"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo]["imei"]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "imei",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Serial Number")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "serial_no"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['serial_no']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Serial Number"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "serial_no"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "serial_no",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Make")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "make"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['make']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Make"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo]["make"]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "make",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Model")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "model"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['model']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Model"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo]["model"]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "model",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._m(4, true)
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(5, true),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Color")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "color"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['color']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Sys ID"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo]["color"]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "color",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Grade")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "grade"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['grade']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "IMEI Number"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo]["grade"]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "grade",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Capacity")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "capacity"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['capacity']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Serial Number"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "capacity"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "capacity",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Part No")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "part_no"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['part_no']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Make"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "part_no"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "part_no",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Stock ID")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "stock_id"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['stock_id']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Model"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "stock_id"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "stock_id",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [
+                                        _vm._v("Quantity Per Invoice")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "quantity_per_inv"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['quantity_per_inv']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Model"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "quantity_per_inv"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "quantity_per_inv",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(6, true),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Price AED")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "price_aed"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['price_aed']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Sys ID"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "price_aed"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "price_aed",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Price USD")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "price_usd"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['price_usd']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "IMEI Number"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "price_usd"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "price_usd",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Custom Duty")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "custom_duty"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['custom_duty']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Serial Number"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "custom_duty"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "custom_duty",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Freight")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "freight"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['freight']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Make"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "freight"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "freight",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Total Cost")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "total_cost"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['total_cost']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Model"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "total_cost"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "total_cost",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Bank Deal#")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "bank_deal_no"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['bank_deal_no']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Model"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "bank_deal_no"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "bank_deal_no",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ])
+                                ])
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
                     ]),
                     _vm._v(" "),
-                    _vm._m(4)
+                    _vm._m(7)
                   ]
                 )
               ])
@@ -45011,254 +45820,55 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "detail-section mt-5" }, [
-      _c("h4", [_vm._v("Detail Section")]),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("div", { staticClass: "detail-section-row" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("a", { staticClass: "delete-detail-row", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "far fa-times-circle" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Sys ID")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "invoice-no",
-                  placeholder: "Sys ID"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("IMEI Number")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "exampleInputEmail1",
-                  placeholder: "IMEI Number"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Serial Number")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "exampleInputEmail1",
-                  placeholder: "Serial Number"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Make")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "exampleInputEmail1",
-                  placeholder: "Make"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Model")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "exampleInputEmail1",
-                  placeholder: "Model"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Stock Status")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  staticClass: "form-control select2",
-                  staticStyle: { width: "100%" }
-                },
-                [
-                  _c("option", { attrs: { selected: "selected" } }, [
-                    _vm._v("In Stock")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("Sold")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("RMA")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("Suppler Credit")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("Damaged")])
-                ]
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "detail-section-row mt-2" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("a", { staticClass: "delete-detail-row", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "far fa-times-circle" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Sys ID")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "invoice-no",
-                  placeholder: "Sys ID"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("IMEI Number")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "exampleInputEmail1",
-                  placeholder: "IMEI Number"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Serial Number")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "exampleInputEmail1",
-                  placeholder: "Serial Number"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Make")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "exampleInputEmail1",
-                  placeholder: "Make"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Model")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "email",
-                  id: "exampleInputEmail1",
-                  placeholder: "Model"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-2" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-                _vm._v("Stock Status")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  staticClass: "form-control select2",
-                  staticStyle: { width: "100%" }
-                },
-                [
-                  _c("option", { attrs: { selected: "selected" } }, [
-                    _vm._v("In Stock")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("Sold")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("RMA")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("Suppler Credit")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("Damaged")])
-                ]
-              )
-            ])
-          ])
-        ])
+    return _c("a", { staticClass: "delete-detail-row", attrs: { href: "#" } }, [
+      _c("i", { staticClass: "far fa-times-circle" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-2" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", [_vm._v("Stock Status")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            staticClass: "form-control select2",
+            staticStyle: { width: "100%" }
+          },
+          [
+            _c("option", { attrs: { selected: "selected" } }, [
+              _vm._v("In Stock")
+            ]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Sold")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("RMA")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Suppler Credit")]),
+            _vm._v(" "),
+            _c("option", [_vm._v("Damaged")])
+          ]
+        )
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "delete-detail-row", attrs: { href: "#" } }, [
+      _c("i", { staticClass: "far fa-times-circle" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "delete-detail-row", attrs: { href: "#" } }, [
+      _c("i", { staticClass: "far fa-times-circle" })
     ])
   },
   function() {
