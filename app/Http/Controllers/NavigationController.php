@@ -32,6 +32,13 @@ class NavigationController extends Controller
                 'icon' => 'fas fa-store',
                 'children' => null,
             ),
+            'sales' => array(
+                'route' => route('sales.index'),
+                'permission' => 'view_all_sales',
+                'title' => 'Sales',
+                'icon' => 'fas fa-money-bill',
+                'children' => null,
+            ),
             'forms' => array(
                 'route' => null,
                 'permission' => null,
@@ -105,6 +112,13 @@ class NavigationController extends Controller
                         'route' => route('shipping-billings.index'),
                         'permission' => 'view_all_shipping_billings',
                         'title' => 'Shipping Billings',
+                        'icon' => 'far fa-circle',
+                        'children' => null,
+                    ),
+                    'view_bank_deals' => array(
+                        'route' => route('bank-deals.index'),
+                        'permission' => 'view_all_bank_deals',
+                        'title' => 'Bank Deals',
                         'icon' => 'far fa-circle',
                         'children' => null,
                     ),

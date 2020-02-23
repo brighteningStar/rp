@@ -24,6 +24,7 @@ Vue.component('supplier-component', require('./components/forms/SupplierComponen
 Vue.component('region-component', require('./components/forms/RegionComponent.vue').default);
 Vue.component('make-model-component', require('./components/forms/MakeModelComponent.vue').default);
 Vue.component('shipping-billing-component', require('./components/forms/ShippingBillingComponent.vue').default);
+Vue.component('bank-deal-component', require('./components/forms/BankDealComponent.vue').default);
 
 //selects
 Vue.component('make-select', require('./components/selects/MakeSelect.vue').default);
@@ -35,6 +36,10 @@ Vue.component('login-component', require('./components/LoginComponent.vue').defa
 Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 Vue.component('update-profile-component', require('./components/Profile.vue').default);
 Vue.component('update-password-component', require('./components/ChangePassword.vue').default);
+
+//sales components
+Vue.component('sales-component', require('./components/sales/SalesComponent.vue').default);
+Vue.component('create-sales-item', require('./components/sales/CreateSalesItem.vue').default);
 
 
 
