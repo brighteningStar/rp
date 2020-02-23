@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "simple-vue-validator": "^0.16.0"
+        "simple-vue-validator": "^0.16.0",
+        "vue-select": "^3.4.0",
+        "vuejs-datepicker": "^1.6.2"
     }
 }

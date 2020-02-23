@@ -14,6 +14,8 @@ Route::group(['middleware' => ["auth"]], function () {
 
     Route::get( '/stock', 'StockController@index' )->name( 'stock.index' );
     Route::post( '/process-excel', 'StockController@processExcel' )->name( 'stock.excel' );
+    Route::post( '/stock', 'StockController@store' )->name( 'stock.store' );
+    Route::get( '/search', 'AttributesController@search' )->name( 'attribute.search' );
 
     Route::prefix('forms')->group(function () {
 

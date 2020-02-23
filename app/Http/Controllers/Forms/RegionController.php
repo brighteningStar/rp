@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Forms;
 
 use App\Http\Controllers\Controller;
+use App\Models\Region;
 use App\Services\RegionService;
 use Illuminate\Http\Request;
 

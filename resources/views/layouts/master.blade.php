@@ -25,6 +25,8 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{url('plugins/summernote/summernote-bs4.css')}}">
 
+    <link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
+
     <link rel="stylesheet" href="{{url('css/app.css')}}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -76,7 +78,11 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{--<script src="dist/js/pages/dashboard.js"></script>--}}
 <!-- AdminLTE for demo purposes -->
+{{--<script src="https://unpkg.com/vue@latest"></script>--}}
+<script src="https://unpkg.com/vue-select@latest"></script>
+
 <script src="{{url('dist/js/demo.js')}}"></script>
 <script src="{{ asset('js/app.js') }}" defer></script>
+
 </body>
 </html>
