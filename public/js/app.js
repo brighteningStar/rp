@@ -4669,10 +4669,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4775,8 +4771,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     onSubmitStock: function onSubmitStock() {
-      console.log(this.detailSection);
-      axios.post('/stock', this.stockHeading).then(function (response) {
+      axios.post('/stock', {
+        'heading': this.stockHeading,
+        'detail': this.detailSection
+      }).then(function (response) {
         console.log(response);
       })["catch"](function (errors) {
         console.log(errors);
@@ -45514,7 +45512,7 @@ var render = function() {
                                                         $event
                                                       ) {
                                                         return _vm.search(
-                                                          "shipping_billings",
+                                                          "bill_to",
                                                           $event.target.value
                                                         )
                                                       }
@@ -45533,7 +45531,7 @@ var render = function() {
                                     ],
                                     null,
                                     false,
-                                    529267622
+                                    1394824412
                                   ),
                                   model: {
                                     value: _vm.stockHeading.bill_to,
@@ -45548,7 +45546,7 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-3" }, [
+                          _c("div", { staticClass: "col-md-3" }, [
                             _c(
                               "div",
                               { staticClass: "form-group" },
@@ -45602,7 +45600,7 @@ var render = function() {
                                                         $event
                                                       ) {
                                                         return _vm.search(
-                                                          "shipping_billings",
+                                                          "ship_to",
                                                           $event.target.value
                                                         )
                                                       }
@@ -45621,7 +45619,7 @@ var render = function() {
                                     ],
                                     null,
                                     false,
-                                    3934780463
+                                    4038580956
                                   ),
                                   model: {
                                     value: _vm.stockHeading.ship_to,
@@ -45963,11 +45961,72 @@ var render = function() {
                                     ])
                                   ]),
                                   _vm._v(" "),
-                                  _vm._m(4, true)
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Stock Status")]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.detailSection[serialNo][
+                                                  "stock_status"
+                                                ],
+                                              expression:
+                                                "detailSection[serialNo]['stock_status']"
+                                            }
+                                          ],
+                                          staticClass: "form-control select2",
+                                          staticStyle: { width: "100%" },
+                                          on: {
+                                            change: function($event) {
+                                              var $$selectedVal = Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function(o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function(o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "stock_status",
+                                                $event.target.multiple
+                                                  ? $$selectedVal
+                                                  : $$selectedVal[0]
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            {
+                                              attrs: {
+                                                selected: "selected",
+                                                value: "in_stock"
+                                              }
+                                            },
+                                            [_vm._v("In Stock")]
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(5, true),
+                                  _vm._m(4, true),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-2" }, [
                                     _c("div", { staticClass: "form-group" }, [
@@ -46233,7 +46292,7 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(6, true),
+                                  _vm._m(5, true),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-2" }, [
                                     _c("div", { staticClass: "form-group" }, [
@@ -46507,7 +46566,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(7)
+                    _vm._m(6)
                   ]
                 )
               ])
@@ -46552,37 +46611,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("a", { staticClass: "delete-detail-row", attrs: { href: "#" } }, [
       _c("i", { staticClass: "far fa-times-circle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", [_vm._v("Stock Status")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "form-control select2",
-            staticStyle: { width: "100%" }
-          },
-          [
-            _c("option", { attrs: { selected: "selected" } }, [
-              _vm._v("In Stock")
-            ]),
-            _vm._v(" "),
-            _c("option", [_vm._v("Sold")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("RMA")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("Suppler Credit")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("Damaged")])
-          ]
-        )
-      ])
     ])
   },
   function() {

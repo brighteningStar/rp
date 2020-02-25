@@ -13,6 +13,10 @@ class AttributesController extends Controller
     {
         $table = $request->get( 'table' );
 
+        if( $table === 'bill_to' || $table === 'ship_to' ) {
+            $table = 'shipping_billings';
+        }
+
         $keyword    = $request->get( 'q', null );
         $attributes = DB::table( $table )->select( 'name', 'id' )->whereRaw( "name like ?", "%$keyword%" )->get();
 

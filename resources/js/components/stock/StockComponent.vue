@@ -117,12 +117,12 @@
                                                 </div>
                                                 <v-select :options="bill_to.options" v-model="stockHeading.bill_to">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.bill_to" v-bind="attributes" v-on="events" @keypress="search('shipping_billings', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.bill_to" v-bind="attributes" v-on="events" @keypress="search('bill_to', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Ship To</label>
                                                 <div v-show="ship_to.spinner" class="spinner-border v-select-spinner spinner-grow-sm" role="status">
@@ -130,7 +130,7 @@
                                                 </div>
                                                 <v-select :options="ship_to.options" v-model="stockHeading.ship_to">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.ship_to" v-bind="attributes" v-on="events" @keypress="search('shipping_billings', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.ship_to" v-bind="attributes" v-on="events" @keypress="search('ship_to', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
                                             </div>
@@ -189,12 +189,8 @@
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Stock Status</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                        <option selected="selected">In Stock</option>
-                                                        <option>Sold</option>
-                                                        <option>RMA</option>
-                                                        <option>Suppler Credit</option>
-                                                        <option>Damaged</option>
+                                                    <select class="form-control select2" style="width: 100%;" v-model="detailSection[serialNo]['stock_status']">
+                                                        <option selected="selected" value="in_stock">In Stock</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -409,8 +405,7 @@
             },
 
             onSubmitStock() {
-                console.log(this.detailSection);
-                axios.post('/stock', this.stockHeading)
+                axios.post('/stock', {'heading':this.stockHeading, 'detail': this.detailSection})
                     .then(response => {
                         console.log(response);
                     })

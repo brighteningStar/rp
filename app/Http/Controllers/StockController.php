@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\AttributeNotFound;
 use App\Models\Region;
 use App\Models\ShippingBilling;
+use App\Models\StockHead;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -87,6 +88,7 @@ class StockController extends Controller
                         'freight'          => trim( $result['freight'] ),
                         'total_cost'       => trim( $result['total_cost'] ),
                         'bank_deal_no'     => trim( $result['bank_deal_no'] ),
+                        'stock_status'     => 'in_stock',
                     ];
                 }
             } );
@@ -99,7 +101,23 @@ class StockController extends Controller
 
     public function store( Request $request )
     {
-        return $request->all();
+        $headPart = $request->get( 'heading' );
+
+        $stockHead = [
+            'quantity_invoice'   => $headPart['invoice_no'],
+            'invoice_number'     => $headPart['invoice_no'],
+            'declaration_number' => $headPart['declaration_no'],
+            'tracking_number'    => $headPart['tracking_no'],
+            'invoice_date'       => $headPart['invoice_date'],
+            'so_number'          => $headPart['so_number'],
+            'so_date'            => $headPart['so_date'],
+            'bill_to'            => $headPart['bill_to']['id'],
+            'ship_to'            => $headPart['ship_to']['id'],
+            'supplier_id'        => $headPart['supplier']['id'],
+            'region_id'          => $headPart['region']['id'],
+        ];
+
+        StockHead::create( $stockHead );
     }
 
 
