@@ -10,6 +10,7 @@ namespace App\Services;
 
 
 use App\Models\SalesHead;
+use Carbon\Carbon;
 
 class SalesService extends ServiceAbstract
 {
@@ -35,6 +36,12 @@ class SalesService extends ServiceAbstract
 //            'columns' => $columns,
 //            'items'   => $regions->paginate(10)
 //        ];
+    }
+
+    public function create(array $data)
+    {
+        $data['sale_date'] = Carbon::parse($data['sale_date']);
+        $this->model->create($data);
     }
 
 

@@ -29,6 +29,7 @@ Vue.component('bank-deal-component', require('./components/forms/BankDealCompone
 //selects
 Vue.component('make-select', require('./components/selects/MakeSelect.vue').default);
 Vue.component('role-select', require('./components/selects/RoleSelect.vue').default);
+Vue.component('customer-select', require('./components/selects/CustomerSelect.vue').default);
 
 // app components
 Vue.component('stock-component', require('./components/stock/StockComponent.vue').default);

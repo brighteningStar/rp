@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\SalesService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -27,6 +28,12 @@ class SalesController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'invoice_no' => 'required|unique:sales_heads,invoice_no',
+            'sale_date' => 'required',
+            'customer_id' => 'required|integer'
+        ]);
+        $this->service->create($request->all());
 
     }
 
