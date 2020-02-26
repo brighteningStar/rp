@@ -25,14 +25,32 @@ class SalesController extends Controller
         return view('sales.create');
     }
 
+    public function edit($id){
+        dd($id);
+    }
+
 
     public function store(Request $request)
     {
         $request->validate([
             'invoice_no' => 'required|unique:sales_heads,invoice_no',
             'sale_date' => 'required',
-            'customer_id' => 'required|integer'
-        ]);
+            'customer_id' => 'required|integer',
+            'details.*.imei' => 'required',
+            'details.*.price_aed' => 'required',
+            'details.*.freight' => 'required',
+            'details.*.unit_price' => 'required',
+            'details.*.discount' => 'required',
+            'details.*.amount' => 'required',
+        ],
+            [
+                'details.*.imei.required' => 'IMEI is required',
+                'details.*.price_aed.required' => 'AED Price is required',
+                'details.*.freight.required' => 'Freight is required',
+                'details.*.unit_price.required' => 'Unit Price is required',
+                'details.*.discount.required' => 'Discount is required',
+                'details.*.amount.required' => 'Amount is required',
+            ]);
         $this->service->create($request->all());
 
     }
@@ -58,6 +76,11 @@ class SalesController extends Controller
 
     public function get()
     {
-       // return $this->service->getAll();
+        return $this->service->getAll(['customer', 'sale date', 'invoice number']);
+    }
+
+    public function searchImei(Request $request){
+        $imei = $request->get('imei');
+        return $this->service->fetchStockDetails($imei);
     }
 }

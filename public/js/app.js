@@ -2457,8 +2457,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['uri', 'title'],
+  props: ['uri', 'title', 'editUrl'],
   data: function data() {
     return {
       items: [],
@@ -2522,6 +2523,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     capitalize: function capitalize(s) {
       return s[0].toUpperCase() + s.slice(1);
+    },
+    updateEditUrl: function updateEditUrl(id) {
+      console.log(id);
+      return this.editUrl.replace("id", id);
     }
   },
   created: function created() {
@@ -4263,6 +4268,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4273,12 +4280,15 @@ __webpack_require__.r(__webpack_exports__);
         invoice_no: '',
         loading: false,
         details: [{
+          detail_id: '',
           imei: '',
           price_aed: '',
           freight: '',
           unit_price: '',
           discount: '',
-          amount: ''
+          amount: '',
+          imeis: [],
+          spinner: false
         }]
       })
     };
@@ -4288,26 +4298,55 @@ __webpack_require__.r(__webpack_exports__);
       return moment(date).format('DD-MM-YYYY');
     },
     onSubmitForm: function onSubmitForm() {
-      console.log(this.form); // this.form.post('/sales')
-      //     .then(function (response) {
-      //         window.location.replace("/sales");
-      //     })
-      //     .catch(errors => console.log(errors));
+      this.form.post('/sales').then(function (response) {
+        window.location.replace("/sales");
+      })["catch"](function (errors) {
+        return console.log(errors);
+      });
     },
     addRow: function addRow() {
       this.form.details.push({
         imei: '',
+        detail_id: '',
         price_aed: '',
         freight: '',
         unit_price: '',
         discount: '',
-        amount: ''
+        amount: '',
+        imeis: [],
+        spinner: false
       });
     },
     deleteRow: function deleteRow(index) {
       this.form.details.splice(index, 1);
     },
-    searchImei: function searchImei(name, search) {}
+    searchImei: function searchImei(row, imei) {
+      row.spinner = true;
+      axios.get('/search/imei', {
+        params: {
+          imei: imei
+        }
+      }).then(function (response) {
+        row.imeis = response.data;
+      }.bind(this))["catch"](function (error) {
+        console.log(error);
+      }).then(function () {
+        row.spinner = false;
+      });
+    },
+    setImeiDetails: function setImeiDetails(event, row) {
+      if (event == null) {
+        row.imei = '';
+        row.detail_id = '';
+        row.price_aed = '';
+        row.freight = '';
+      } else {
+        row.imei = event.value.imei_no;
+        row.detail_id = event.value.id;
+        row.price_aed = event.value.price_aed;
+        row.freight = event.value.freight;
+      }
+    }
   }
 });
 
@@ -4322,7 +4361,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Form */ "./resources/js/Form.js");
 //
 //
 //
@@ -4337,11 +4375,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {},
-  methods: {}
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -42003,30 +42037,45 @@ var render = function() {
                             ])
                           }),
                           _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: "#",
-                                  "data-toggle": "modal",
-                                  "data-target": "#modal-xl"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.openModal(item.id)
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fas fa-pencil-alt mr-1",
-                                  attrs: { "aria-hidden": "true" }
-                                })
-                              ]
-                            )
-                          ])
+                          _vm.editUrl == null
+                            ? _c("td", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: "#",
+                                      "data-toggle": "modal",
+                                      "data-target": "#modal-xl"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.openModal(item.id)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-pencil-alt mr-1",
+                                      attrs: { "aria-hidden": "true" }
+                                    })
+                                  ]
+                                )
+                              ])
+                            : _c("td", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: _vm.updateEditUrl(item.id) }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-pencil-alt mr-1",
+                                      attrs: { "aria-hidden": "true" }
+                                    })
+                                  ]
+                                )
+                              ])
                         ],
                         2
                       )
@@ -44986,12 +45035,36 @@ var render = function() {
                                     "div",
                                     { staticClass: "form-group" },
                                     [
-                                      _c("label", [_vm._v("Region")]),
+                                      _c("label", [_vm._v("Search by IMEI")]),
                                       _vm._v(" "),
-                                      _vm._m(1, true),
+                                      row.spinner
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "spinner-border v-select-spinner spinner-grow-sm",
+                                              attrs: { role: "status" }
+                                            },
+                                            [
+                                              _c(
+                                                "span",
+                                                { staticClass: "sr-only" },
+                                                [_vm._v("Loading...")]
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e(),
                                       _vm._v(" "),
                                       _c("v-select", {
-                                        attrs: { options: [] },
+                                        attrs: { options: row.imeis },
+                                        on: {
+                                          input: function($event) {
+                                            return _vm.setImeiDetails(
+                                              $event,
+                                              row
+                                            )
+                                          }
+                                        },
                                         scopedSlots: _vm._u(
                                           [
                                             {
@@ -45008,11 +45081,11 @@ var render = function() {
                                                           staticClass:
                                                             "vs__search",
                                                           on: {
-                                                            keypress: function(
+                                                            keyup: function(
                                                               $event
                                                             ) {
                                                               return _vm.searchImei(
-                                                                "regions",
+                                                                row,
                                                                 $event.target
                                                                   .value
                                                               )
@@ -45032,15 +45105,24 @@ var render = function() {
                                           ],
                                           null,
                                           true
-                                        ),
-                                        model: {
-                                          value: row.imei,
-                                          callback: function($$v) {
-                                            _vm.$set(row, "imei", $$v)
-                                          },
-                                          expression: "row.imei"
-                                        }
-                                      })
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.form.errors.has(
+                                        "details." + index + ".imei"
+                                      )
+                                        ? _c("span", {
+                                            staticClass:
+                                              "error invalid-feedback",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.form.errors.get(
+                                                  "details." + index + ".imei"
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e()
                                     ],
                                     1
                                   )
@@ -45060,7 +45142,7 @@ var render = function() {
                                         }
                                       ],
                                       staticClass: "form-control",
-                                      attrs: { type: "text" },
+                                      attrs: { type: "text", disabled: "" },
                                       domProps: { value: row.price_aed },
                                       on: {
                                         input: function($event) {
@@ -45074,13 +45156,30 @@ var render = function() {
                                           )
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.form.errors.has(
+                                      "details." + index + ".price_aed"
+                                    )
+                                      ? _c("span", {
+                                          staticClass: "error invalid-feedback",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.form.errors.get(
+                                                "details." +
+                                                  index +
+                                                  ".price_aed"
+                                              )
+                                            )
+                                          }
+                                        })
+                                      : _vm._e()
                                   ])
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "col-2" }, [
                                   _c("div", { staticClass: "form-group" }, [
-                                    _c("label", [_vm._v("Frieght")]),
+                                    _c("label", [_vm._v("Freight")]),
                                     _vm._v(" "),
                                     _c("input", {
                                       directives: [
@@ -45092,7 +45191,7 @@ var render = function() {
                                         }
                                       ],
                                       staticClass: "form-control",
-                                      attrs: { type: "text" },
+                                      attrs: { type: "text", disabled: "" },
                                       domProps: { value: row.freight },
                                       on: {
                                         input: function($event) {
@@ -45106,7 +45205,22 @@ var render = function() {
                                           )
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.form.errors.has(
+                                      "details." + index + ".freight"
+                                    )
+                                      ? _c("span", {
+                                          staticClass: "error invalid-feedback",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.form.errors.get(
+                                                "details." + index + ".freight"
+                                              )
+                                            )
+                                          }
+                                        })
+                                      : _vm._e()
                                   ])
                                 ]),
                                 _vm._v(" "),
@@ -45138,7 +45252,24 @@ var render = function() {
                                           )
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.form.errors.has(
+                                      "details." + index + ".unit_price"
+                                    )
+                                      ? _c("span", {
+                                          staticClass: "error invalid-feedback",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.form.errors.get(
+                                                "details." +
+                                                  index +
+                                                  ".unit_price"
+                                              )
+                                            )
+                                          }
+                                        })
+                                      : _vm._e()
                                   ])
                                 ]),
                                 _vm._v(" "),
@@ -45170,7 +45301,22 @@ var render = function() {
                                           )
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.form.errors.has(
+                                      "details." + index + ".discount"
+                                    )
+                                      ? _c("span", {
+                                          staticClass: "error invalid-feedback",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.form.errors.get(
+                                                "details." + index + ".discount"
+                                              )
+                                            )
+                                          }
+                                        })
+                                      : _vm._e()
                                   ])
                                 ]),
                                 _vm._v(" "),
@@ -45202,7 +45348,22 @@ var render = function() {
                                           )
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.form.errors.has(
+                                      "details." + index + ".amount"
+                                    )
+                                      ? _c("span", {
+                                          staticClass: "error invalid-feedback",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.form.errors.get(
+                                                "details." + index + ".amount"
+                                              )
+                                            )
+                                          }
+                                        })
+                                      : _vm._e()
                                   ])
                                 ])
                               ])
@@ -45232,7 +45393,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(2)
+                  _vm._m(1)
                 ]
               )
             ],
@@ -45251,19 +45412,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "card-header" }, [
       _c("h3", { staticClass: "card-title" }, [_vm._v("Sales Form")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "spinner-border v-select-spinner spinner-grow-sm",
-        attrs: { role: "status" }
-      },
-      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-    )
   },
   function() {
     var _vm = this
@@ -45299,27 +45447,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("section", { staticClass: "content" }, [
+    _c(
+      "div",
+      { staticClass: "container-fluid" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-4 col-md-12" }),
+        _vm._v(" "),
+        _c("table-vue", {
+          attrs: {
+            uri: "/sales/get",
+            title: "Sales Heads",
+            "edit-url": "/sales/id/edit"
+          }
+        })
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("a", { attrs: { href: "/sales/create" } }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "button" } },
-            [
-              _vm._v(
-                "\n                    Create Sales Item\n                "
-              )
-            ]
-          )
-        ])
-      ])
+    return _c("a", { attrs: { href: "/sales/create" } }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("\n                Create Sales Item\n            ")]
+      )
     ])
   }
 ]

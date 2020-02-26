@@ -25,7 +25,8 @@
                         <tbody>
                         <tr v-for="(item, index) in items" :key="index">
                             <td v-for="(column, indexColumn) in columns" :key="indexColumn">{{item[column]}}</td>
-                            <td><a href="#" data-toggle="modal" data-target="#modal-xl" @click.prevent="openModal(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a></td>
+                            <td v-if="editUrl==null"><a href="#" data-toggle="modal" data-target="#modal-xl" @click.prevent="openModal(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a></td>
+                            <td v-else=""><a :href="updateEditUrl(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -53,7 +54,7 @@
 
 <script>
     export default {
-        props: ['uri', 'title'],
+        props: ['uri', 'title', 'editUrl'],
 
         data() {
             return {
@@ -130,6 +131,11 @@
             capitalize(s){
                 return s[0].toUpperCase() + s.slice(1);
             },
+
+            updateEditUrl(id){
+                console.log(id);
+                return this.editUrl.replace("id", id);
+            }
         },
 
         created() {

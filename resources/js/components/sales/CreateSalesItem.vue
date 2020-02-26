@@ -45,50 +45,52 @@
                                         <div class="row">
                                             <a href="#" @click.prevent="deleteRow(index)" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
                                             <div class="col-2">
-<!--                                                <div class="form-group">-->
-<!--                                                    <label>IMEI</label>-->
-<!--                                                    <input type="text" class="form-control" v-model="row.imei">-->
-<!--                                                </div>-->
                                                 <div class="form-group">
-                                                    <label>Region</label>
-                                                    <div class="spinner-border v-select-spinner spinner-grow-sm" role="status">
+                                                    <label>Search by IMEI</label>
+                                                    <div  v-if="row.spinner" class="spinner-border v-select-spinner spinner-grow-sm" role="status">
                                                         <span class="sr-only">Loading...</span>
                                                     </div>
-                                                    <v-select :options="[]" v-model="row.imei">
+                                                    <v-select :options="row.imeis" v-on:input="setImeiDetails($event, row)">
                                                         <template #search="{attributes, events}">
-                                                            <input class="vs__search"  v-bind="attributes" v-on="events" @keypress="searchImei('regions', $event.target.value)"/>
+                                                            <input class="vs__search" v-bind="attributes" v-on="events" @keyup="searchImei(row, $event.target.value)"/>
                                                         </template>
                                                     </v-select>
+                                                    <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.imei')" v-text="form.errors.get('details.'+index+'.imei')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Price AED</label>
-                                                    <input type="text" class="form-control" v-model="row.price_aed">
+                                                    <input type="text" disabled class="form-control" v-model="row.price_aed">
+                                                    <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.price_aed')" v-text="form.errors.get('details.'+index+'.price_aed')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label>Frieght</label>
-                                                    <input type="text" class="form-control" v-model="row.freight">
+                                                    <label>Freight</label>
+                                                    <input type="text" disabled class="form-control" v-model="row.freight">
+                                                    <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.freight')" v-text="form.errors.get('details.'+index+'.freight')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>unit price</label>
                                                     <input type="text" class="form-control" v-model="row.unit_price">
+                                                    <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.unit_price')" v-text="form.errors.get('details.'+index+'.unit_price')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>discount</label>
                                                     <input type="text" class="form-control" v-model="row.discount">
+                                                    <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.discount')" v-text="form.errors.get('details.'+index+'.discount')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>amount</label>
                                                     <input type="text" class="form-control" v-model="row.amount">
+                                                    <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.amount')" v-text="form.errors.get('details.'+index+'.amount')"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -119,12 +121,15 @@
                     invoice_no: '',
                     loading:false,
                     details:[{
+                        detail_id:'',
                         imei:'',
                         price_aed:'',
                         freight:'',
                         unit_price:'',
                         discount:'',
                         amount:'',
+                        imeis:[],
+                        spinner:false,
                     }],
                 }),
             };
@@ -135,22 +140,24 @@
             },
 
             onSubmitForm(){
-                console.log(this.form);
-                // this.form.post('/sales')
-                //     .then(function (response) {
-                //         window.location.replace("/sales");
-                //     })
-                //     .catch(errors => console.log(errors));
+                this.form.post('/sales')
+                    .then(function (response) {
+                        window.location.replace("/sales");
+                    })
+                    .catch(errors => console.log(errors));
             },
 
             addRow(){
                 this.form.details.push({
                     imei:'',
+                    detail_id:'',
                     price_aed:'',
                     freight:'',
                     unit_price:'',
                     discount:'',
                     amount:'',
+                    imeis:[],
+                    spinner:false,
                 });
             },
 
@@ -158,9 +165,41 @@
                 this.form.details.splice(index, 1);
             },
 
-            searchImei(name, search){
+            searchImei(row, imei){
+
+                row.spinner=true;
+                axios.get('/search/imei',{
+                    params: {
+                        imei: imei
+                    },
+                })
+                    .then(function (response) {
+                        row.imeis = response.data;
+
+                    }.bind(this))
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                    .then(function () {
+                        row.spinner=false;
+                    });
 
             },
+
+            setImeiDetails(event, row){
+                if(event==null){
+                    row.imei = '';
+                    row.detail_id ='';
+                    row.price_aed = '';
+                    row.freight = '';
+                } else {
+                    row.imei = event.value.imei_no;
+                    row.detail_id = event.value.id;
+                    row.price_aed = event.value.price_aed;
+                    row.freight = event.value.freight;
+                }
+
+            }
         },
 
 
