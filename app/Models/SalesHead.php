@@ -22,6 +22,6 @@ class SalesHead extends Model
     }
 
     public function stockDetails(){
-        return $this->belongsToMany(StockHeadDetail::class, 'sales_details', 'sales_head_id', 'stock_details_id');
+        return $this->belongsToMany(StockHeadDetail::class, 'sales_details', 'sales_head_id', 'stock_details_id')->withPivot('unit_price', 'discount', 'amount');
     }
 }

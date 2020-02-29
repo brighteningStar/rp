@@ -50,7 +50,7 @@
                                                     <div  v-if="row.spinner" class="spinner-border v-select-spinner spinner-grow-sm" role="status">
                                                         <span class="sr-only">Loading...</span>
                                                     </div>
-                                                    <v-select :options="row.imeis" v-on:input="setImeiDetails($event, row)">
+                                                    <v-select :value="row.imei" :options="row.imeis" v-on:input="setImeiDetails($event, row)">
                                                         <template #search="{attributes, events}">
                                                             <input class="vs__search" v-bind="attributes" v-on="events" @keyup="searchImei(row, $event.target.value)"/>
                                                         </template>
@@ -113,6 +113,7 @@
 <script>
     import {Form} from "../../Form"
     export default {
+        props: ['id'],
         data() {
             return {
                 form: new Form({
@@ -140,11 +141,20 @@
             },
 
             onSubmitForm(){
-                this.form.post('/sales')
-                    .then(function (response) {
-                        window.location.replace("/sales");
-                    })
-                    .catch(errors => console.log(errors));
+                if(this.id) {
+                    this.form.put('/sales/'+this.id)
+                        .then(function (response) {
+                            window.location.replace("/sales");
+                        })
+                        .catch(errors => console.log(errors));
+                } else {
+                    this.form.post('/sales')
+                        .then(function (response) {
+                            window.location.replace("/sales");
+                        })
+                        .catch(errors => console.log(errors));
+                }
+
             },
 
             addRow(){
@@ -199,8 +209,54 @@
                     row.freight = event.value.freight;
                 }
 
-            }
+            },
+
+            getData(){
+                this.form.loading = true;
+                axios.get('/sales/'+this.id,{
+                })
+                    .then(function (response) {
+                        this.loadData(response.data);
+
+                    }.bind(this))
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                    .then(function () {
+                        this.form.loading = false;
+                    }.bind(this));
+            },
+
+            loadData(data){
+                console.log(data);
+                let self = this;
+                this.form.customer_id = data.customer_id;
+                this.form.invoice_no = data.invoice_no;
+                this.form.sale_date = data.sale_date;
+                this.form.details = [];
+                data.stock_details.forEach(function(entry) {
+                    let newobj = {
+                        detail_id:entry.id,
+                        price_aed:entry.price_aed,
+                        freight:entry.freight,
+                        unit_price:entry.pivot.unit_price,
+                        discount:entry.pivot.discount,
+                        amount:entry.pivot.amount,
+                        imeis:[{label:entry.imei_no, value:{id:entry.id, imei_no:entry.imei_no, price_aed:entry.price_aed , freight:entry.freight}}],
+                        imei:entry.imei_no,
+                        spinner:false,
+                    }
+                    self.form.details.push(newobj);
+                });
+            },
+
         },
+
+        mounted() {
+            if(this.id){
+                this.getData();
+            }
+        }
 
 
 

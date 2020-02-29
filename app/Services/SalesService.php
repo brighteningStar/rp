@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Models\SalesHead;
 use App\Models\StockHeadDetail;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class SalesService extends ServiceAbstract
 {
@@ -58,8 +59,42 @@ class SalesService extends ServiceAbstract
                 'amount' => $detail['amount'],
             );
             array_push($detailsArr, $detailItem);
+            StockHeadDetail::find($detail['detail_id'])->update(['stock_status'=>'sold']);
         }
         $head->details()->createMany($detailsArr);
+    }
+
+    public function update(Request $request, array $where)
+    {
+        $item = $this->model->where($where)->first();
+        $data = $request->all();
+        $data['sale_date'] = Carbon::parse($data['sale_date']);
+        $sales_head = array(
+            'customer_id' => $data['customer_id'],
+            'sale_date' => $data['sale_date'],
+            'invoice_no' => $data['invoice_no'],
+        );
+        $item->update($sales_head);
+
+        $stockDetails = $item->stockDetails;
+        foreach ($stockDetails as $stockDetail){
+            $stockDetail->update(['stock_status'=>'in_stock']);
+        }
+        $item->stockDetails()->detach();
+
+        $detailsArr = array();
+        foreach ($data['details'] as $detail){
+            $detailItem = array(
+                'stock_details_id' => $detail['detail_id'],
+                'unit_price' => $detail['unit_price'],
+                'discount' => $detail['discount'],
+                'amount' => $detail['amount'],
+            );
+            array_push($detailsArr, $detailItem);
+            StockHeadDetail::find($detail['detail_id'])->update(['stock_status'=>'sold']);
+        }
+        $item->details()->createMany($detailsArr);
+
     }
 
     public function fetchStockDetails($imei){
@@ -74,6 +109,11 @@ class SalesService extends ServiceAbstract
             array_push($result,$obj);
         }
         return $result;
+    }
+
+    public function getDetails($id, $columns = array('*')){
+        $salesItem = $this->model->with('stockDetails')->where('id',$id)->first();
+        return $salesItem;
     }
 
 

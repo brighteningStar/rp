@@ -133,7 +133,6 @@
             },
 
             updateEditUrl(id){
-                console.log(id);
                 return this.editUrl.replace("id", id);
             }
         },

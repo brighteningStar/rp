@@ -2525,7 +2525,6 @@ __webpack_require__.r(__webpack_exports__);
       return s[0].toUpperCase() + s.slice(1);
     },
     updateEditUrl: function updateEditUrl(id) {
-      console.log(id);
       return this.editUrl.replace("id", id);
     }
   },
@@ -4272,6 +4271,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['id'],
   data: function data() {
     return {
       form: new _Form__WEBPACK_IMPORTED_MODULE_0__["Form"]({
@@ -4298,11 +4298,19 @@ __webpack_require__.r(__webpack_exports__);
       return moment(date).format('DD-MM-YYYY');
     },
     onSubmitForm: function onSubmitForm() {
-      this.form.post('/sales').then(function (response) {
-        window.location.replace("/sales");
-      })["catch"](function (errors) {
-        return console.log(errors);
-      });
+      if (this.id) {
+        this.form.put('/sales/' + this.id).then(function (response) {
+          window.location.replace("/sales");
+        })["catch"](function (errors) {
+          return console.log(errors);
+        });
+      } else {
+        this.form.post('/sales').then(function (response) {
+          window.location.replace("/sales");
+        })["catch"](function (errors) {
+          return console.log(errors);
+        });
+      }
     },
     addRow: function addRow() {
       this.form.details.push({
@@ -4346,6 +4354,51 @@ __webpack_require__.r(__webpack_exports__);
         row.price_aed = event.value.price_aed;
         row.freight = event.value.freight;
       }
+    },
+    getData: function getData() {
+      this.form.loading = true;
+      axios.get('/sales/' + this.id, {}).then(function (response) {
+        this.loadData(response.data);
+      }.bind(this))["catch"](function (error) {
+        console.log(error);
+      }).then(function () {
+        this.form.loading = false;
+      }.bind(this));
+    },
+    loadData: function loadData(data) {
+      console.log(data);
+      var self = this;
+      this.form.customer_id = data.customer_id;
+      this.form.invoice_no = data.invoice_no;
+      this.form.sale_date = data.sale_date;
+      this.form.details = [];
+      data.stock_details.forEach(function (entry) {
+        var newobj = {
+          detail_id: entry.id,
+          price_aed: entry.price_aed,
+          freight: entry.freight,
+          unit_price: entry.pivot.unit_price,
+          discount: entry.pivot.discount,
+          amount: entry.pivot.amount,
+          imeis: [{
+            label: entry.imei_no,
+            value: {
+              id: entry.id,
+              imei_no: entry.imei_no,
+              price_aed: entry.price_aed,
+              freight: entry.freight
+            }
+          }],
+          imei: entry.imei_no,
+          spinner: false
+        };
+        self.form.details.push(newobj);
+      });
+    }
+  },
+  mounted: function mounted() {
+    if (this.id) {
+      this.getData();
     }
   }
 });
@@ -45056,7 +45109,10 @@ var render = function() {
                                         : _vm._e(),
                                       _vm._v(" "),
                                       _c("v-select", {
-                                        attrs: { options: row.imeis },
+                                        attrs: {
+                                          value: row.imei,
+                                          options: row.imeis
+                                        },
                                         on: {
                                           input: function($event) {
                                             return _vm.setImeiDetails(

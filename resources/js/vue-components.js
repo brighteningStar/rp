@@ -43,4 +43,3 @@ Vue.component('sales-component', require('./components/sales/SalesComponent.vue'
 Vue.component('create-sales-item', require('./components/sales/CreateSalesItem.vue').default);
 
 
-

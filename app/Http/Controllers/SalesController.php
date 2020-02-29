@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\SalesService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -26,7 +25,14 @@ class SalesController extends Controller
     }
 
     public function edit($id){
-        dd($id);
+        $item = $this->service->find($id);
+        if(isset($item)){
+            return view('sales.edit')->with('id',$id);
+        }
+        else {
+            return abort(404);
+        }
+
     }
 
 
@@ -58,12 +64,35 @@ class SalesController extends Controller
 
     public function show($id)
     {
-        //return $this->service->find($id);
+        return $this->service->getDetails($id);
     }
 
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'invoice_no' => 'required|unique:sales_heads,invoice_no,'.$id,
+            'sale_date' => 'required',
+            'customer_id' => 'required|integer',
+            'details.*.imei' => 'required',
+            'details.*.price_aed' => 'required',
+            'details.*.freight' => 'required',
+            'details.*.unit_price' => 'required',
+            'details.*.discount' => 'required',
+            'details.*.amount' => 'required',
+        ],
+            [
+                'details.*.imei.required' => 'IMEI is required',
+                'details.*.price_aed.required' => 'AED Price is required',
+                'details.*.freight.required' => 'Freight is required',
+                'details.*.unit_price.required' => 'Unit Price is required',
+                'details.*.discount.required' => 'Discount is required',
+                'details.*.amount.required' => 'Amount is required',
+            ]);
+
+        $where = array('id'=>$id);
+        $this->service->update($request, $where);
+
 
     }
 
