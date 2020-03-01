@@ -16,4 +16,9 @@ class RmaHead extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
+
+
+    public function stockDetails(){
+        return $this->belongsToMany(StockHeadDetail::class, 'rma_details', 'rma_heads_id', 'stock_details_id');
+    }
 }

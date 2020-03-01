@@ -28,6 +28,10 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::get( '/search/imei', 'SalesController@searchImei' )->name( 'search.imei' );
     Route::resource( 'sales', 'SalesController' );
 
+    Route::get( '/rma/get', 'RMAController@get' )->name( 'rma.get' );
+    //Route::get( '/search/imei', 'SalesController@searchImei' )->name( 'search.imei' );
+    Route::resource( 'rma', 'RMAController' );
+
     Route::prefix('forms')->group(function () {
 
         Route::get( '/colors/get', 'Forms\ColorController@get' )->name( 'colors.get' );
