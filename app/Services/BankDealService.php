@@ -23,7 +23,7 @@ class BankDealService extends ServiceAbstract
     {
         $columns = is_null($columns)?$this->model->getFillable():$columns;
         $keyword = request()->get( 'q', null );
-        $items = $this->model->select('bank_deals.deal_number as deal number', 'bank_deals.exchange_rate as exchange rate', 'bank_deals.deal_amount as deal amount');
+        $items = $this->model->select('bank_deals.id as id', 'bank_deals.deal_number as deal number', 'bank_deals.exchange_rate as exchange rate', 'bank_deals.deal_amount as deal amount');
         if ( $keyword != '' ) {
             $items = $items->whereRaw( "bank_deals.deal_number like ?", "%$keyword%" )
                 ->orWhereRaw( "bank_deals.exchange_rate like ?", "%$keyword%" )
