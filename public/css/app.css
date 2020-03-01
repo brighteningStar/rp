@@ -10943,7 +10943,6 @@ a.text-dark:focus {
 }
 
 .detail-section-row:hover {
-  background-color: #c3c3c3;
   transform: scale(1.02);
 }
 
@@ -11017,5 +11016,11 @@ a.text-dark:focus {
   position: absolute;
   top: 40px;
   right: 32px;
+}
+
+.flash {
+  position: fixed;
+  bottom: 50px;
+  right: 30px;
 }
 

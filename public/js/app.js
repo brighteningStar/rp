@@ -4669,6 +4669,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4689,7 +4737,8 @@ __webpack_require__.r(__webpack_exports__);
         tracking_no: '',
         invoice_date: '',
         so_number: '',
-        so_date: ''
+        so_date: '',
+        quantity_per_inv: ''
       },
       suppliers: {
         options: [],
@@ -4704,6 +4753,26 @@ __webpack_require__.r(__webpack_exports__);
         spinner: false
       },
       bill_to: {
+        options: [],
+        spinner: false
+      },
+      make_models: {
+        options: [],
+        spinner: false
+      },
+      make: {
+        options: [],
+        spinner: false
+      },
+      colors: {
+        options: [],
+        spinner: false
+      },
+      grades: {
+        options: [],
+        spinner: false
+      },
+      capacities: {
         options: [],
         spinner: false
       },
@@ -4727,15 +4796,16 @@ __webpack_require__.r(__webpack_exports__);
       this.fileName = this.file.name;
     },
     search: function search(name, _search) {
-      this[name].spinner = true;
-      this.fetchList(_search, this, name);
+      var serialNo = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      this[name][serialNo].spinner = true;
+      this.fetchList(_search, this, name, serialNo);
     },
-    fetchList: _.debounce(function (search, vm, name) {
+    fetchList: _.debounce(function (search, vm, name, serialNo) {
       fetch("/search?q=".concat(escape(search), "&table=").concat(escape(name))).then(function (res) {
         res.json().then(function (json) {
-          return vm[name].options = json.items;
+          return vm[name][serialNo].options = json.items;
         });
-        vm[name].spinner = false;
+        vm[name][serialNo].spinner = false;
       });
     }, 350),
     uploadExcel: function uploadExcel() {
@@ -4754,7 +4824,41 @@ __webpack_require__.r(__webpack_exports__);
         this.fileName = 'Choose File';
         this.showUploadForm = false;
         this.mapResponseToHeading(response.data.heading);
-        console.log(response.data.detail);
+        var detailData = Object.keys(response.data.detail);
+        var makeModels = [];
+        var make = [];
+        var color = [];
+        var grade = [];
+        var capacity = [];
+
+        for (var i = 0; i < detailData.length - 1; i++) {
+          makeModels[detailData[i]] = {
+            options: [],
+            spinner: false
+          };
+          make[detailData[i]] = {
+            options: [],
+            spinner: false
+          };
+          color[detailData[i]] = {
+            options: [],
+            spinner: false
+          };
+          grade[detailData[i]] = {
+            options: [],
+            spinner: false
+          };
+          capacity[detailData[i]] = {
+            options: [],
+            spinner: false
+          };
+        }
+
+        this.make_models = Object.assign({}, this.make_models, makeModels);
+        this.make = Object.assign({}, this.make, make);
+        this.colors = Object.assign({}, this.colors, color);
+        this.grades = Object.assign({}, this.grades, grade);
+        this.capacities = Object.assign({}, this.capacities, capacity);
         this.detailSection = response.data.detail;
       }.bind(this))["catch"](function (errors) {
         this.loading = false;
@@ -45725,6 +45829,46 @@ var render = function() {
                               1
                             )
                           ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-2" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Quantity Per Invoice")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.stockHeading.quantity_per_inv,
+                                    expression: "stockHeading.quantity_per_inv"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "Quantity Per Invoice",
+                                  disabled: true
+                                },
+                                domProps: {
+                                  value: _vm.stockHeading.quantity_per_inv
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.stockHeading,
+                                      "quantity_per_inv",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ])
                         ])
                       ]),
                       _vm._v(" "),
@@ -45878,50 +46022,232 @@ var render = function() {
                                   ]),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-2" }, [
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [_vm._v("Make")]),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Make")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
                                           {
-                                            name: "model",
-                                            rawName: "v-model",
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.make[serialNo]
+                                                  ? _vm.make[serialNo].spinner
+                                                  : _vm.make.spinner,
+                                                expression:
+                                                  "make[serialNo] ? make[serialNo].spinner : make.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.make[serialNo]
+                                              ? _vm.make[serialNo].options
+                                              : _vm.make.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["make"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "make",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
                                             value:
                                               _vm.detailSection[serialNo][
                                                 "make"
                                               ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "make",
+                                                $$v
+                                              )
+                                            },
                                             expression:
                                               "detailSection[serialNo]['make']"
                                           }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "text",
-                                          placeholder: "Make"
-                                        },
-                                        domProps: {
-                                          value:
-                                            _vm.detailSection[serialNo]["make"]
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.detailSection[serialNo],
-                                              "make",
-                                              $event.target.value
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Model")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.make_models[serialNo]
+                                                  ? _vm.make_models[serialNo]
+                                                      .spinner
+                                                  : _vm.make_models.spinner,
+                                                expression:
+                                                  "make_models[serialNo] ? make_models[serialNo].spinner : make_models.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
                                             )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.make_models[serialNo]
+                                              ? _vm.make_models[serialNo]
+                                                  .options
+                                              : _vm.make_models.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["model"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "make_models",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "model"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "model",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['model']"
                                           }
-                                        }
-                                      })
-                                    ])
+                                        })
+                                      ],
+                                      1
+                                    )
                                   ]),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-2" }, [
                                     _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [_vm._v("Model")]),
+                                      _c("label", [_vm._v("Bank Deal#")]),
                                       _vm._v(" "),
                                       _c("input", {
                                         directives: [
@@ -45930,10 +46256,10 @@ var render = function() {
                                             rawName: "v-model",
                                             value:
                                               _vm.detailSection[serialNo][
-                                                "model"
+                                                "bank_deal_no"
                                               ],
                                             expression:
-                                              "detailSection[serialNo]['model']"
+                                              "detailSection[serialNo]['bank_deal_no']"
                                           }
                                         ],
                                         staticClass: "form-control",
@@ -45943,201 +46269,8 @@ var render = function() {
                                         },
                                         domProps: {
                                           value:
-                                            _vm.detailSection[serialNo]["model"]
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.detailSection[serialNo],
-                                              "model",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-2" }, [
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [_vm._v("Stock Status")]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "select",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value:
-                                                _vm.detailSection[serialNo][
-                                                  "stock_status"
-                                                ],
-                                              expression:
-                                                "detailSection[serialNo]['stock_status']"
-                                            }
-                                          ],
-                                          staticClass: "form-control select2",
-                                          staticStyle: { width: "100%" },
-                                          on: {
-                                            change: function($event) {
-                                              var $$selectedVal = Array.prototype.filter
-                                                .call(
-                                                  $event.target.options,
-                                                  function(o) {
-                                                    return o.selected
-                                                  }
-                                                )
-                                                .map(function(o) {
-                                                  var val =
-                                                    "_value" in o
-                                                      ? o._value
-                                                      : o.value
-                                                  return val
-                                                })
-                                              _vm.$set(
-                                                _vm.detailSection[serialNo],
-                                                "stock_status",
-                                                $event.target.multiple
-                                                  ? $$selectedVal
-                                                  : $$selectedVal[0]
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "option",
-                                            {
-                                              attrs: {
-                                                selected: "selected",
-                                                value: "in_stock"
-                                              }
-                                            },
-                                            [_vm._v("In Stock")]
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "row" }, [
-                                  _vm._m(4, true),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-2" }, [
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [_vm._v("Color")]),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value:
-                                              _vm.detailSection[serialNo][
-                                                "color"
-                                              ],
-                                            expression:
-                                              "detailSection[serialNo]['color']"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "text",
-                                          placeholder: "Sys ID"
-                                        },
-                                        domProps: {
-                                          value:
-                                            _vm.detailSection[serialNo]["color"]
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.detailSection[serialNo],
-                                              "color",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-2" }, [
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [_vm._v("Grade")]),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value:
-                                              _vm.detailSection[serialNo][
-                                                "grade"
-                                              ],
-                                            expression:
-                                              "detailSection[serialNo]['grade']"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "text",
-                                          placeholder: "IMEI Number"
-                                        },
-                                        domProps: {
-                                          value:
-                                            _vm.detailSection[serialNo]["grade"]
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.detailSection[serialNo],
-                                              "grade",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-2" }, [
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [_vm._v("Capacity")]),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value:
-                                              _vm.detailSection[serialNo][
-                                                "capacity"
-                                              ],
-                                            expression:
-                                              "detailSection[serialNo]['capacity']"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "text",
-                                          placeholder: "Serial Number"
-                                        },
-                                        domProps: {
-                                          value:
                                             _vm.detailSection[serialNo][
-                                              "capacity"
+                                              "bank_deal_no"
                                             ]
                                         },
                                         on: {
@@ -46147,16 +46280,354 @@ var render = function() {
                                             }
                                             _vm.$set(
                                               _vm.detailSection[serialNo],
-                                              "capacity",
+                                              "bank_deal_no",
                                               $event.target.value
                                             )
                                           }
                                         }
                                       })
                                     ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(4, true),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Color")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.colors[serialNo]
+                                                  ? _vm.colors[serialNo].spinner
+                                                  : _vm.colors.spinner,
+                                                expression:
+                                                  "colors[serialNo] ? colors[serialNo].spinner : colors.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.colors[serialNo]
+                                              ? _vm.colors[serialNo].options
+                                              : _vm.colors.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["color"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "colors",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "color"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "color",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['color']"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
                                   ]),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Grade")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.grades[serialNo]
+                                                  ? _vm.grades[serialNo].spinner
+                                                  : _vm.grades.spinner,
+                                                expression:
+                                                  "grades[serialNo] ? grades[serialNo].spinner : grades.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.grades[serialNo]
+                                              ? _vm.grades[serialNo].options
+                                              : _vm.grades.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["grade"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "grades",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "grade"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "grade",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['grade']"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Capacity")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.capacities[serialNo]
+                                                  ? _vm.capacities[serialNo]
+                                                      .spinner
+                                                  : _vm.capacities.spinner,
+                                                expression:
+                                                  "capacities[serialNo] ? capacities[serialNo].spinner : capacities.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.capacities[serialNo]
+                                              ? _vm.capacities[serialNo].options
+                                              : _vm.capacities.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["capacity"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "capacities",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "capacity"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "capacity",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['capacity']"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-3" }, [
                                     _c("div", { staticClass: "form-group" }, [
                                       _c("label", [_vm._v("Part No")]),
                                       _vm._v(" "),
@@ -46200,7 +46671,7 @@ var render = function() {
                                     ])
                                   ]),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "col-2" }, [
+                                  _c("div", { staticClass: "col-3" }, [
                                     _c("div", { staticClass: "form-group" }, [
                                       _c("label", [_vm._v("Stock ID")]),
                                       _vm._v(" "),
@@ -46236,52 +46707,6 @@ var render = function() {
                                             _vm.$set(
                                               _vm.detailSection[serialNo],
                                               "stock_id",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-2" }, [
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [
-                                        _vm._v("Quantity Per Invoice")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value:
-                                              _vm.detailSection[serialNo][
-                                                "quantity_per_inv"
-                                              ],
-                                            expression:
-                                              "detailSection[serialNo]['quantity_per_inv']"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "text",
-                                          placeholder: "Model"
-                                        },
-                                        domProps: {
-                                          value:
-                                            _vm.detailSection[serialNo][
-                                              "quantity_per_inv"
-                                            ]
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.detailSection[serialNo],
-                                              "quantity_per_inv",
                                               $event.target.value
                                             )
                                           }
@@ -46358,7 +46783,8 @@ var render = function() {
                                         staticClass: "form-control",
                                         attrs: {
                                           type: "text",
-                                          placeholder: "IMEI Number"
+                                          placeholder: "IMEI Number",
+                                          disabled: true
                                         },
                                         domProps: {
                                           value:
@@ -46506,50 +46932,6 @@ var render = function() {
                                             _vm.$set(
                                               _vm.detailSection[serialNo],
                                               "total_cost",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-2" }, [
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [_vm._v("Bank Deal#")]),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value:
-                                              _vm.detailSection[serialNo][
-                                                "bank_deal_no"
-                                              ],
-                                            expression:
-                                              "detailSection[serialNo]['bank_deal_no']"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "text",
-                                          placeholder: "Model"
-                                        },
-                                        domProps: {
-                                          value:
-                                            _vm.detailSection[serialNo][
-                                              "bank_deal_no"
-                                            ]
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.detailSection[serialNo],
-                                              "bank_deal_no",
                                               $event.target.value
                                             )
                                           }

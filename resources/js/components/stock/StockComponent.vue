@@ -63,7 +63,8 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>So Date</label>
-                                                <datepicker class="v-datepicker-custom" :format="dateFormatter" :value="stockHeading.so_date" name="so_date" v-model="stockHeading.so_date"></datepicker>
+                                                <datepicker class="v-datepicker-custom" :format="dateFormatter" :value="stockHeading.so_date" name="so_date"
+                                                            v-model="stockHeading.so_date"></datepicker>
                                             </div>
                                         </div>
                                         <div class="col-2">
@@ -80,7 +81,8 @@
                                                 </div>
                                                 <v-select :options="regions.options" v-model="stockHeading.region">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.region" v-bind="attributes" v-on="events" @keypress="search('regions', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.region" v-bind="attributes" v-on="events"
+                                                               @keypress="search('regions', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
                                             </div>
@@ -100,7 +102,8 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label>Invoice Date</label>
-                                                <datepicker class="v-datepicker-custom" :format="dateFormatter" :value="stockHeading.invoice_date" name="invoice_date" v-model="stockHeading.invoice_date"></datepicker>
+                                                <datepicker class="v-datepicker-custom" :format="dateFormatter" :value="stockHeading.invoice_date" name="invoice_date"
+                                                            v-model="stockHeading.invoice_date"></datepicker>
                                             </div>
                                         </div>
                                         <div class="col-2">
@@ -117,7 +120,8 @@
                                                 </div>
                                                 <v-select :options="bill_to.options" v-model="stockHeading.bill_to">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.bill_to" v-bind="attributes" v-on="events" @keypress="search('bill_to', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.bill_to" v-bind="attributes" v-on="events"
+                                                               @keypress="search('bill_to', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
                                             </div>
@@ -130,7 +134,8 @@
                                                 </div>
                                                 <v-select :options="ship_to.options" v-model="stockHeading.ship_to">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.ship_to" v-bind="attributes" v-on="events" @keypress="search('ship_to', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.ship_to" v-bind="attributes" v-on="events"
+                                                               @keypress="search('ship_to', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
                                             </div>
@@ -143,9 +148,18 @@
                                                 </div>
                                                 <v-select :options="suppliers.options" v-model="stockHeading.supplier">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!stockHeading.supplier" v-bind="attributes" v-on="events" @keypress="search('suppliers', $event.target.value)"/>
+                                                        <input class="vs__search" :required="!stockHeading.supplier" v-bind="attributes" v-on="events"
+                                                               @keypress="search('suppliers', $event.target.value)"/>
                                                     </template>
                                                 </v-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <div class="form-group">
+                                                <label>Quantity Per Invoice</label>
+                                                <input type="text" class="form-control" placeholder="Quantity Per Invoice" v-model="stockHeading.quantity_per_inv" :disabled="true">
                                             </div>
                                         </div>
                                     </div>
@@ -177,21 +191,37 @@
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Make</label>
-                                                    <input type="text" class="form-control" placeholder="Make" v-model="detailSection[serialNo]['make']">
+                                                    <div v-show="make[serialNo] ? make[serialNo].spinner : make.spinner" class="spinner-border v-select-spinner spinner-grow-sm" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <v-select :options="make[serialNo] ? make[serialNo].options: make.options" v-model="detailSection[serialNo]['make']" :key="serialNo">
+                                                        <template #search="{attributes, events}">
+                                                            <input class="vs__search" :required="!detailSection[serialNo]['make']" v-bind="attributes" v-on="events"
+                                                                   @keypress="search('make', $event.target.value, serialNo)"/>
+                                                        </template>
+                                                    </v-select>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Model</label>
-                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['model']">
+                                                    <div v-show="make_models[serialNo] ? make_models[serialNo].spinner : make_models.spinner" class="spinner-border v-select-spinner spinner-grow-sm"
+                                                         role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <v-select :options="make_models[serialNo] ? make_models[serialNo].options: make_models.options" v-model="detailSection[serialNo]['model']"
+                                                              :key="serialNo">
+                                                        <template #search="{attributes, events}">
+                                                            <input class="vs__search" :required="!detailSection[serialNo]['model']" v-bind="attributes" v-on="events"
+                                                                   @keypress="search('make_models', $event.target.value, serialNo)"/>
+                                                        </template>
+                                                    </v-select>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
-                                                    <label>Stock Status</label>
-                                                    <select class="form-control select2" style="width: 100%;" v-model="detailSection[serialNo]['stock_status']">
-                                                        <option selected="selected" value="in_stock">In Stock</option>
-                                                    </select>
+                                                    <label>Bank Deal#</label>
+                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['bank_deal_no']">
                                                 </div>
                                             </div>
                                         </div>
@@ -200,37 +230,61 @@
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Color</label>
-                                                    <input type="text" class="form-control" placeholder="Sys ID" v-model="detailSection[serialNo]['color']">
+                                                    <div v-show="colors[serialNo] ? colors[serialNo].spinner : colors.spinner" class="spinner-border v-select-spinner spinner-grow-sm"
+                                                         role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <v-select :options="colors[serialNo] ? colors[serialNo].options: colors.options" v-model="detailSection[serialNo]['color']"
+                                                              :key="serialNo">
+                                                        <template #search="{attributes, events}">
+                                                            <input class="vs__search" :required="!detailSection[serialNo]['color']" v-bind="attributes" v-on="events"
+                                                                   @keypress="search('colors', $event.target.value, serialNo)"/>
+                                                        </template>
+                                                    </v-select>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Grade</label>
-                                                    <input type="text" class="form-control" placeholder="IMEI Number" v-model="detailSection[serialNo]['grade']">
+                                                    <div v-show="grades[serialNo] ? grades[serialNo].spinner : grades.spinner" class="spinner-border v-select-spinner spinner-grow-sm"
+                                                         role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <v-select :options="grades[serialNo] ? grades[serialNo].options: grades.options" v-model="detailSection[serialNo]['grade']"
+                                                              :key="serialNo">
+                                                        <template #search="{attributes, events}">
+                                                            <input class="vs__search" :required="!detailSection[serialNo]['grade']" v-bind="attributes" v-on="events"
+                                                                   @keypress="search('grades', $event.target.value, serialNo)"/>
+                                                        </template>
+                                                    </v-select>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Capacity</label>
-                                                    <input type="text" class="form-control" placeholder="Serial Number" v-model="detailSection[serialNo]['capacity']">
+                                                    <div v-show="capacities[serialNo] ? capacities[serialNo].spinner : capacities.spinner" class="spinner-border v-select-spinner spinner-grow-sm"
+                                                         role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <v-select :options="capacities[serialNo] ? capacities[serialNo].options: capacities.options" v-model="detailSection[serialNo]['capacity']"
+                                                              :key="serialNo">
+                                                        <template #search="{attributes, events}">
+                                                            <input class="vs__search" :required="!detailSection[serialNo]['capacity']" v-bind="attributes" v-on="events"
+                                                                   @keypress="search('capacities', $event.target.value, serialNo)"/>
+                                                        </template>
+                                                    </v-select>
                                                 </div>
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-3">
                                                 <div class="form-group">
                                                     <label>Part No</label>
                                                     <input type="text" class="form-control" placeholder="Make" v-model="detailSection[serialNo]['part_no']">
                                                 </div>
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-3">
                                                 <div class="form-group">
                                                     <label>Stock ID</label>
                                                     <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['stock_id']">
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <div class="form-group">
-                                                    <label>Quantity Per Invoice</label>
-                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['quantity_per_inv']">
                                                 </div>
                                             </div>
                                         </div>
@@ -245,7 +299,7 @@
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Price USD</label>
-                                                    <input type="text" class="form-control" placeholder="IMEI Number" v-model="detailSection[serialNo]['price_usd']">
+                                                    <input type="text" class="form-control" placeholder="IMEI Number" v-model="detailSection[serialNo]['price_usd']" :disabled="true">
                                                 </div>
                                             </div>
                                             <div class="col-2">
@@ -264,12 +318,6 @@
                                                 <div class="form-group">
                                                     <label>Total Cost</label>
                                                     <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['total_cost']">
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <div class="form-group">
-                                                    <label>Bank Deal#</label>
-                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['bank_deal_no']">
                                                 </div>
                                             </div>
                                         </div>
@@ -310,6 +358,7 @@
                     invoice_date: '',
                     so_number: '',
                     so_date: '',
+                    quantity_per_inv:''
                 },
                 suppliers: {
                     options: [],
@@ -327,6 +376,27 @@
                     options: [],
                     spinner: false,
                 },
+                make_models: {
+                    options: [],
+                    spinner: false,
+                },
+                make: {
+                    options: [],
+                    spinner: false,
+                },
+                colors: {
+                    options: [],
+                    spinner: false,
+                },
+                grades: {
+                    options: [],
+                    spinner: false,
+                },
+                capacities: {
+                    options: [],
+                    spinner: false,
+                },
+
                 local_imported: {
                     options: ['local', 'imported'],
                     selected: ''
@@ -352,18 +422,18 @@
             },
 
 
-            search(name, search) {
-                this[name].spinner = true;
-                this.fetchList(search, this, name);
+            search(name, search, serialNo = null) {
+                this[name][serialNo].spinner = true;
+                this.fetchList(search, this, name, serialNo);
             },
 
 
-            fetchList: _.debounce((search, vm, name) => {
+            fetchList: _.debounce((search, vm, name, serialNo) => {
                 fetch(
                     `/search?q=${escape(search)}&table=${escape(name)}`
                 ).then(res => {
-                    res.json().then(json => (vm[name].options = json.items));
-                    vm[name].spinner = false;
+                    res.json().then(json => (vm[name][serialNo].options = json.items));
+                    vm[name][serialNo].spinner = false;
                 });
             }, 350),
 
@@ -384,7 +454,40 @@
                         this.fileName = 'Choose File';
                         this.showUploadForm = false;
                         this.mapResponseToHeading(response.data.heading);
-                        console.log(response.data.detail);
+                        let detailData = Object.keys(response.data.detail);
+                        let makeModels = [];
+                        let make = [];
+                        let color = [];
+                        let grade = [];
+                        let capacity = [];
+                        for (let i = 0; i < detailData.length - 1; i++) {
+                            makeModels[detailData[i]] = {
+                                options: [],
+                                spinner: false,
+                            };
+                            make[detailData[i]] = {
+                                options: [],
+                                spinner: false,
+                            };
+                            color[detailData[i]] = {
+                                options: [],
+                                spinner: false,
+                            };
+                            grade[detailData[i]] = {
+                                options: [],
+                                spinner: false,
+                            };
+                            capacity[detailData[i]] = {
+                                options: [],
+                                spinner: false,
+                            };
+                        }
+                        this.make_models = Object.assign({}, this.make_models, makeModels);
+                        this.make = Object.assign({}, this.make, make);
+                        this.colors = Object.assign({}, this.colors, color);
+                        this.grades = Object.assign({}, this.grades, grade);
+                        this.capacities = Object.assign({}, this.capacities, capacity);
+
                         this.detailSection = response.data.detail;
                     }.bind(this))
                     .catch(function (errors) {
@@ -405,7 +508,7 @@
             },
 
             onSubmitStock() {
-                axios.post('/stock', {'heading':this.stockHeading, 'detail': this.detailSection})
+                axios.post('/stock', {'heading': this.stockHeading, 'detail': this.detailSection})
                     .then(response => {
                         console.log(response);
                     })
