@@ -39,6 +39,13 @@ class NavigationController extends Controller
                 'icon' => 'fas fa-money-bill',
                 'children' => null,
             ),
+            'rma' => array(
+                'route' => route('rma.index'),
+                'permission' => 'view_all_rma',
+                'title' => 'RMA',
+                'icon' => 'fas fa-money-bill',
+                'children' => null,
+            ),
             'forms' => array(
                 'route' => null,
                 'permission' => null,
