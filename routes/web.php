@@ -25,6 +25,7 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::get( '/search', 'AttributesController@search' )->name( 'attribute.search' );
 
     Route::get( '/sales/get', 'SalesController@get' )->name( 'sales.get' );
+    Route::get( '/search/imei', 'SalesController@searchImei' )->name( 'search.imei' );
     Route::resource( 'sales', 'SalesController' );
 
     Route::prefix('forms')->group(function () {
