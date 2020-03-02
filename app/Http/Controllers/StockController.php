@@ -161,7 +161,6 @@ class StockController extends Controller
                     'total_cost'       => $detail['total_cost'],
                     'stock_status'     => 'in_stock',
                     'local_imported'   => $localImported['selected']['id'],
-                    'fault_type'       => 1,
                 ] );
             }
         } );
