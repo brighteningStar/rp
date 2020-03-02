@@ -81,7 +81,7 @@ class StockController extends Controller
                         'price_aed'    => trim( $result['price_aed'] ),
                         'custom_duty'  => trim( $result['custom_duty'] ),
                         'freight'      => trim( $result['freight'] ),
-                        'total_cost'   => number_format($result['price_aed'] + $result['freight'] + $result['custom_duty'], 2, '.', ''),
+                        'total_cost'   => number_format( $result['price_aed'] + $result['freight'] + $result['custom_duty'], 2, '.', '' ),
                         'bank_deal_no' => $bankDeal['bank_deal'],
                     ];
                 }
@@ -96,26 +96,26 @@ class StockController extends Controller
     public function store( Request $request )
     {
         $request->validate( [
-            'detail.*.sys_id'        => 'required|integer|unique:stock_details',
-            'detail.*.custom_duty'   => 'required',
-            'detail.*.total_cost'   => 'required',
-            'detail.*.bank_deal_no'  => 'required',
-            'detail.*.imei'          => 'required|unique:stock_details,imei_no',
-            'detail.*.price_aed'     => 'required',
-            'detail.*.freight'       => 'required',
-            'heading.local_imported' => 'required',
+            'detail.*.sys_id'         => 'required|integer|unique:stock_details',
+            'detail.*.custom_duty'    => 'required',
+            'detail.*.total_cost'     => 'required',
+            'detail.*.bank_deal_no'   => 'required',
+            'detail.*.imei'           => 'required|unique:stock_details,imei_no',
+            'detail.*.price_aed'      => 'required',
+            'detail.*.freight'        => 'required',
+            'local_imported.selected' => 'required',
         ],
             [
-                'detail.*.bank_deal_no.required'  => 'Bank Deal Number is required',
-                'detail.*.custom_duty.required'   => 'Custom Duty is required',
-                'detail.*.imei.required'          => 'IMEI is required',
-                'detail.*.imei.unique'          => 'IMEI should be unique',
+                'detail.*.bank_deal_no.required' => 'Bank Deal Number is required',
+                'detail.*.custom_duty.required'  => 'Custom Duty is required',
+                'detail.*.imei.required'         => 'IMEI is required',
+                'detail.*.imei.unique'           => 'IMEI should be unique',
                 'detail.*.sys_id.integer'        => 'SYS id should be a number',
-                'detail.*.sys_id.required'        => 'SYS id field is required',
-                'detail.*.sys_id.unique'        => 'SYS id should be unique',
-                'detail.*.price_aed.required'     => 'AED Price is required',
-                'detail.*.freight.required'       => 'Freight is required',
-                'heading.local_imported.required' => 'Local/Imported field is required',
+                'detail.*.sys_id.required'       => 'SYS id field is required',
+                'detail.*.sys_id.unique'         => 'SYS id should be unique',
+                'detail.*.price_aed.required'    => 'AED Price is required',
+                'detail.*.freight.required'      => 'Freight is required',
+                'local_imported.selected.required'        => 'Local Imported field is required',
             ] );
 
         $headPart      = $request->get( 'heading' );

@@ -97,7 +97,7 @@
                                                         <input class="vs__search" v-bind="attributes" v-on="events"/>
                                                     </template>
                                                 </v-select>
-                                                <span class="error invalid-feedback" v-if="has('heading.local_imported')" v-text="get('heading.local_imported')"></span>
+                                                <span class="error invalid-feedback" v-if="has('local_imported.selected')" v-text="get('local_imported.selected')"></span>
                                             </div>
                                         </div>
                                     </div>

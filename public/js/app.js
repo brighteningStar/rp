@@ -47102,12 +47102,12 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _vm.has("heading.local_imported")
+                                  _vm.has("local_imported.selected")
                                     ? _c("span", {
                                         staticClass: "error invalid-feedback",
                                         domProps: {
                                           textContent: _vm._s(
-                                            _vm.get("heading.local_imported")
+                                            _vm.get("local_imported.selected")
                                           )
                                         }
                                       })
