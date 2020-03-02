@@ -178,7 +178,7 @@
             searchImei(row, imei){
 
                 row.spinner=true;
-                axios.get('/search/imei',{
+                axios.get('/sales/search/imei',{
                     params: {
                         imei: imei
                     },

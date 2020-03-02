@@ -80,22 +80,22 @@ class RMAService extends ServiceAbstract
         }
 
     }
-//
-//    public function fetchStockDetails($imei){
-//        $query = StockHeadDetail::select('id', 'imei_no', 'price_aed','freight')
-//            ->whereRaw( "imei_no like ?", "%$imei%" )
-//            ->where('stock_status','in_stock')
-//            ->get();
-//        $result = array();
-//        foreach ($query as $item){
-//            $obj = new \stdClass();
-//            $obj->label = $item->imei_no;
-//            $obj->value = $item;
-//            array_push($result,$obj);
-//        }
-//        return $result;
-//    }
-//
+
+    public function fetchStockDetails($imei){
+        $query = StockHeadDetail::select('id', 'imei_no', 'price_aed','freight')
+            ->whereRaw( "imei_no like ?", "%$imei%" )
+            ->where('stock_status','sold')
+            ->get();
+        $result = array();
+        foreach ($query as $item){
+            $obj = new \stdClass();
+            $obj->label = $item->imei_no;
+            $obj->value = $item;
+            array_push($result,$obj);
+        }
+        return $result;
+    }
+
     public function getDetails($id, $columns = array('*')){
         $rmaItems = $this->model->with('stockDetails')->where('id',$id)->first();
         return $rmaItems;

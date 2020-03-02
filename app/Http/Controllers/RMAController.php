@@ -96,8 +96,8 @@ class RMAController extends Controller
         return $this->service->getAll(['customer', 'RMA date', 'RMA number']);
     }
 
-//    public function searchImei(Request $request){
-//        $imei = $request->get('imei');
-//        return $this->service->fetchStockDetails($imei);
-//    }
+    public function searchImei(Request $request){
+        $imei = $request->get('imei');
+        return $this->service->fetchStockDetails($imei);
+    }
 }

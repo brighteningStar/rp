@@ -26,11 +26,11 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::get( '/get-stock', 'StockController@getStock' )->name( 'get.stock' );
 
     Route::get( '/sales/get', 'SalesController@get' )->name( 'sales.get' );
-    Route::get( '/search/imei', 'SalesController@searchImei' )->name( 'search.imei' );
+    Route::get( '/sales/search/imei', 'SalesController@searchImei' )->name( 'sales.search.imei' );
     Route::resource( 'sales', 'SalesController' );
 
     Route::get( '/rma/get', 'RMAController@get' )->name( 'rma.get' );
-    //Route::get( '/search/imei', 'SalesController@searchImei' )->name( 'search.imei' );
+    Route::get( '/rma/search/imei', 'RMAController@searchImei' )->name( 'rma.search.imei' );
     Route::resource( 'rma', 'RMAController' );
 
     Route::prefix('forms')->group(function () {

@@ -4305,7 +4305,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     searchImei: function searchImei(row, imei) {
       row.spinner = true;
-      axios.get('/search/imei', {
+      axios.get('/rma/search/imei', {
         params: {
           imei: imei
         }
@@ -4586,7 +4586,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     searchImei: function searchImei(row, imei) {
       row.spinner = true;
-      axios.get('/search/imei', {
+      axios.get('/sales/search/imei', {
         params: {
           imei: imei
         }
@@ -65998,8 +65998,8 @@ Vue.component('create-rma-item', __webpack_require__(/*! ./components/rma/Create
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/adda/Projects/stock/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/adda/Projects/stock/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/stock/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/stock/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
