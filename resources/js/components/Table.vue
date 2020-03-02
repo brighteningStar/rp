@@ -19,13 +19,13 @@
                         <thead>
                         <tr>
                             <th scope="col" v-for="(column, index) in columns" :key="index"> {{capitalize(column)}}</th>
-                            <th>Action</th>
+                            <th v-show="! showEditIcon">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="(item, index) in items" :key="index">
                             <td v-for="(column, indexColumn) in columns" :key="indexColumn">{{item[column]}}</td>
-                            <td v-if="editUrl==null"><a href="#" data-toggle="modal" data-target="#modal-xl" @click.prevent="openModal(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a></td>
+                            <td v-show="! showEditIcon" v-if="editUrl==null"><a href="#" data-toggle="modal" data-target="#modal-xl" @click.prevent="openModal(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a></td>
                             <td v-else=""><a :href="updateEditUrl(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a></td>
                         </tr>
                         </tbody>
@@ -54,7 +54,7 @@
 
 <script>
     export default {
-        props: ['uri', 'title', 'editUrl'],
+        props: ['uri', 'title', 'editUrl', 'showEditIcon'],
 
         data() {
             return {

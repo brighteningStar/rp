@@ -34,18 +34,20 @@
                     </div>
                 </div>
             </div>
+            <table-vue uri="/get-stock" title="Stock" showEditIcon="false"></table-vue>
         </div>
         <div v-if="! showUploadForm" class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary">
+                        <loading v-if="loadingForm"></loading>
                         <div class="card-header">
                             <h3 class="card-title">Stock Form</h3>
                         </div>
                         <form role="form" @submit.prevent="onSubmitStock">
                             <div class="card-body">
                                 <div class="head-section">
-                                    <h4>Head Section</h4>
+                                    <h4>Stock Head</h4>
                                     <hr>
                                     <div class="row">
                                         <div class="col-2">
@@ -62,14 +64,14 @@
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label>So Date</label>
+                                                <label>SO Date</label>
                                                 <datepicker class="v-datepicker-custom" :format="dateFormatter" :value="stockHeading.so_date" name="so_date"
                                                             v-model="stockHeading.so_date"></datepicker>
                                             </div>
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label>So Number</label>
+                                                <label>SO Number</label>
                                                 <input type="text" class="form-control" placeholder="So Number" v-model="stockHeading.so_number">
                                             </div>
                                         </div>
@@ -92,9 +94,10 @@
                                                 <label>Local/Imported</label>
                                                 <v-select :options="local_imported.options" label="title" v-model="local_imported.selected">
                                                     <template #search="{attributes, events}">
-                                                        <input class="vs__search" :required="!local_imported.selected" v-bind="attributes" v-on="events"/>
+                                                        <input class="vs__search" v-bind="attributes" v-on="events"/>
                                                     </template>
                                                 </v-select>
+                                                <span class="error invalid-feedback" v-if="has('heading.local_imported')" v-text="get('heading.local_imported')"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -165,27 +168,29 @@
                                     </div>
                                 </div>
                                 <div class="detail-section mt-5">
-                                    <h4>Detail Section</h4>
+                                    <h4>Stock Detail</h4>
                                     <hr>
                                     <div class="detail-section-row mt-2" v-for="(item, serialNo) in detailSection" :key="serialNo">
                                         <div class="row">
-                                            <a href="#" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Sys ID</label>
                                                     <input type="text" class="form-control" placeholder="Sys ID" v-model="detailSection[serialNo]['sys_id']">
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.sys_id')" v-text="get('detail.'+serialNo+'.sys_id')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>IMEI Number</label>
                                                     <input type="text" class="form-control" placeholder="IMEI Number" v-model="detailSection[serialNo]['imei']">
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.imei')" v-text="get('detail.'+serialNo+'.imei')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Serial Number</label>
                                                     <input type="text" class="form-control" placeholder="Serial Number" v-model="detailSection[serialNo]['serial_no']">
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.serial_no')" v-text="get('detail.'+serialNo+'.serial_no')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
@@ -200,7 +205,9 @@
                                                                    @keypress="search('make', $event.target.value, serialNo)"/>
                                                         </template>
                                                     </v-select>
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.make')" v-text="get('detail.'+serialNo+'.make')"></span>
                                                 </div>
+
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
@@ -216,17 +223,30 @@
                                                                    @keypress="search('make_models', $event.target.value, serialNo)"/>
                                                         </template>
                                                     </v-select>
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.model')" v-text="get('detail.'+serialNo+'.model')"></span>
                                                 </div>
+
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Bank Deal#</label>
-                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['bank_deal_no']">
+                                                    <div v-show="bank_deals[serialNo] ? bank_deals[serialNo].spinner : bank_deals.spinner" class="spinner-border v-select-spinner spinner-grow-sm"
+                                                         role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <v-select :options="bank_deals[serialNo] ? bank_deals[serialNo].options: bank_deals.options" v-model="detailSection[serialNo]['bank_deal_no']"
+                                                              :key="serialNo">
+                                                        <template #search="{attributes, events}">
+                                                            <input class="vs__search" v-bind="attributes" v-on="events"
+                                                                   @keypress="search('bank_deals', $event.target.value, serialNo)"/>
+                                                        </template>
+                                                    </v-select>
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.bank_deal_no')" v-text="get('detail.'+serialNo+'.bank_deal_no')"></span>
                                                 </div>
+
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <a href="#" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Color</label>
@@ -241,7 +261,9 @@
                                                                    @keypress="search('colors', $event.target.value, serialNo)"/>
                                                         </template>
                                                     </v-select>
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.color')" v-text="get('detail.'+serialNo+'.color')"></span>
                                                 </div>
+
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
@@ -257,7 +279,9 @@
                                                                    @keypress="search('grades', $event.target.value, serialNo)"/>
                                                         </template>
                                                     </v-select>
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.grade')" v-text="get('detail.'+serialNo+'.grade')"></span>
                                                 </div>
+
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
@@ -273,6 +297,7 @@
                                                                    @keypress="search('capacities', $event.target.value, serialNo)"/>
                                                         </template>
                                                     </v-select>
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.capacity')" v-text="get('detail.'+serialNo+'.capacity')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-3">
@@ -280,44 +305,50 @@
                                                     <label>Part No</label>
                                                     <input type="text" class="form-control" placeholder="Make" v-model="detailSection[serialNo]['part_no']">
                                                 </div>
+                                                <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.part_no')" v-text="get('detail.'+serialNo+'.part_no')"></span>
                                             </div>
                                             <div class="col-3">
                                                 <div class="form-group">
                                                     <label>Stock ID</label>
                                                     <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['stock_id']">
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.stock_id')" v-text="get('detail.'+serialNo+'.stock_id')"></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <a href="#" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Price AED</label>
-                                                    <input type="text" class="form-control" placeholder="Sys ID" v-model="detailSection[serialNo]['price_aed']">
+                                                    <input type="text" class="form-control" placeholder="Price AED" v-model="detailSection[serialNo]['price_aed']">
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.price_aed')" v-text="get('detail.'+serialNo+'.price_aed')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Price USD</label>
-                                                    <input type="text" class="form-control" placeholder="IMEI Number" v-model="detailSection[serialNo]['price_usd']" :disabled="true">
+                                                    <input type="text" class="form-control" placeholder="Price USD" v-model="detailSection[serialNo]['price_usd']" :disabled="true">
                                                 </div>
+                                                <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.price_usd')" v-text="get('detail.'+serialNo+'.price_usd')"></span>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Custom Duty</label>
                                                     <input type="text" class="form-control" placeholder="Serial Number" v-model="detailSection[serialNo]['custom_duty']">
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.custom_duty')" v-text="get('detail.'+serialNo+'.custom_duty')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Freight</label>
                                                     <input type="text" class="form-control" placeholder="Make" v-model="detailSection[serialNo]['freight']">
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.freight')" v-text="get('detail.'+serialNo+'.freight')"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Total Cost</label>
                                                     <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['total_cost']">
+                                                    <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.total_cost')" v-text="get('detail.'+serialNo+'.total_cost')"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -326,6 +357,7 @@
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-default" @click.prevent="cancelForm">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -340,6 +372,7 @@
 
         data() {
             return {
+                loadingForm: false,
                 errors: {},
                 showUploadForm: true,
                 fileName: 'Choose file',
@@ -358,7 +391,7 @@
                     invoice_date: '',
                     so_number: '',
                     so_date: '',
-                    quantity_per_inv:''
+                    quantity_per_inv: ''
                 },
                 suppliers: {
                     options: [],
@@ -396,9 +429,13 @@
                     options: [],
                     spinner: false,
                 },
+                bank_deals: {
+                    options: [],
+                    spinner: false,
+                },
 
                 local_imported: {
-                    options: ['local', 'imported'],
+                    options: [{'title': 'Local', 'id': 'local'}, {'title': 'Imported', 'id': 'imported'}],
                     selected: ''
                 }
             }
@@ -422,20 +459,32 @@
             },
 
 
-            search(name, search, serialNo = null) {
-                this[name][serialNo].spinner = true;
+            search(name, search, serialNo = false) {
+                if (serialNo === false) {
+                    this[name].spinner = true;
+                } else {
+                    this[name][serialNo].spinner = true;
+                }
+
                 this.fetchList(search, this, name, serialNo);
             },
 
 
-            fetchList: _.debounce((search, vm, name, serialNo) => {
+            fetchList: _.throttle((search, vm, name, serialNo) => {
+                console.log(search);
                 fetch(
                     `/search?q=${escape(search)}&table=${escape(name)}`
                 ).then(res => {
-                    res.json().then(json => (vm[name][serialNo].options = json.items));
-                    vm[name][serialNo].spinner = false;
+                    if (serialNo === false) {
+                        res.json().then(json => (vm[name].options = json.items));
+                        vm[name].spinner = false;
+                    } else {
+                        res.json().then(json => (vm[name][serialNo].options = json.items));
+                        vm[name][serialNo].spinner = false;
+                    }
+
                 });
-            }, 350),
+            }, 10),
 
             uploadExcel() {
                 this.loading = true;
@@ -450,6 +499,7 @@
                     }.bind(this)
                 })
                     .then(function (response) {
+                        this.uploadPercentage = 0;
                         this.loading = false;
                         this.fileName = 'Choose File';
                         this.showUploadForm = false;
@@ -460,7 +510,9 @@
                         let color = [];
                         let grade = [];
                         let capacity = [];
-                        for (let i = 0; i < detailData.length - 1; i++) {
+                        let bankDeal = [];
+
+                        for (let i = 0; i < detailData.length; i++) {
                             makeModels[detailData[i]] = {
                                 options: [],
                                 spinner: false,
@@ -481,19 +533,26 @@
                                 options: [],
                                 spinner: false,
                             };
+                            bankDeal[detailData[i]] = {
+                                options: [],
+                                spinner: false,
+                            };
                         }
+                        //console.log(makeModels);
                         this.make_models = Object.assign({}, this.make_models, makeModels);
                         this.make = Object.assign({}, this.make, make);
                         this.colors = Object.assign({}, this.colors, color);
                         this.grades = Object.assign({}, this.grades, grade);
                         this.capacities = Object.assign({}, this.capacities, capacity);
+                        this.bank_deals = Object.assign({}, this.bank_deals, bankDeal);
 
                         this.detailSection = response.data.detail;
                     }.bind(this))
                     .catch(function (errors) {
+                        console.log(this.errors);
                         this.loading = false;
                         this.uploadPercentage = 0;
-                        this.errors = errors.response.data;
+                        this.errors = errors.response.data.errors;
                     }.bind(this));
             },
 
@@ -502,20 +561,28 @@
             },
 
             get(field) {
+                console.log(field);
                 if (this.errors[field]) {
-                    return this.errors[field];
+                    return this.errors[field][0];
                 }
             },
 
             onSubmitStock() {
-                axios.post('/stock', {'heading': this.stockHeading, 'detail': this.detailSection})
+                this.loadingForm = true;
+                axios.post('/stock', {'heading': this.stockHeading, 'detail': this.detailSection, 'local_imported': this.local_imported})
                     .then(response => {
-                        console.log(response);
+                        this.showUploadForm = true;
+                        this.loadingForm = false;
                     })
-                    .catch(errors => {
-                        console.log(errors);
-                    })
-            }
+                    .catch(function (errors) {
+                        this.errors = Object.assign({}, this.errors, errors.response.data.errors);
+                        this.loadingForm = false;
+                    }.bind(this))
+            },
+
+            cancelForm() {
+                this.showUploadForm = true;
+            },
         },
 
         mounted() {

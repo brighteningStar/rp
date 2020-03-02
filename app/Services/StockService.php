@@ -112,16 +112,18 @@ class StockService
     }
 
 
-
-    public function bankDealExchangeRate( $bankDealNo )
+    public function bankDeal( $bankDealNo )
     {
         $bankDeal = BankDeal::where( 'deal_number', $bankDealNo )->first();
 
-        if ( ! $bankDeal  ) {
+        if ( ! $bankDeal ) {
             throw new AttributeNotFound( 'Bank deal having number ' . $bankDealNo . ' not found', 404 );
         }
 
-        return $bankDeal->exchange_rate;
+        return [
+            'exchange_rate' => $bankDeal->exchange_rate,
+            'bank_deal'     => [ 'label' => $bankDeal->deal_number, 'id' => $bankDeal->id ]
+        ];
     }
 
 
@@ -133,7 +135,7 @@ class StockService
             return [ 'label' => $attribute->name, 'id' => $attribute->id ];
         }
 
-        return $attribute;
+        return $name;
     }
 
 

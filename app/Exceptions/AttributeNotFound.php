@@ -20,6 +20,6 @@ class AttributeNotFound extends Exception
 
     public function render($request)
     {
-        return response()->json(['file' => $this->message], $this->code);
+        return response()->json(['errors' => ['file' => [$this->message]]], $this->code);
     }
 }
