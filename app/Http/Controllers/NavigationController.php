@@ -49,7 +49,7 @@ class NavigationController extends Controller
             'forms' => array(
                 'route' => null,
                 'permission' => null,
-                'title' => 'Forms',
+                'title' => 'Setup Forms',
                 'icon' => 'far fa-file',
                 'children' => array(
                     'view_colors' => array(
