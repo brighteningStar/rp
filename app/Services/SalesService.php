@@ -97,10 +97,14 @@ class SalesService extends ServiceAbstract
 
     }
 
-    public function fetchStockDetails($imei){
+    public function fetchStockDetails($imei, $grade, $color, $capacity, $model){
         $query = StockHeadDetail::select('id', 'imei_no', 'price_aed','freight')
             ->whereRaw( "imei_no like ?", "%$imei%" )
             ->where('stock_status','in_stock')
+            ->where('grade_id',$grade)
+            ->where('color_id',$color)
+            ->where('capacity_id',$capacity)
+            ->where('model_id',$model)
             ->get();
         $result = array();
         foreach ($query as $item){

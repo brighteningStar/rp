@@ -109,7 +109,12 @@ class SalesController extends Controller
     }
 
     public function searchImei(Request $request){
+
         $imei = $request->get('imei');
-        return $this->service->fetchStockDetails($imei);
+        $grade = $request->get('grade');
+        $color = $request->get('color');
+        $capacity = $request->get('capacity');
+        $model = $request->get('model');
+        return $this->service->fetchStockDetails($imei, $grade, $color, $capacity, $model);
     }
 }
