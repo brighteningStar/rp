@@ -49,7 +49,7 @@
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label>Select Model</label>
-                                                <model-select v-model.sync="filters.model"></model-select>
+                                                <model-select v-model.sync="form.filters.model"></model-select>
 <!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
                                             </div>
                                         </div>
@@ -57,7 +57,7 @@
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label>Select Color</label>
-                                                <color-select v-model.sync="filters.color"></color-select>
+                                                <color-select v-model.sync="form.filters.color"></color-select>
 <!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
                                             </div>
                                         </div>
@@ -65,7 +65,7 @@
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label>Select Capacity</label>
-                                                <capacity-select v-model.sync="filters.capacity"></capacity-select>
+                                                <capacity-select v-model.sync="form.filters.capacity"></capacity-select>
 <!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
                                             </div>
                                         </div>
@@ -73,7 +73,7 @@
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label>Select Grade</label>
-                                                <grade-select v-model.sync="filters.grade"></grade-select>
+                                                <grade-select v-model.sync="form.filters.grade"></grade-select>
 <!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
                                             </div>
                                         </div>
@@ -163,6 +163,12 @@
                     sale_date: '',
                     invoice_no: '',
                     loading:false,
+                    filters:{
+                        'model' :null,
+                        'capacity' :null,
+                        'color' :null,
+                        'grade' :null,
+                    },
                     details:[{
                         detail_id:'',
                         imei:'',
@@ -175,19 +181,12 @@
                         spinner:false,
                     }],
                 }),
-
-                filters: {
-                    'model' :null,
-                    'capacity' :null,
-                    'color' :null,
-                    'grade' :null,
-                }
             };
         },
 
         computed: {
             isDisabled(){
-                if(this.filters.model==null || this.filters.capacity==null || this.filters.color==null || this.filters.grade==null)
+                if(this.form.filters.model==null || this.form.filters.capacity==null || this.form.filters.color==null || this.form.filters.grade==null)
                     return true;
                 else
                     return false;
@@ -209,7 +208,7 @@
                 } else {
                     this.form.post('/sales')
                         .then(function (response) {
-                            window.location.replace("/sales");
+                            // window.location.replace("/sales");
                         })
                         .catch(errors => console.log(errors));
                 }
@@ -240,10 +239,10 @@
                 axios.get('/sales/search/imei',{
                     params: {
                         imei: imei,
-                        color: this.filters.color,
-                        grade: this.filters.grade ,
-                        capacity: this.filters.capacity,
-                        model: this.filters.model,
+                        color: this.form.filters.color,
+                        grade: this.form.filters.grade ,
+                        capacity: this.form.filters.capacity,
+                        model: this.form.filters.model,
                     },
                 })
                     .then(function (response) {

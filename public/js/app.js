@@ -4577,6 +4577,12 @@ __webpack_require__.r(__webpack_exports__);
         sale_date: '',
         invoice_no: '',
         loading: false,
+        filters: {
+          'model': null,
+          'capacity': null,
+          'color': null,
+          'grade': null
+        },
         details: [{
           detail_id: '',
           imei: '',
@@ -4588,18 +4594,12 @@ __webpack_require__.r(__webpack_exports__);
           imeis: [],
           spinner: false
         }]
-      }),
-      filters: {
-        'model': null,
-        'capacity': null,
-        'color': null,
-        'grade': null
-      }
+      })
     };
   },
   computed: {
     isDisabled: function isDisabled() {
-      if (this.filters.model == null || this.filters.capacity == null || this.filters.color == null || this.filters.grade == null) return true;else return false;
+      if (this.form.filters.model == null || this.form.filters.capacity == null || this.form.filters.color == null || this.form.filters.grade == null) return true;else return false;
     }
   },
   methods: {
@@ -4614,8 +4614,7 @@ __webpack_require__.r(__webpack_exports__);
           return console.log(errors);
         });
       } else {
-        this.form.post('/sales').then(function (response) {
-          window.location.replace("/sales");
+        this.form.post('/sales').then(function (response) {// window.location.replace("/sales");
         })["catch"](function (errors) {
           return console.log(errors);
         });
@@ -4642,10 +4641,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/sales/search/imei', {
         params: {
           imei: imei,
-          color: this.filters.color,
-          grade: this.filters.grade,
-          capacity: this.filters.capacity,
-          model: this.filters.model
+          color: this.form.filters.color,
+          grade: this.form.filters.grade,
+          capacity: this.form.filters.capacity,
+          model: this.form.filters.model
         }
       }).then(function (response) {
         row.imeis = response.data;
@@ -46334,11 +46333,11 @@ var render = function() {
                               _vm._v(" "),
                               _c("model-select", {
                                 model: {
-                                  value: _vm.filters.model,
+                                  value: _vm.form.filters.model,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.filters, "model", $$v)
+                                    _vm.$set(_vm.form.filters, "model", $$v)
                                   },
-                                  expression: "filters.model"
+                                  expression: "form.filters.model"
                                 }
                               })
                             ],
@@ -46355,11 +46354,11 @@ var render = function() {
                               _vm._v(" "),
                               _c("color-select", {
                                 model: {
-                                  value: _vm.filters.color,
+                                  value: _vm.form.filters.color,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.filters, "color", $$v)
+                                    _vm.$set(_vm.form.filters, "color", $$v)
                                   },
-                                  expression: "filters.color"
+                                  expression: "form.filters.color"
                                 }
                               })
                             ],
@@ -46376,11 +46375,11 @@ var render = function() {
                               _vm._v(" "),
                               _c("capacity-select", {
                                 model: {
-                                  value: _vm.filters.capacity,
+                                  value: _vm.form.filters.capacity,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.filters, "capacity", $$v)
+                                    _vm.$set(_vm.form.filters, "capacity", $$v)
                                   },
-                                  expression: "filters.capacity"
+                                  expression: "form.filters.capacity"
                                 }
                               })
                             ],
@@ -46397,11 +46396,11 @@ var render = function() {
                               _vm._v(" "),
                               _c("grade-select", {
                                 model: {
-                                  value: _vm.filters.grade,
+                                  value: _vm.form.filters.grade,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.filters, "grade", $$v)
+                                    _vm.$set(_vm.form.filters, "grade", $$v)
                                   },
-                                  expression: "filters.grade"
+                                  expression: "form.filters.grade"
                                 }
                               })
                             ],
