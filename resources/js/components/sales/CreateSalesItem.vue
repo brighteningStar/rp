@@ -208,7 +208,7 @@
                 } else {
                     this.form.post('/sales')
                         .then(function (response) {
-                            // window.location.replace("/sales");
+                            window.location.replace("/sales");
                         })
                         .catch(errors => console.log(errors));
                 }
@@ -294,6 +294,12 @@
                 this.form.customer_id = data.customer_id;
                 this.form.invoice_no = data.invoice_no;
                 this.form.sale_date = data.sale_date;
+
+                this.form.filters.model = data.search_model_id;
+                this.form.filters.color = data.search_color_id;
+                this.form.filters.capacity = data.search_capacity_id;
+                this.form.filters.grade = data.search_grade_id;
+
                 this.form.details = [];
                 data.stock_details.forEach(function(entry) {
                     let newobj = {

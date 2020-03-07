@@ -4614,7 +4614,8 @@ __webpack_require__.r(__webpack_exports__);
           return console.log(errors);
         });
       } else {
-        this.form.post('/sales').then(function (response) {// window.location.replace("/sales");
+        this.form.post('/sales').then(function (response) {
+          window.location.replace("/sales");
         })["catch"](function (errors) {
           return console.log(errors);
         });
@@ -4682,6 +4683,10 @@ __webpack_require__.r(__webpack_exports__);
       this.form.customer_id = data.customer_id;
       this.form.invoice_no = data.invoice_no;
       this.form.sale_date = data.sale_date;
+      this.form.filters.model = data.search_model_id;
+      this.form.filters.color = data.search_color_id;
+      this.form.filters.capacity = data.search_capacity_id;
+      this.form.filters.grade = data.search_grade_id;
       this.form.details = [];
       data.stock_details.forEach(function (entry) {
         var newobj = {

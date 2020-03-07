@@ -9,7 +9,7 @@ class SalesHead extends Model
     protected $table = 'sales_heads';
 
     protected $fillable = [
-        'customer_id', 'sale_date', 'invoice_no'
+        'customer_id', 'sale_date', 'invoice_no', 'search_model_id', 'search_color_id', 'search_capacity_id', 'search_grade_id',
     ];
 
     public function customer()

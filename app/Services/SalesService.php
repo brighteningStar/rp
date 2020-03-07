@@ -48,6 +48,10 @@ class SalesService extends ServiceAbstract
             'customer_id' => $data['customer_id'],
             'sale_date' => $data['sale_date'],
             'invoice_no' => $data['invoice_no'],
+            'search_model_id' => $data['filters']['model'],
+            'search_color_id' => $data['filters']['color'],
+            'search_capacity_id' => $data['filters']['capacity'],
+            'search_grade_id' => $data['filters']['grade'],
         );
         $head = $this->model->create($sales_head);
         $detailsArr = array();
