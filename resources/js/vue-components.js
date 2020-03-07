@@ -30,6 +30,10 @@ Vue.component('bank-deal-component', require('./components/forms/BankDealCompone
 Vue.component('make-select', require('./components/selects/MakeSelect.vue').default);
 Vue.component('role-select', require('./components/selects/RoleSelect.vue').default);
 Vue.component('customer-select', require('./components/selects/CustomerSelect.vue').default);
+Vue.component('model-select', require('./components/selects/ModelSelect.vue').default);
+Vue.component('color-select', require('./components/selects/ColorSelect.vue').default);
+Vue.component('capacity-select', require('./components/selects/CapacitySelect.vue').default);
+Vue.component('grade-select', require('./components/selects/GradeSelect.vue').default);
 
 // app components
 Vue.component('stock-component', require('./components/stock/StockComponent.vue').default);
