@@ -49,7 +49,7 @@ class FaultTypeController extends Controller
 
     public function destroy($id)
     {
-        //
+        $this->service->destroy($id);
     }
 
 

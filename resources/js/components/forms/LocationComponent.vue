@@ -33,7 +33,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/locations/get" title="Locations"></table-vue>
+            <table-vue uri="/forms/locations/get" title="Locations" delete-url="/forms/locations/id"></table-vue>
         </div>
     </section>
 </template>

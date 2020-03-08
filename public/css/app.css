@@ -11024,3 +11024,7 @@ a.text-dark:focus {
   right: 30px;
 }
 
+.cross-del {
+  color: red;
+}
+

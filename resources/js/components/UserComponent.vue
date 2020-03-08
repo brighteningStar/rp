@@ -55,7 +55,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/users/get" title="Users"></table-vue>
+            <table-vue uri="/users/get" title="Users" delete-url="/users/id"></table-vue>
         </div>
     </section>
 </template>
