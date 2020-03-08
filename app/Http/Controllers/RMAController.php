@@ -43,13 +43,15 @@ class RMAController extends Controller
             'rma_date' => 'required',
             'customer_id' => 'required|integer',
             'details.*.imei' => 'required',
-            'details.*.price_aed' => 'required',
-            'details.*.freight' => 'required',
+            'details.*.fault_type_id' => 'required',
+            'details.*.fault' => 'required',
+            'details.*.location_id' => 'required',
         ],
             [
                 'details.*.imei.required' => 'IMEI is required',
-                'details.*.price_aed.required' => 'AED Price is required',
-                'details.*.freight.required' => 'Freight is required',
+                'details.*.fault_type_id.required' => 'Fault Type is required',
+                'details.*.fault.required' => 'Fault is required',
+                'details.*.location_id.required' => 'Location is required',
             ]);
         $this->service->create($request->all());
 
@@ -69,13 +71,15 @@ class RMAController extends Controller
             'rma_date' => 'required',
             'customer_id' => 'required|integer',
             'details.*.imei' => 'required',
-            'details.*.price_aed' => 'required',
-            'details.*.freight' => 'required',
+            'details.*.fault_type_id' => 'required',
+            'details.*.fault' => 'required',
+            'details.*.location_id' => 'required',
         ],
             [
                 'details.*.imei.required' => 'IMEI is required',
-                'details.*.price_aed.required' => 'AED Price is required',
-                'details.*.freight.required' => 'Freight is required',
+                'details.*.fault_type_id.required' => 'Fault Type is required',
+                'details.*.fault.required' => 'Fault is required',
+                'details.*.location_id.required' => 'Location is required',
             ]);
 
         $where = array('id'=>$id);

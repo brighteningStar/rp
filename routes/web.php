@@ -68,6 +68,9 @@ Route::group(['middleware' => ["auth"]], function () {
         Route::get( 'bank-deals/get', 'Forms\BankDealsController@get' )->name( 'bank-deals.get' );
         Route::resource('bank-deals', 'Forms\BankDealsController');
 
+        Route::get( 'locations/get', 'Forms\LocationsController@get' )->name( 'locations.get' );
+        Route::resource('locations', 'Forms\LocationsController');
+
     });
 
 });

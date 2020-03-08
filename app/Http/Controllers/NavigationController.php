@@ -43,7 +43,7 @@ class NavigationController extends Controller
                 'route' => route('rma.index'),
                 'permission' => 'view_all_rma',
                 'title' => 'RMA',
-                'icon' => 'fas fa-money-bill',
+                'icon' => 'fas fa-undo-alt',
                 'children' => null,
             ),
             'forms' => array(
@@ -126,6 +126,13 @@ class NavigationController extends Controller
                         'route' => route('bank-deals.index'),
                         'permission' => 'view_all_bank_deals',
                         'title' => 'Bank Deals',
+                        'icon' => 'far fa-circle',
+                        'children' => null,
+                    ),
+                    'view_locations' => array(
+                        'route' => route('locations.index'),
+                        'permission' => 'view_all_locations',
+                        'title' => 'Locations',
                         'icon' => 'far fa-circle',
                         'children' => null,
                     ),
