@@ -17,6 +17,7 @@ class AddNewColumnsInRmaDetail extends Migration
             $table->bigInteger('fault_type_id')->unsigned()->after('stock_details_id');
             $table->bigInteger('location_id')->unsigned()->after('fault_type_id');
             $table->string('fault')->after('location_id');
+            $table->string('sale_price')->after('fault');
 
             $table->foreign('fault_type_id')->references('id')->on('fault_types');
             $table->foreign('location_id')->references('id')->on('locations');
@@ -37,6 +38,7 @@ class AddNewColumnsInRmaDetail extends Migration
             $table->dropColumn('fault_type_id');
             $table->dropColumn('location_id');
             $table->dropColumn('fault');
+            $table->dropColumn('sale_price');
         });
     }
 }

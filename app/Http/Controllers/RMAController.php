@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\RMAIMEIValid;
 use App\Services\RMAService;
 use Illuminate\Http\Request;
 
@@ -42,15 +43,17 @@ class RMAController extends Controller
             'rma_no' => 'required|unique:rma_heads,rma_number',
             'rma_date' => 'required',
             'customer_id' => 'required|integer',
-            'details.*.imei' => 'required',
+            'details.*.imei' => ['required', new RMAIMEIValid($request)],
             'details.*.fault_type_id' => 'required',
             'details.*.fault' => 'required',
+            'details.*.sale_price' => 'required',
             'details.*.location_id' => 'required',
         ],
             [
                 'details.*.imei.required' => 'IMEI is required',
                 'details.*.fault_type_id.required' => 'Fault Type is required',
                 'details.*.fault.required' => 'Fault is required',
+                'details.*.sale_price.required' => 'Sale Price is required',
                 'details.*.location_id.required' => 'Location is required',
             ]);
         $this->service->create($request->all());
@@ -73,12 +76,14 @@ class RMAController extends Controller
             'details.*.imei' => 'required',
             'details.*.fault_type_id' => 'required',
             'details.*.fault' => 'required',
+            'details.*.sale_price' => 'required',
             'details.*.location_id' => 'required',
         ],
             [
                 'details.*.imei.required' => 'IMEI is required',
                 'details.*.fault_type_id.required' => 'Fault Type is required',
                 'details.*.fault.required' => 'Fault is required',
+                'details.*.sale_price.required' => 'Sale Price is required',
                 'details.*.location_id.required' => 'Location is required',
             ]);
 
@@ -102,6 +107,7 @@ class RMAController extends Controller
 
     public function searchImei(Request $request){
         $imei = $request->get('imei');
-        return $this->service->fetchStockDetails($imei);
+        $customer_id = $request->get('customer_id');
+        return $this->service->fetchStockDetails($imei, $customer_id);
     }
 }

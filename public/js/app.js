@@ -4422,13 +4422,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['id'],
   data: function data() {
     return {
       form: new _Form__WEBPACK_IMPORTED_MODULE_0__["Form"]({
-        customer_id: '',
+        customer_id: null,
         rma_date: '',
         rma_no: '',
         loading: false,
@@ -4438,11 +4445,17 @@ __webpack_require__.r(__webpack_exports__);
           fault_type_id: '',
           fault: '',
           location_id: '',
+          sale_price: '',
           imeis: [],
           spinner: false
         }]
       })
     };
+  },
+  computed: {
+    isDisabled: function isDisabled() {
+      if (this.form.customer_id == null) return true;else return false;
+    }
   },
   methods: {
     dateFormatter: function dateFormatter(date) {
@@ -4456,7 +4469,8 @@ __webpack_require__.r(__webpack_exports__);
           return console.log(errors);
         });
       } else {
-        this.form.post('/rma').then(function (response) {// window.location.replace("/rma");
+        this.form.post('/rma').then(function (response) {
+          window.location.replace("/rma");
         })["catch"](function (errors) {
           return console.log(errors);
         });
@@ -4469,6 +4483,7 @@ __webpack_require__.r(__webpack_exports__);
         fault_type_id: '',
         fault: '',
         location_id: '',
+        sale_price: '',
         imeis: [],
         spinner: false
       });
@@ -4480,7 +4495,8 @@ __webpack_require__.r(__webpack_exports__);
       row.spinner = true;
       axios.get('/rma/search/imei', {
         params: {
-          imei: imei
+          imei: imei,
+          customer_id: this.form.customer_id
         }
       }).then(function (response) {
         row.imeis = response.data;
@@ -4494,9 +4510,11 @@ __webpack_require__.r(__webpack_exports__);
       if (event == null) {
         row.imei = '';
         row.detail_id = '';
+        row.sale_price = '';
       } else {
         row.imei = event.value.imei_no;
         row.detail_id = event.value.id;
+        row.sale_price = event.value.sale_price;
       }
     },
     getData: function getData() {
@@ -4511,7 +4529,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     loadData: function loadData(data) {
       var self = this;
-      console.log(data);
       this.form.customer_id = data.customer_id;
       this.form.rma_no = data.rma_number;
       this.form.rma_date = data.rma_date;
@@ -4522,6 +4539,7 @@ __webpack_require__.r(__webpack_exports__);
           fault_type_id: entry.pivot.fault_type_id,
           fault: entry.pivot.fault,
           location_id: entry.pivot.location_id,
+          sale_price: entry.pivot.sale_price,
           imeis: [{
             label: entry.imei_no,
             value: {
@@ -49424,7 +49442,7 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "col-3" }, [
+                                _c("div", { staticClass: "col-2" }, [
                                   _c(
                                     "div",
                                     { staticClass: "form-group" },
@@ -49452,7 +49470,8 @@ var render = function() {
                                       _c("v-select", {
                                         attrs: {
                                           value: row.imei,
-                                          options: row.imeis
+                                          options: row.imeis,
+                                          disabled: _vm.isDisabled
                                         },
                                         on: {
                                           input: function($event) {
@@ -49527,6 +49546,38 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "col-3" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [_vm._v("Sale Price")]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: row.sale_price,
+                                          expression: "row.sale_price"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "text", disabled: "" },
+                                      domProps: { value: row.sale_price },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            row,
+                                            "sale_price",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-2" }, [
                                   _c(
                                     "div",
                                     { staticClass: "form-group" },
@@ -49612,7 +49663,7 @@ var render = function() {
                                   ])
                                 ]),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "col-3" }, [
+                                _c("div", { staticClass: "col-2" }, [
                                   _c(
                                     "div",
                                     { staticClass: "form-group" },

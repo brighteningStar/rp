@@ -57,6 +57,7 @@ class RMAService extends ServiceAbstract
                 'fault_type_id' => $detail['fault_type_id'],
                 'location_id' => $detail['location_id'],
                 'fault' => $detail['fault'],
+                'sale_price' => $detail['sale_price'],
             );
             array_push($detailsArr, $detailItem);
             StockHeadDetail::find($detail['detail_id'])->update(['stock_status'=>'rma']);
@@ -88,6 +89,7 @@ class RMAService extends ServiceAbstract
                 'fault_type_id' => $detail['fault_type_id'],
                 'location_id' => $detail['location_id'],
                 'fault' => $detail['fault'],
+                'sale_price' => $detail['sale_price'],
             );
             array_push($detailsArr, $detailItem);
             StockHeadDetail::find($detail['detail_id'])->update(['stock_status'=>'rma']);
@@ -96,10 +98,14 @@ class RMAService extends ServiceAbstract
 
     }
 
-    public function fetchStockDetails($imei){
-        $query = StockHeadDetail::select('id', 'imei_no', 'price_aed','freight')
+    public function fetchStockDetails($imei, $customer_id){
+        $query = StockHeadDetail::select(\DB::raw('stock_details.id as id, stock_details.imei_no as imei_no, min(sales_details.unit_price) as sale_price'))
+            ->join('sales_details', 'stock_details.id', '=', 'sales_details.stock_details_id')
+            ->join('sales_heads', 'sales_details.sales_head_id', '=', 'sales_heads.id')
+            ->where('customer_id',$customer_id)
             ->whereRaw( "imei_no like ?", "%$imei%" )
             ->where('stock_status','sold')
+            ->groupBy('stock_details.id')
             ->get();
         $result = array();
         foreach ($query as $item){

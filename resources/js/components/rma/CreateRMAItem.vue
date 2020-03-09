@@ -46,13 +46,13 @@
                                     <div class="detail-section-row mt-2" v-for="(row, index) in form.details">
                                         <div class="row">
                                             <a href="#" @click.prevent="deleteRow(index)" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
-                                            <div class="col-3">
+                                            <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Search by IMEI</label>
                                                     <div  v-if="row.spinner" class="spinner-border v-select-spinner spinner-grow-sm" role="status">
                                                         <span class="sr-only">Loading...</span>
                                                     </div>
-                                                    <v-select :value="row.imei" :options="row.imeis" v-on:input="setImeiDetails($event, row)">
+                                                    <v-select :value="row.imei" :options="row.imeis" v-on:input="setImeiDetails($event, row)" :disabled="isDisabled">
                                                         <template #search="{attributes, events}">
                                                             <input class="vs__search" v-bind="attributes" v-on="events" @blur="addRow" @keyup="searchImei(row, $event.target.value)"/>
                                                         </template>
@@ -61,6 +61,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Sale Price</label>
+                                                    <input type="text" disabled class="form-control" v-model="row.sale_price">
+<!--                                                    <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.fault')" v-text="form.errors.get('details.'+index+'.fault')"></span>-->
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Fault Type</label>
                                                     <fault-type-select v-model.sync="row.fault_type_id"></fault-type-select>
@@ -74,7 +81,7 @@
                                                     <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.fault')" v-text="form.errors.get('details.'+index+'.fault')"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Location</label>
                                                     <location-select v-model.sync="row.location_id"></location-select>
@@ -105,7 +112,7 @@
         data() {
             return {
                 form: new Form({
-                    customer_id: '',
+                    customer_id: null,
                     rma_date: '',
                     rma_no: '',
                     loading:false,
@@ -115,12 +122,22 @@
                         fault_type_id:'',
                         fault:'',
                         location_id:'',
+                        sale_price:'',
                         imeis:[],
                         spinner:false,
                     }],
                 }),
             };
         },
+        computed: {
+            isDisabled(){
+                if(this.form.customer_id==null)
+                    return true;
+                else
+                    return false;
+            }
+        },
+
         methods: {
             dateFormatter(date) {
                 return moment(date).format('DD-MM-YYYY');
@@ -137,7 +154,7 @@
                 } else {
                     this.form.post('/rma')
                         .then(function (response) {
-                            // window.location.replace("/rma");
+                            window.location.replace("/rma");
                         })
                         .catch(errors => console.log(errors));
                 }
@@ -151,6 +168,7 @@
                     fault_type_id:'',
                     fault:'',
                     location_id:'',
+                    sale_price:'',
                     imeis:[],
                     spinner:false,
                 });
@@ -165,7 +183,8 @@
                 row.spinner=true;
                 axios.get('/rma/search/imei',{
                     params: {
-                        imei: imei
+                        imei: imei,
+                        customer_id: this.form.customer_id
                     },
                 })
                     .then(function (response) {
@@ -185,9 +204,11 @@
                 if(event==null){
                     row.imei = '';
                     row.detail_id ='';
+                    row.sale_price ='';
                 } else {
                     row.imei = event.value.imei_no;
                     row.detail_id = event.value.id;
+                    row.sale_price =event.value.sale_price;
                 }
 
             },
@@ -210,7 +231,6 @@
 
             loadData(data){
                 let self = this;
-                console.log(data);
                 this.form.customer_id = data.customer_id;
                 this.form.rma_no = data.rma_number;
                 this.form.rma_date = data.rma_date;
@@ -221,6 +241,7 @@
                         fault_type_id:entry.pivot.fault_type_id,
                         fault:entry.pivot.fault,
                         location_id: entry.pivot.location_id,
+                        sale_price:entry.pivot.sale_price,
                         imeis:[{label:entry.imei_no, value:{id:entry.id, imei_no:entry.imei_no, price_aed:entry.price_aed , freight:entry.freight}}],
                         imei:entry.imei_no,
                         spinner:false,
