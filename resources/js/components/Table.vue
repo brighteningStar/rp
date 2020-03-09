@@ -28,7 +28,7 @@
                             <td >
                                 <a v-show="! showEditIcon" v-if="editUrl==null" href="#" data-toggle="modal" data-target="#modal-xl" @click.prevent="openModal(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a>
                                 <a v-else="" :href="updateEditUrl(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a>
-                                <a @click.prevent="prepareToRemove(item)" href="#"><i class="fas fa-times cross-del" aria-hidden="true"></i></a>
+                                <a v-if="!cantDelete" @click.prevent="prepareToRemove(item)" href="#"><i class="fas fa-times cross-del" aria-hidden="true"></i></a>
                             </td>
 
                         </tr>
@@ -59,7 +59,7 @@
 <script>
     import Swal from 'sweetalert2'
     export default {
-        props: ['uri', 'title', 'editUrl', 'showEditIcon','deleteUrl'],
+        props: ['uri', 'title', 'editUrl', 'showEditIcon','deleteUrl', 'cantDelete'],
 
         data() {
             return {

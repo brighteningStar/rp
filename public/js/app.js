@@ -2466,7 +2466,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['uri', 'title', 'editUrl', 'showEditIcon', 'deleteUrl'],
+  props: ['uri', 'title', 'editUrl', 'showEditIcon', 'deleteUrl', 'cantDelete'],
   data: function data() {
     return {
       items: [],
@@ -46251,24 +46251,26 @@ var render = function() {
                                   ]
                                 ),
                             _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.prepareToRemove(item)
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fas fa-times cross-del",
-                                  attrs: { "aria-hidden": "true" }
-                                })
-                              ]
-                            )
+                            !_vm.cantDelete
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.prepareToRemove(item)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-times cross-del",
+                                      attrs: { "aria-hidden": "true" }
+                                    })
+                                  ]
+                                )
+                              : _vm._e()
                           ])
                         ],
                         2
@@ -49795,7 +49797,8 @@ var render = function() {
           attrs: {
             uri: "/rma/get",
             title: "RMA Heads",
-            "edit-url": "/rma/id/edit"
+            "edit-url": "/rma/id/edit",
+            "cant-delete": "1"
           }
         })
       ],
@@ -50555,7 +50558,8 @@ var render = function() {
             uri: "/sales/get",
             title: "Sales Heads",
             "edit-url": "/sales/id/edit",
-            "delete-url": "/sales/id"
+            "delete-url": "/sales/id",
+            "cant-delete": "1"
           }
         })
       ],

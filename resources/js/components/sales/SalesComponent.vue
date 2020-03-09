@@ -7,7 +7,7 @@
                 </button>
             </a>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/sales/get" title="Sales Heads" edit-url="/sales/id/edit" delete-url="/sales/id"></table-vue>
+            <table-vue uri="/sales/get" title="Sales Heads" edit-url="/sales/id/edit" delete-url="/sales/id" cant-delete="1"></table-vue>
         </div>
     </section>
 </template>
