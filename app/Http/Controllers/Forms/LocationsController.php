@@ -3,29 +3,29 @@
 namespace App\Http\Controllers\Forms;
 
 use App\Http\Controllers\Controller;
-use App\Services\GradeService;
+use App\Services\LocationService;
 use Illuminate\Http\Request;
 
-class GradeController extends Controller
+class LocationsController extends Controller
 {
     protected $service;
 
-    public function __construct(GradeService $gradeService)
+    public function __construct(LocationService $locationService)
     {
-        $this->service = $gradeService;
+        $this->service = $locationService;
 
     }
 
     public function index()
     {
-        return view('forms.grades.index');
+        return view('forms.locations.index');
     }
 
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:grades,name',
+            'name' => 'required|unique:locations,name',
         ]);
         $this->service->create($request->all());
     }
@@ -40,7 +40,7 @@ class GradeController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:grades,name,'.$id,
+            'name' => 'required|unique:locations,name,'.$id,
         ]);
         $where = array('id'=>$id);
         $this->service->update($request, $where);

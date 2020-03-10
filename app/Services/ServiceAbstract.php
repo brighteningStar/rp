@@ -79,6 +79,11 @@ abstract class ServiceAbstract {
         ];
     }
 
+    public function destroy($id){
+        $item = $this->model->find($id);
+        $item->delete();
+    }
+
 
 
     private function RejectEmpty($data) {

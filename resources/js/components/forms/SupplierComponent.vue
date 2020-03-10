@@ -70,7 +70,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/suppliers/get" title="Suppliers"></table-vue>
+            <table-vue uri="/forms/suppliers/get" title="Suppliers" delete-url="/forms/suppliers/id"></table-vue>
         </div>
     </section>
 </template>

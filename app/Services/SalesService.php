@@ -125,5 +125,16 @@ class SalesService extends ServiceAbstract
         return $salesItem;
     }
 
+    public function destroy($id)
+    {
+        $item = $this->model->find($id);
+        $stockDetails = $item->stockDetails;
+        foreach ($stockDetails as $stockDetail){
+            $stockDetail->update(['stock_status'=>'in_stock']);
+        }
+        $item->stockDetails()->detach();
+        $item->delete();
+    }
+
 
 }

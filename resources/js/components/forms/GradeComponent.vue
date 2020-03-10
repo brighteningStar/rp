@@ -33,7 +33,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/grades/get" title="Grades"></table-vue>
+            <table-vue uri="/forms/grades/get" title="Grades" delete-url="/forms/grades/id"></table-vue>
         </div>
     </section>
 </template>
