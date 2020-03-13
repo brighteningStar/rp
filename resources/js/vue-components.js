@@ -37,6 +37,7 @@ Vue.component('capacity-select', require('./components/selects/CapacitySelect.vu
 Vue.component('grade-select', require('./components/selects/GradeSelect.vue').default);
 Vue.component('fault-type-select', require('./components/selects/FaultTypeSelect.vue').default);
 Vue.component('location-select', require('./components/selects/LocationSelect.vue').default);
+Vue.component('supplier-select', require('./components/selects/SupplierSelect.vue').default);
 
 // app components
 Vue.component('stock-component', require('./components/stock/StockComponent.vue').default);
@@ -54,3 +55,6 @@ Vue.component('rma-component', require('./components/rma/RMAComponent.vue').defa
 Vue.component('create-rma-item', require('./components/rma/CreateRMAItem.vue').default);
 
 
+//supplier credit components
+Vue.component('supplier-credit-component', require('./components/supplier-credit/SupplierCreditComponent.vue').default);
+Vue.component('create-supplier-credit-item', require('./components/supplier-credit/CreateSupplierCredit.vue').default);

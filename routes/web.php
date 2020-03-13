@@ -33,6 +33,10 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::get( '/rma/search/imei', 'RMAController@searchImei' )->name( 'rma.search.imei' );
     Route::resource( 'rma', 'RMAController' );
 
+    Route::get( '/supplier-credit/get', 'SupplierCreditController@get' )->name( 'supplier-credit.get' );
+    Route::get( '/supplier-credit/search/imei', 'SupplierCreditController@searchImei' )->name( 'supplier-credit.search.imei' );
+    Route::resource( 'supplier-credit', 'SupplierCreditController' );
+
     Route::prefix('forms')->group(function () {
 
         Route::get( '/colors/get', 'Forms\ColorController@get' )->name( 'colors.get' );

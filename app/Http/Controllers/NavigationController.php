@@ -46,6 +46,13 @@ class NavigationController extends Controller
                 'icon' => 'fas fa-undo-alt',
                 'children' => null,
             ),
+            'supplier_credit' => array(
+                'route' => route('supplier-credit.index'),
+                'permission' => 'view_all_supplier_credit',
+                'title' => 'Supplier Credit',
+                'icon' => 'fas fa-box-open',
+                'children' => null,
+            ),
             'forms' => array(
                 'route' => null,
                 'permission' => null,
