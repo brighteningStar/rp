@@ -6206,28 +6206,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['id'],
@@ -6241,93 +6219,75 @@ __webpack_require__.r(__webpack_exports__);
         details: [{
           detail_id: '',
           imei: '',
-          sale_price: '',
+          usd_price: '',
           imeis: [],
           spinner: false
         }]
       })
     };
   },
-  computed: {// isDisabled(){
-    //     if(this.form.customer_id==null)
-    //         return true;
-    //     else
-    //         return false;
-    // }
+  computed: {
+    isDisabled: function isDisabled() {
+      if (this.form.supplier_id == null) return true;else return false;
+    }
   },
   methods: {
     dateFormatter: function dateFormatter(date) {
       return moment(date).format('DD-MM-YYYY');
-    } // onSubmitForm(){
-    //
-    //     if(this.id) {
-    //         this.form.put('/rma/'+this.id)
-    //             .then(function (response) {
-    //                 window.location.replace("/rma");
-    //             })
-    //             .catch(errors => console.log(errors));
-    //     } else {
-    //         this.form.post('/rma')
-    //             .then(function (response) {
-    //                 window.location.replace("/rma");
-    //             })
-    //             .catch(errors => console.log(errors));
-    //     }
-    //
-    // },
-    // addRow(){
-    //     this.form.details.push({
-    //         imei:'',
-    //         detail_id:'',
-    //         fault_type_id:'',
-    //         fault:'',
-    //         location_id:'',
-    //         sale_price:'',
-    //         imeis:[],
-    //         spinner:false,
-    //     });
-    // },
-    //
-    // deleteRow(index){
-    //     this.form.details.splice(index, 1);
-    // },
-    //
-    // searchImei(row, imei){
-    //
-    //     row.spinner=true;
-    //     axios.get('/rma/search/imei',{
-    //         params: {
-    //             imei: imei,
-    //             customer_id: this.form.customer_id
-    //         },
-    //     })
-    //         .then(function (response) {
-    //             row.imeis = response.data;
-    //
-    //         }.bind(this))
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         })
-    //         .then(function () {
-    //             row.spinner=false;
-    //         });
-    //
-    // },
-    //
-    // setImeiDetails(event, row){
-    //     if(event==null){
-    //         row.imei = '';
-    //         row.detail_id ='';
-    //         row.sale_price ='';
-    //     } else {
-    //         row.imei = event.value.imei_no;
-    //         row.detail_id = event.value.id;
-    //         row.sale_price =event.value.sale_price;
-    //     }
-    //
-    // },
-    //
-    // getData(){
+    },
+    onSubmitForm: function onSubmitForm() {
+      if (this.id) {
+        this.form.put('/supplier-credit/' + this.id).then(function (response) {
+          window.location.replace("/supplier-credit");
+        })["catch"](function (errors) {
+          return console.log(errors);
+        });
+      } else {
+        this.form.post('/supplier-credit').then(function (response) {
+          window.location.replace("/supplier-credit");
+        })["catch"](function (errors) {
+          return console.log(errors);
+        });
+      }
+    },
+    addRow: function addRow() {
+      this.form.details.push({
+        detail_id: '',
+        imei: '',
+        usd_price: '',
+        imeis: [],
+        spinner: false
+      });
+    },
+    deleteRow: function deleteRow(index) {
+      this.form.details.splice(index, 1);
+    },
+    searchImei: function searchImei(row, imei) {
+      row.spinner = true;
+      axios.get('/supplier-credit/search/imei', {
+        params: {
+          imei: imei,
+          supplier_id: this.form.supplier_id
+        }
+      }).then(function (response) {
+        row.imeis = response.data;
+      }.bind(this))["catch"](function (error) {
+        console.log(error);
+      }).then(function () {
+        row.spinner = false;
+      });
+    },
+    setImeiDetails: function setImeiDetails(event, row) {
+      if (event == null) {
+        row.imei = '';
+        row.detail_id = '';
+        row.usd_price = '';
+      } else {
+        row.imei = event.value.imei_no;
+        row.detail_id = event.value.id;
+        row.usd_price = event.value.usd_price;
+      }
+    } // getData(){
     //     this.form.loading = true;
     //     axios.get('/rma/'+this.id,{
     //     })
@@ -53886,7 +53846,200 @@ var render = function() {
                           )
                         ])
                       ])
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "detail-section mt-5" },
+                      [
+                        _c("h4", [_vm._v("Detail Section")]),
+                        _vm._v(" "),
+                        _c("hr"),
+                        _vm._v(" "),
+                        _vm._l(_vm.form.details, function(row, index) {
+                          return _c(
+                            "div",
+                            { staticClass: "detail-section-row mt-2" },
+                            [
+                              _c("div", { staticClass: "row" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "delete-detail-row",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteRow(index)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "far fa-times-circle"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-6" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("label", [_vm._v("Search by IMEI")]),
+                                      _vm._v(" "),
+                                      row.spinner
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "spinner-border v-select-spinner spinner-grow-sm",
+                                              attrs: { role: "status" }
+                                            },
+                                            [
+                                              _c(
+                                                "span",
+                                                { staticClass: "sr-only" },
+                                                [_vm._v("Loading...")]
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _c("v-select", {
+                                        attrs: {
+                                          value: row.imei,
+                                          options: row.imeis,
+                                          disabled: _vm.isDisabled
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            return _vm.setImeiDetails(
+                                              $event,
+                                              row
+                                            )
+                                          }
+                                        },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "search",
+                                              fn: function(ref) {
+                                                var attributes = ref.attributes
+                                                var events = ref.events
+                                                return [
+                                                  _c(
+                                                    "input",
+                                                    _vm._g(
+                                                      _vm._b(
+                                                        {
+                                                          staticClass:
+                                                            "vs__search",
+                                                          on: {
+                                                            blur: _vm.addRow,
+                                                            keyup: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.searchImei(
+                                                                row,
+                                                                $event.target
+                                                                  .value
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        "input",
+                                                        attributes,
+                                                        false
+                                                      ),
+                                                      events
+                                                    )
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.form.errors.has(
+                                        "details." + index + ".imei"
+                                      )
+                                        ? _c("span", {
+                                            staticClass:
+                                              "error invalid-feedback",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.form.errors.get(
+                                                  "details." + index + ".imei"
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e()
+                                    ],
+                                    1
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-6" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("label", [_vm._v("USD Price")]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: row.usd_price,
+                                          expression: "row.usd_price"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "text", disabled: "" },
+                                      domProps: { value: row.usd_price },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            row,
+                                            "usd_price",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ])
+                                ])
+                              ])
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            staticStyle: {
+                              float: "right",
+                              "margin-top": "10px"
+                            },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addRow($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Add")]
+                        )
+                      ],
+                      2
+                    )
                   ]),
                   _vm._v(" "),
                   _vm._m(1)
@@ -53943,29 +54096,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("section", { staticClass: "content" }, [
+    _c(
+      "div",
+      { staticClass: "container-fluid" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-4 col-md-12" }),
+        _vm._v(" "),
+        _c("table-vue", {
+          attrs: {
+            uri: "/supplier-credit/get",
+            title: "Supplier Credit",
+            "edit-url": "/supplier-credit/id/edit",
+            "cant-delete": "1"
+          }
+        })
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("a", { attrs: { href: "/supplier-credit/create" } }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "button" } },
-            [
-              _vm._v(
-                "\n                    Create Supplier Credit\n                "
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mt-4 col-md-12" })
-      ])
+    return _c("a", { attrs: { href: "/supplier-credit/create" } }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("\n                Create Supplier Credit\n            ")]
+      )
     ])
   }
 ]
