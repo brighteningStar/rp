@@ -9,7 +9,7 @@ class StockHeadDetail extends Model
     protected $table = 'stock_details';
 
     protected $fillable = [
-        'stock_head_id', 'sys_id', 'imei_no', 'serial_no', 'make_id', 'model_id', 'capacity_id','color_id', 'grade_id', 'bank_deal_id', 'fault_type', 'stock_number', 'part_description', 'price_usd', 'price_aed', 'custom_duty', 'freight', 'total_cost', 'stock_status', 'local_imported'
+        'invoice_number', 'stock_head_id', 'sys_id', 'imei_no', 'serial_no', 'make_id', 'model_id', 'capacity_id','color_id', 'grade_id', 'bank_deal_id', 'fault_type', 'stock_number', 'part_description', 'price_usd', 'price_aed', 'total_cost', 'stock_status', 'local_imported'
     ];
 
     public function stockHead()

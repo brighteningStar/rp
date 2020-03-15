@@ -139,6 +139,18 @@ class StockService
     }
 
 
+    public function getAttributeByID( $attributeObj, $id )
+    {
+        $attribute = ( new $attributeObj() )->where( 'id', $id )->first();
+
+        if ( $attribute ) {
+            return [ 'label' => $attribute->name, 'id' => $attribute->id ];
+        }
+
+        return $id;
+    }
+
+
     public function builtHeadSection( $result, &$quantity )
     {
         return [
@@ -152,6 +164,8 @@ class StockService
             'bill_to'          => $this->shippingBilling( trim( $result['bill_to'] ) ),
             'ship_to'          => $this->shippingBilling( trim( $result['bill_to'] ) ),
             'supplier'         => $this->supplier( trim( $result['supplier'] ) ),
+            'custom_duty'      => '',
+            'freight'          => '',
             'quantity_per_inv' => ++$quantity,
         ];
     }

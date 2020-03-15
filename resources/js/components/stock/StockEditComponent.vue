@@ -1,42 +1,5 @@
 <template>
-    <section class="content">
-        <div v-if="showUploadForm" class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card" v-if="uploadPercentage">
-                        <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" :value.prop="uploadPercentage" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
-                                 :style="{width:uploadPercentage+'%'}"></div>
-                        </div>
-                    </div>
-                    <div class="card card-primary">
-                        <loading v-if="loading"></loading>
-                        <div class="card-header">
-                            <h3 class="card-title">Upload Excel</h3>
-                        </div>
-                        <form role="form" method="post" @submit.prevent="uploadExcel()">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="file">File input</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="file" ref="file" v-on:change="fileHandle()">
-                                            <label class="custom-file-label" for="file" v-text="fileName"></label>
-                                        </div>
-                                    </div>
-                                    <span class="error invalid-feedback" v-if="has('file')" v-text="get('file')"></span>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <table-vue uri="/get-stock" title="Stock" edit-url="/stock/edit/id"></table-vue>
-        </div>
-        <div v-if="! showUploadForm" class="container-fluid">
+    <div v-if="! showUploadForm" class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary">
@@ -195,7 +158,7 @@
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Serial Number</label>
-                                                    <input type="text" class="form-control" placeholder="Serial Number" v-model="detailSection[serialNo]['serial_no']">
+                                                    <input type="text" class="form-control" placeholder="Serial Number" v-model="detailSection[serialNo]['serial_no']" :disabled="true">
                                                     <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.serial_no')" v-text="get('detail.'+serialNo+'.serial_no')"></span>
                                                 </div>
                                             </div>
@@ -339,7 +302,7 @@
                                             <div class="col-2">
                                                 <div class="form-group">
                                                     <label>Total Cost</label>
-                                                    <input type="text" class="form-control" placeholder="0.00" v-model="detailSection[serialNo]['total_cost']" :disabled="true">
+                                                    <input type="text" class="form-control" placeholder="Model" v-model="detailSection[serialNo]['total_cost']" :disabled="true">
                                                     <span class="error invalid-feedback" v-if="has('detail.'+serialNo+'.total_cost')" v-text="get('detail.'+serialNo+'.total_cost')"></span>
                                                 </div>
                                             </div>
@@ -363,7 +326,5 @@
                 </div>
             </div>
         </div>
-    </section>
 </template>
-
-<script src="./stock.js"></script>
+<script src="./stock-edit.js"></script>
