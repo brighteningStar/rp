@@ -52,7 +52,9 @@
 
             isActive:function(menu){
                 let currentPage = window.location.href.replace(/^(.+?)\/*?$/, "$1");
-                return menu.route==currentPage
+                let routes = menu.routes_to_active.split("|");
+                let res = routes.indexOf(currentPage);
+                return res>=0;
             },
 
             hasActiveChildren: function(menu){

@@ -79,7 +79,7 @@ class RMAService extends ServiceAbstract
 
         $stockDetails = $item->stockDetails;
         foreach ($stockDetails as $stockDetail){
-            $stockDetail->update(['stock_status'=>'in_stock']);
+            $stockDetail->update(['stock_status'=>'sold']);
         }
         $item->stockDetails()->detach();
         $detailsArr = array();
@@ -99,15 +99,18 @@ class RMAService extends ServiceAbstract
     }
 
     public function fetchStockDetails($imei, $customer_id){
-        $query = StockHeadDetail::select(\DB::raw('stock_details.id as id, stock_details.imei_no as imei_no, min(sales_details.unit_price) as sale_price'))
+
+        $result = array();
+        if($imei==null){
+            return $result;
+        }
+        $query = StockHeadDetail::select(\DB::raw("stock_details.id as id, stock_details.imei_no as imei_no, (SELECT unit_price from sales_details inner join stock_details on `stock_details`.`id` = `sales_details`.`stock_details_id` where `stock_details`.`imei_no` like '%$imei%' order by sales_details.updated_at desc limit 1 ) as sale_price"))
             ->join('sales_details', 'stock_details.id', '=', 'sales_details.stock_details_id')
             ->join('sales_heads', 'sales_details.sales_head_id', '=', 'sales_heads.id')
             ->where('customer_id',$customer_id)
             ->whereRaw( "imei_no like ?", "%$imei%" )
             ->where('stock_status','sold')
-            ->groupBy('stock_details.id')
             ->get();
-        $result = array();
         foreach ($query as $item){
             $obj = new \stdClass();
             $obj->label = $item->imei_no;

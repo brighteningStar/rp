@@ -16,4 +16,13 @@ class SupplierCreditHead extends Model
     {
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
+
+    public function details(){
+        return $this->hasMany(SupplierCreditHeadDetail::class, 'supplier_credit_head_id');
+    }
+
+
+    public function stockDetails(){
+        return $this->belongsToMany(StockHeadDetail::class, 'supplier_credit_details', 'supplier_credit_head_id', 'stock_details_id')->withPivot('usd_price');
+    }
 }

@@ -26,8 +26,10 @@
                         <tr v-for="(item, index) in items" :key="index">
                             <td v-for="(column, indexColumn) in columns" :key="indexColumn">{{item[column]}}</td>
                             <td >
-                                <a v-show="! showEditIcon" v-if="editUrl==null" href="#" data-toggle="modal" data-target="#modal-xl" @click.prevent="openModal(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a>
-                                <a v-else="" :href="updateEditUrl(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a>
+                                <span v-if="!cantEdit">
+                                    <a v-show="! showEditIcon" v-if="editUrl==null" href="#" data-toggle="modal" data-target="#modal-xl" @click.prevent="openModal(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a>
+                                    <a v-else="" :href="updateEditUrl(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a>
+                                </span>
                                 <a v-if="!cantDelete" @click.prevent="prepareToRemove(item)" href="#"><i class="fas fa-times cross-del" aria-hidden="true"></i></a>
                             </td>
 
@@ -59,7 +61,7 @@
 <script>
     import Swal from 'sweetalert2'
     export default {
-        props: ['uri', 'title', 'editUrl', 'showEditIcon','deleteUrl', 'cantDelete'],
+        props: ['uri', 'title', 'editUrl', 'showEditIcon','deleteUrl', 'cantDelete', 'cantEdit'],
 
         data() {
             return {

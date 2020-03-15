@@ -95,6 +95,11 @@ class RolePermissionSeeder extends Seeder
             [Permission::firstOrCreate(['name' => 'delete_rma']),'admin'],
             [Permission::firstOrCreate(['name' => 'create_new_rma']),'admin'],
             [Permission::firstOrCreate(['name' => 'view_all_rma']),'admin'],
+
+            [Permission::firstOrCreate(['name' => 'edit_supplier_credit']),'admin'],
+            [Permission::firstOrCreate(['name' => 'delete_supplier_credit']),'admin'],
+            [Permission::firstOrCreate(['name' => 'create_new_supplier_credit']),'admin'],
+            [Permission::firstOrCreate(['name' => 'view_all_supplier_credit']),'admin'],
         ];
 
         foreach ($allPermissions as $permission){

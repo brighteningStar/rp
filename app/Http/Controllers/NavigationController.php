@@ -13,6 +13,7 @@ class NavigationController extends Controller
         $this->routes = array(
             'dashboard' => array(
                 'route' => route('home'),
+                'routes_to_active' => route('home'),
                 'permission' => 'view_dashboard',
                 'title' => 'Dashboard',
                 'icon' => 'fas fa-th',
@@ -20,6 +21,7 @@ class NavigationController extends Controller
             ),
             'users' => array(
                 'route' => route('users.index'),
+                'routes_to_active' => route('users.index'),
                 'permission' => 'view_all_users',
                 'title' => 'Users',
                 'icon' => 'fas fa-users',
@@ -27,6 +29,7 @@ class NavigationController extends Controller
             ),
             'stock' => array(
                 'route' => route('stock.index'),
+                'routes_to_active' => route('stock.index'),
                 'permission' => 'view_stocks',
                 'title' => 'Stocks',
                 'icon' => 'fas fa-store',
@@ -34,6 +37,7 @@ class NavigationController extends Controller
             ),
             'sales' => array(
                 'route' => route('sales.index'),
+                'routes_to_active' => route('sales.index').'|'.route('sales.create'),
                 'permission' => 'view_all_sales',
                 'title' => 'Sales',
                 'icon' => 'fas fa-money-bill',
@@ -41,19 +45,30 @@ class NavigationController extends Controller
             ),
             'rma' => array(
                 'route' => route('rma.index'),
+                'routes_to_active' => route('rma.index').'|'.route('rma.create'),
                 'permission' => 'view_all_rma',
                 'title' => 'RMA',
                 'icon' => 'fas fa-undo-alt',
                 'children' => null,
             ),
+            'supplier_credit' => array(
+                'route' => route('supplier-credit.index'),
+                'routes_to_active' => route('supplier-credit.index').'|'.route('supplier-credit.create'),
+                'permission' => 'view_all_supplier_credit',
+                'title' => 'Supplier Credit',
+                'icon' => 'fas fa-box-open',
+                'children' => null,
+            ),
             'forms' => array(
                 'route' => null,
+                'routes_to_active' => null,
                 'permission' => null,
                 'title' => 'Setup Forms',
                 'icon' => 'far fa-file',
                 'children' => array(
                     'view_colors' => array(
                         'route' => route('colors.index'),
+                        'routes_to_active' => route('colors.index'),
                         'permission' => 'view_all_colors',
                         'title' => 'Colors',
                         'icon' => 'far fa-circle',
@@ -61,6 +76,7 @@ class NavigationController extends Controller
                     ),
                     'view_capacity' => array(
                         'route' => route('capacities.index'),
+                        'routes_to_active' => route('capacities.index'),
                         'permission' => 'view_all_capacity',
                         'title' => 'Capacity',
                         'icon' => 'far fa-circle',
@@ -68,6 +84,7 @@ class NavigationController extends Controller
                     ),
                     'view_make' => array(
                         'route' => route('makes.index'),
+                        'routes_to_active' => route('makes.index'),
                         'permission' => 'view_all_make',
                         'title' => 'Make',
                         'icon' => 'far fa-circle',
@@ -75,6 +92,7 @@ class NavigationController extends Controller
                     ),
                     'view_models' => array(
                         'route' => route('make-models.index'),
+                        'routes_to_active' => route('make-models.index'),
                         'permission' => 'view_all_models',
                         'title' => 'Models',
                         'icon' => 'far fa-circle',
@@ -82,6 +100,7 @@ class NavigationController extends Controller
                     ),
                     'view_grade' => array(
                         'route' => route('grades.index'),
+                        'routes_to_active' => route('grades.index'),
                         'permission' => 'view_all_grades',
                         'title' => 'Grades',
                         'icon' => 'far fa-circle',
@@ -89,6 +108,7 @@ class NavigationController extends Controller
                     ),
                     'view_fault_type' => array(
                         'route' => route('fault-types.index'),
+                        'routes_to_active' => route('fault-types.index'),
                         'permission' => 'view_all_fault_types',
                         'title' => 'Fault Types',
                         'icon' => 'far fa-circle',
@@ -96,6 +116,7 @@ class NavigationController extends Controller
                     ),
                     'view_customers' => array(
                         'route' => route('customers.index'),
+                        'routes_to_active' => route('customers.index'),
                         'permission' => 'view_all_customers',
                         'title' => 'Customers',
                         'icon' => 'far fa-circle',
@@ -103,6 +124,7 @@ class NavigationController extends Controller
                     ),
                     'view_suppliers' => array(
                         'route' => route('suppliers.index'),
+                        'routes_to_active' => route('suppliers.index'),
                         'permission' => 'view_all_suppliers',
                         'title' => 'Suppliers',
                         'icon' => 'far fa-circle',
@@ -110,6 +132,7 @@ class NavigationController extends Controller
                     ),
                     'view_regions' => array(
                         'route' => route('regions.index'),
+                        'routes_to_active' => route('regions.index'),
                         'permission' => 'view_all_regions',
                         'title' => 'Regions',
                         'icon' => 'far fa-circle',
@@ -117,6 +140,7 @@ class NavigationController extends Controller
                     ),
                     'view_shipping_billings' => array(
                         'route' => route('shipping-billings.index'),
+                        'routes_to_active' => route('shipping-billings.index'),
                         'permission' => 'view_all_shipping_billings',
                         'title' => 'Shipping Billings',
                         'icon' => 'far fa-circle',
@@ -124,6 +148,7 @@ class NavigationController extends Controller
                     ),
                     'view_bank_deals' => array(
                         'route' => route('bank-deals.index'),
+                        'routes_to_active' => route('bank-deals.index'),
                         'permission' => 'view_all_bank_deals',
                         'title' => 'Bank Deals',
                         'icon' => 'far fa-circle',
@@ -131,6 +156,7 @@ class NavigationController extends Controller
                     ),
                     'view_locations' => array(
                         'route' => route('locations.index'),
+                        'routes_to_active' => route('locations.index'),
                         'permission' => 'view_all_locations',
                         'title' => 'Locations',
                         'icon' => 'far fa-circle',
