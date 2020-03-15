@@ -50,10 +50,19 @@ class RMAService extends ServiceAbstract
             'rma_number' => $data['rma_no'],
         );
         $head = $this->model->create($rma_head);
+        $detailsArr = array();
         foreach ($data['details'] as $detail){
-            $head->stockDetails()->attach($detail['detail_id']);
+            $detailItem = array(
+                'stock_details_id' => $detail['detail_id'],
+                'fault_type_id' => $detail['fault_type_id'],
+                'location_id' => $detail['location_id'],
+                'fault' => $detail['fault'],
+                'sale_price' => $detail['sale_price'],
+            );
+            array_push($detailsArr, $detailItem);
             StockHeadDetail::find($detail['detail_id'])->update(['stock_status'=>'rma']);
         }
+        $head->details()->createMany($detailsArr);
     }
 
     public function update(Request $request, array $where)
@@ -73,29 +82,41 @@ class RMAService extends ServiceAbstract
             $stockDetail->update(['stock_status'=>'in_stock']);
         }
         $item->stockDetails()->detach();
-
+        $detailsArr = array();
         foreach ($data['details'] as $detail){
-            $item->stockDetails()->attach($detail['detail_id']);
+            $detailItem = array(
+                'stock_details_id' => $detail['detail_id'],
+                'fault_type_id' => $detail['fault_type_id'],
+                'location_id' => $detail['location_id'],
+                'fault' => $detail['fault'],
+                'sale_price' => $detail['sale_price'],
+            );
+            array_push($detailsArr, $detailItem);
             StockHeadDetail::find($detail['detail_id'])->update(['stock_status'=>'rma']);
         }
+        $item->details()->createMany($detailsArr);
 
     }
-//
-//    public function fetchStockDetails($imei){
-//        $query = StockHeadDetail::select('id', 'imei_no', 'price_aed','freight')
-//            ->whereRaw( "imei_no like ?", "%$imei%" )
-//            ->where('stock_status','in_stock')
-//            ->get();
-//        $result = array();
-//        foreach ($query as $item){
-//            $obj = new \stdClass();
-//            $obj->label = $item->imei_no;
-//            $obj->value = $item;
-//            array_push($result,$obj);
-//        }
-//        return $result;
-//    }
-//
+
+    public function fetchStockDetails($imei, $customer_id){
+        $query = StockHeadDetail::select(\DB::raw('stock_details.id as id, stock_details.imei_no as imei_no, min(sales_details.unit_price) as sale_price'))
+            ->join('sales_details', 'stock_details.id', '=', 'sales_details.stock_details_id')
+            ->join('sales_heads', 'sales_details.sales_head_id', '=', 'sales_heads.id')
+            ->where('customer_id',$customer_id)
+            ->whereRaw( "imei_no like ?", "%$imei%" )
+            ->where('stock_status','sold')
+            ->groupBy('stock_details.id')
+            ->get();
+        $result = array();
+        foreach ($query as $item){
+            $obj = new \stdClass();
+            $obj->label = $item->imei_no;
+            $obj->value = $item;
+            array_push($result,$obj);
+        }
+        return $result;
+    }
+
     public function getDetails($id, $columns = array('*')){
         $rmaItems = $this->model->with('stockDetails')->where('id',$id)->first();
         return $rmaItems;

@@ -49,7 +49,7 @@ class CapacityController extends Controller
 
     public function destroy($id)
     {
-        //
+        $this->service->destroy($id);
     }
 
 

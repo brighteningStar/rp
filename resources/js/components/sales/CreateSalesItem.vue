@@ -36,6 +36,48 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h4>Filters For IMEI</h4>
+                                        </div>
+
+                                    </div>
+                                    <!-- filters for imei -->
+
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Select Model</label>
+                                                <model-select v-model.sync="form.filters.model"></model-select>
+<!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Select Color</label>
+                                                <color-select v-model.sync="form.filters.color"></color-select>
+<!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Select Capacity</label>
+                                                <capacity-select v-model.sync="form.filters.capacity"></capacity-select>
+<!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label>Select Grade</label>
+                                                <grade-select v-model.sync="form.filters.grade"></grade-select>
+<!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="detail-section mt-5">
@@ -50,9 +92,9 @@
                                                     <div  v-if="row.spinner" class="spinner-border v-select-spinner spinner-grow-sm" role="status">
                                                         <span class="sr-only">Loading...</span>
                                                     </div>
-                                                    <v-select :value="row.imei" :options="row.imeis" v-on:input="setImeiDetails($event, row)">
+                                                    <v-select :value="row.imei" :options="row.imeis" v-on:input="setImeiDetails($event, row)" :disabled="isDisabled">
                                                         <template #search="{attributes, events}">
-                                                            <input class="vs__search" v-bind="attributes" v-on="events" @keyup="searchImei(row, $event.target.value)"/>
+                                                            <input class="vs__search" v-bind="attributes" v-on="events" @blur="addRow" @keyup="searchImei(row, $event.target.value)" />
                                                         </template>
                                                     </v-select>
                                                     <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.imei')" v-text="form.errors.get('details.'+index+'.imei')"></span>
@@ -121,6 +163,12 @@
                     sale_date: '',
                     invoice_no: '',
                     loading:false,
+                    filters:{
+                        'model' :null,
+                        'capacity' :null,
+                        'color' :null,
+                        'grade' :null,
+                    },
                     details:[{
                         detail_id:'',
                         imei:'',
@@ -135,6 +183,16 @@
                 }),
             };
         },
+
+        computed: {
+            isDisabled(){
+                if(this.form.filters.model==null || this.form.filters.capacity==null || this.form.filters.color==null || this.form.filters.grade==null)
+                    return true;
+                else
+                    return false;
+            }
+        },
+
         methods: {
             dateFormatter(date) {
                 return moment(date).format('DD-MM-YYYY');
@@ -178,9 +236,13 @@
             searchImei(row, imei){
 
                 row.spinner=true;
-                axios.get('/search/imei',{
+                axios.get('/sales/search/imei',{
                     params: {
-                        imei: imei
+                        imei: imei,
+                        color: this.form.filters.color,
+                        grade: this.form.filters.grade ,
+                        capacity: this.form.filters.capacity,
+                        model: this.form.filters.model,
                     },
                 })
                     .then(function (response) {
@@ -232,6 +294,12 @@
                 this.form.customer_id = data.customer_id;
                 this.form.invoice_no = data.invoice_no;
                 this.form.sale_date = data.sale_date;
+
+                this.form.filters.model = data.search_model_id;
+                this.form.filters.color = data.search_color_id;
+                this.form.filters.capacity = data.search_capacity_id;
+                this.form.filters.grade = data.search_grade_id;
+
                 this.form.details = [];
                 data.stock_details.forEach(function(entry) {
                     let newobj = {

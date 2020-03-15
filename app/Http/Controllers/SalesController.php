@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\IMEIValid;
 use App\Services\SalesService;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,7 @@ class SalesController extends Controller
             'invoice_no' => 'required|unique:sales_heads,invoice_no',
             'sale_date' => 'required',
             'customer_id' => 'required|integer',
-            'details.*.imei' => 'required',
+            'details.*.imei' => ['required', new IMEIValid($request)],
             'details.*.price_aed' => 'required',
             'details.*.freight' => 'required',
             'details.*.unit_price' => 'required',
@@ -99,7 +100,7 @@ class SalesController extends Controller
 
     public function destroy($id)
     {
-        //
+        $this->service->destroy($id);
     }
 
 
@@ -109,7 +110,12 @@ class SalesController extends Controller
     }
 
     public function searchImei(Request $request){
+
         $imei = $request->get('imei');
-        return $this->service->fetchStockDetails($imei);
+        $grade = $request->get('grade');
+        $color = $request->get('color');
+        $capacity = $request->get('capacity');
+        $model = $request->get('model');
+        return $this->service->fetchStockDetails($imei, $grade, $color, $capacity, $model);
     }
 }

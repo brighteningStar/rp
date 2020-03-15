@@ -25,8 +25,12 @@
                         <tbody>
                         <tr v-for="(item, index) in items" :key="index">
                             <td v-for="(column, indexColumn) in columns" :key="indexColumn">{{item[column]}}</td>
-                            <td v-show="! showEditIcon" v-if="editUrl==null"><a href="#" data-toggle="modal" data-target="#modal-xl" @click.prevent="openModal(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a></td>
-                            <td v-else=""><a :href="updateEditUrl(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a></td>
+                            <td >
+                                <a v-show="! showEditIcon" v-if="editUrl==null" href="#" data-toggle="modal" data-target="#modal-xl" @click.prevent="openModal(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a>
+                                <a v-else="" :href="updateEditUrl(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a>
+                                <a v-if="!cantDelete" @click.prevent="prepareToRemove(item)" href="#"><i class="fas fa-times cross-del" aria-hidden="true"></i></a>
+                            </td>
+
                         </tr>
                         </tbody>
                     </table>
@@ -53,8 +57,9 @@
 </template>
 
 <script>
+    import Swal from 'sweetalert2'
     export default {
-        props: ['uri', 'title', 'editUrl', 'showEditIcon'],
+        props: ['uri', 'title', 'editUrl', 'showEditIcon','deleteUrl', 'cantDelete'],
 
         data() {
             return {
@@ -134,6 +139,49 @@
 
             updateEditUrl(id){
                 return this.editUrl.replace("id", id);
+            },
+
+            prepareToRemove(item){
+                if(this.deleteUrl==null){
+                    return;
+                }
+                let delUrl = this.deleteUrl.replace("id", item.id);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm: false,
+                }).then((result) => {
+                    if (result.value) {
+                        this.deleteItem(delUrl);
+                    }
+                })
+
+            },
+
+            deleteItem(url){
+                axios.delete(url)
+                    .then(function (response) {
+                        this.loadTable();
+                        Swal.fire(
+                            'Deleted!',
+                            'Item has been deleted.',
+                            'success'
+                        )
+
+                    }.bind(this))
+                    .catch(function (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'You cannot delete this item as it may have being used',
+                        })
+                    });
             }
         },
 

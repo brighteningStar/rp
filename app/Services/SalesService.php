@@ -48,6 +48,10 @@ class SalesService extends ServiceAbstract
             'customer_id' => $data['customer_id'],
             'sale_date' => $data['sale_date'],
             'invoice_no' => $data['invoice_no'],
+            'search_model_id' => $data['filters']['model'],
+            'search_color_id' => $data['filters']['color'],
+            'search_capacity_id' => $data['filters']['capacity'],
+            'search_grade_id' => $data['filters']['grade'],
         );
         $head = $this->model->create($sales_head);
         $detailsArr = array();
@@ -97,10 +101,14 @@ class SalesService extends ServiceAbstract
 
     }
 
-    public function fetchStockDetails($imei){
+    public function fetchStockDetails($imei, $grade, $color, $capacity, $model){
         $query = StockHeadDetail::select('id', 'imei_no', 'price_aed','freight')
             ->whereRaw( "imei_no like ?", "%$imei%" )
             ->where('stock_status','in_stock')
+            ->where('grade_id',$grade)
+            ->where('color_id',$color)
+            ->where('capacity_id',$capacity)
+            ->where('model_id',$model)
             ->get();
         $result = array();
         foreach ($query as $item){
@@ -115,6 +123,17 @@ class SalesService extends ServiceAbstract
     public function getDetails($id, $columns = array('*')){
         $salesItem = $this->model->with('stockDetails')->where('id',$id)->first();
         return $salesItem;
+    }
+
+    public function destroy($id)
+    {
+        $item = $this->model->find($id);
+        $stockDetails = $item->stockDetails;
+        foreach ($stockDetails as $stockDetail){
+            $stockDetail->update(['stock_status'=>'in_stock']);
+        }
+        $item->stockDetails()->detach();
+        $item->delete();
     }
 
 

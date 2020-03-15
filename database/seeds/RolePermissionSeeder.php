@@ -79,6 +79,11 @@ class RolePermissionSeeder extends Seeder
             [Permission::firstOrCreate(['name' => 'create_new_bank_deal']),'admin'],
             [Permission::firstOrCreate(['name' => 'view_all_bank_deals']),'admin'],
 
+            [Permission::firstOrCreate(['name' => 'view_all_locations']),'admin'],
+            [Permission::firstOrCreate(['name' => 'edit_location']),'admin'],
+            [Permission::firstOrCreate(['name' => 'delete_location']),'admin'],
+            [Permission::firstOrCreate(['name' => 'create_new_location']),'admin'],
+
             [Permission::firstOrCreate(['name' => 'view_stocks']),'admin'],
 
             [Permission::firstOrCreate(['name' => 'edit_sales']),'admin'],

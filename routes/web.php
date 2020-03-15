@@ -29,11 +29,11 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::get( '/fetch-stock/{id}', 'StockController@fetchStock' )->name( 'fetch.stock' );
 
     Route::get( '/sales/get', 'SalesController@get' )->name( 'sales.get' );
-    Route::get( '/search/imei', 'SalesController@searchImei' )->name( 'search.imei' );
+    Route::get( '/sales/search/imei', 'SalesController@searchImei' )->name( 'sales.search.imei' );
     Route::resource( 'sales', 'SalesController' );
 
     Route::get( '/rma/get', 'RMAController@get' )->name( 'rma.get' );
-    //Route::get( '/search/imei', 'SalesController@searchImei' )->name( 'search.imei' );
+    Route::get( '/rma/search/imei', 'RMAController@searchImei' )->name( 'rma.search.imei' );
     Route::resource( 'rma', 'RMAController' );
 
     Route::prefix('forms')->group(function () {
@@ -70,6 +70,9 @@ Route::group(['middleware' => ["auth"]], function () {
 
         Route::get( 'bank-deals/get', 'Forms\BankDealsController@get' )->name( 'bank-deals.get' );
         Route::resource('bank-deals', 'Forms\BankDealsController');
+
+        Route::get( 'locations/get', 'Forms\LocationsController@get' )->name( 'locations.get' );
+        Route::resource('locations', 'Forms\LocationsController');
 
     });
 

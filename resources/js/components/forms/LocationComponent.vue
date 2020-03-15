@@ -2,7 +2,7 @@
     <section class="content">
         <div class="container-fluid">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-xl">
-                Create User
+                Create Location
             </button>
             <div class="modal fade" id="modal-xl">
                 <div class="modal-dialog modal-lg">
@@ -15,33 +15,11 @@
                             </button>
                         </div>
                         <form action="#" method="post" @submit.prevent="onSubmit">
-
                             <div class="modal-body">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Full name" name="name" v-model="form.name">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-user"></span>
-                                        </div>
-                                    </div>
+                                    <input type="text" class="form-control" placeholder="Name" name="name" v-model="form.name">
                                     <span class="error invalid-feedback" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
                                 </div>
-
-                                <div class="input-group mb-3">
-                                    <input type="email" class="form-control" placeholder="Email" name="email" v-model="form.email">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-envelope"></span>
-                                        </div>
-                                    </div>
-                                    <span class="error invalid-feedback" v-if="form.errors.has('email')" v-text="form.errors.get('email')"></span>
-                                </div>
-
-                                <div class="input-group mb-3">
-                                    <role-select v-model.sync="form.role_id"></role-select>
-                                    <span class="error invalid-feedback" v-if="form.errors.has('role_id')" v-text="form.errors.get('role_id')"></span>
-                                </div>
-
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -55,23 +33,21 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/users/get" title="Users" delete-url="/users/id"></table-vue>
+            <table-vue uri="/forms/locations/get" title="Locations" delete-url="/forms/locations/id"></table-vue>
         </div>
     </section>
 </template>
 
 <script>
-    import {Form} from "../Form"
+    import {Form} from "../../Form"
     export default {
         data() {
             return {
                 form: new Form({
                     name: '',
-                    email: '',
-                    role_id: '',
-                    loading:false,
+                    loading:false
                 }),
-                title:'Create New User',
+                title:'Create New Location',
                 method:'create',
                 editID:null,
             };
@@ -87,7 +63,7 @@
             },
 
             createItem(){
-                this.form.post('/users')
+                this.form.post('/forms/locations')
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -96,7 +72,7 @@
             },
 
             updateItem(){
-                this.form.put('/users/'+this.editID)
+                this.form.put('/forms/locations/'+this.editID)
                     .then(function (response) {
                         Event.$emit('reloadTable');
                         $("[data-dismiss=modal]").trigger({ type: "click" });
@@ -108,7 +84,7 @@
             let self = this;
             $('#modal-xl').on('hidden.bs.modal', function () {
                 self.form.reset();
-                self.title = "Create New User";
+                self.title = "Create New Location";
                 self.method = "create";
                 this.editID = null;
             });
@@ -117,11 +93,11 @@
         created() {
             Event.$on('editModal', (data) => {
                 let colorID = data.itemId;
-                this.title = "Update User";
+                this.title = "Update Location";
                 this.method = "update";
                 this.editID = colorID;
                 this.form.loading = true;
-                axios.get('/users/'+colorID)
+                axios.get('/forms/locations/'+colorID)
                     .then(function (response) {
                         this.form.loading = false;
                         this.form.copyDataToForm(response.data);
