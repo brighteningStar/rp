@@ -96,13 +96,18 @@ class SupplierCreditService extends ServiceAbstract
 //    }
 
     public function fetchStockDetails($imei, $supplier_id){
+
+        $result = array();
+        if($imei==null){
+            return $result;
+        }
         $query = StockHeadDetail::select(\DB::raw('stock_details.id as id, stock_details.imei_no as imei_no, stock_details.price_usd as usd_price'))
             ->join('stock_heads', 'stock_heads.id', '=', 'stock_details.stock_head_id')
             ->where('supplier_id',$supplier_id)
             ->whereRaw( "imei_no like ?", "%$imei%" )
             ->where('stock_status','rma')
             ->get();
-        $result = array();
+
         foreach ($query as $item){
             $obj = new \stdClass();
             $obj->label = $item->imei_no;

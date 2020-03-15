@@ -2205,7 +2205,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     isActive: function isActive(menu) {
       var currentPage = window.location.href.replace(/^(.+?)\/*?$/, "$1");
-      return menu.route == currentPage;
+      var routes = menu.routes_to_active.split("|");
+      var res = routes.indexOf(currentPage);
+      return res >= 0;
     },
     hasActiveChildren: function hasActiveChildren(menu) {
       var currentPage = window.location.href.replace(/^(.+?)\/*?$/, "$1");
@@ -2464,9 +2466,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['uri', 'title', 'editUrl', 'showEditIcon', 'deleteUrl', 'cantDelete'],
+  props: ['uri', 'title', 'editUrl', 'showEditIcon', 'deleteUrl', 'cantDelete', 'cantEdit'],
   data: function data() {
     return {
       items: [],
@@ -46355,49 +46359,57 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("td", [
-                            _vm.editUrl == null
-                              ? _c(
-                                  "a",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "show",
-                                        rawName: "v-show",
-                                        value: !_vm.showEditIcon,
-                                        expression: "! showEditIcon"
-                                      }
-                                    ],
-                                    attrs: {
-                                      href: "#",
-                                      "data-toggle": "modal",
-                                      "data-target": "#modal-xl"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.openModal(item.id)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fas fa-pencil-alt mr-1",
-                                      attrs: { "aria-hidden": "true" }
-                                    })
-                                  ]
-                                )
-                              : _c(
-                                  "a",
-                                  {
-                                    attrs: { href: _vm.updateEditUrl(item.id) }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fas fa-pencil-alt mr-1",
-                                      attrs: { "aria-hidden": "true" }
-                                    })
-                                  ]
-                                ),
+                            !_vm.cantEdit
+                              ? _c("span", [
+                                  _vm.editUrl == null
+                                    ? _c(
+                                        "a",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value: !_vm.showEditIcon,
+                                              expression: "! showEditIcon"
+                                            }
+                                          ],
+                                          attrs: {
+                                            href: "#",
+                                            "data-toggle": "modal",
+                                            "data-target": "#modal-xl"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.openModal(item.id)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass:
+                                              "fas fa-pencil-alt mr-1",
+                                            attrs: { "aria-hidden": "true" }
+                                          })
+                                        ]
+                                      )
+                                    : _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: _vm.updateEditUrl(item.id)
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass:
+                                              "fas fa-pencil-alt mr-1",
+                                            attrs: { "aria-hidden": "true" }
+                                          })
+                                        ]
+                                      )
+                                ])
+                              : _vm._e(),
                             _vm._v(" "),
                             !_vm.cantDelete
                               ? _c(
@@ -49946,7 +49958,8 @@ var render = function() {
             uri: "/rma/get",
             title: "RMA Heads",
             "edit-url": "/rma/id/edit",
-            "cant-delete": "1"
+            "cant-delete": "1",
+            "cant-edit": "1"
           }
         })
       ],
@@ -50707,7 +50720,8 @@ var render = function() {
             title: "Sales Heads",
             "edit-url": "/sales/id/edit",
             "delete-url": "/sales/id",
-            "cant-delete": "1"
+            "cant-delete": "1",
+            "cant-edit": "1"
           }
         })
       ],
@@ -56060,7 +56074,8 @@ var render = function() {
             uri: "/supplier-credit/get",
             title: "Supplier Credit",
             "edit-url": "/supplier-credit/id/edit",
-            "cant-delete": "1"
+            "cant-delete": "1",
+            "cant-edit": "1"
           }
         })
       ],

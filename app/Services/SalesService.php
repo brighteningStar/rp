@@ -102,7 +102,13 @@ class SalesService extends ServiceAbstract
     }
 
     public function fetchStockDetails($imei, $grade, $color, $capacity, $model){
-        $query = StockHeadDetail::select('id', 'imei_no', 'price_aed','freight')
+
+        $result = array();
+        if($imei==null){
+            return $result;
+        }
+        $query = StockHeadDetail::select('stock_details.id as id', 'stock_details.imei_no as imei_no', 'stock_details.price_aed as price_aed','stock_heads.freight as freight')
+            ->join('stock_heads', 'stock_heads.id', '=', 'stock_details.stock_head_id')
             ->whereRaw( "imei_no like ?", "%$imei%" )
             ->where('stock_status','in_stock')
             ->where('grade_id',$grade)
@@ -110,7 +116,6 @@ class SalesService extends ServiceAbstract
             ->where('capacity_id',$capacity)
             ->where('model_id',$model)
             ->get();
-        $result = array();
         foreach ($query as $item){
             $obj = new \stdClass();
             $obj->label = $item->imei_no;
