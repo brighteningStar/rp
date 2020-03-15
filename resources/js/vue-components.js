@@ -33,6 +33,7 @@ Vue.component('customer-select', require('./components/selects/CustomerSelect.vu
 
 // app components
 Vue.component('stock-component', require('./components/stock/StockComponent.vue').default);
+Vue.component('stock-edit-component', require('./components/stock/StockEditComponent.vue').default);
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
 Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 Vue.component('update-profile-component', require('./components/Profile.vue').default);

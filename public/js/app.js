@@ -4848,385 +4848,19 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/stock/StockComponent.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/stock/StockComponent.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./resources/js/components/stock/stock-edit.js?vue&type=script&lang=js&":
+/*!************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/js/components/stock/stock-edit.js?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _stockHeadingModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stockHeadingModel */ "./resources/js/components/stock/stockHeadingModel.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['id'],
   data: function data() {
     return {
       loadingForm: false,
@@ -5237,19 +4871,7 @@ __webpack_require__.r(__webpack_exports__);
       uploadPercentage: 0,
       loading: false,
       detailSection: [],
-      stockHeading: {
-        invoice_no: '',
-        declaration_no: '',
-        supplier: '',
-        ship_to: '',
-        bill_to: '',
-        region: '',
-        tracking_no: '',
-        invoice_date: '',
-        so_number: '',
-        so_date: '',
-        quantity_per_inv: ''
-      },
+      stockHeading: new _stockHeadingModel__WEBPACK_IMPORTED_MODULE_0__["stockHeadingModel"]().heading(),
       suppliers: {
         options: [],
         spinner: false
@@ -5303,6 +4925,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    calculateTotalPrice: function calculateTotalPrice() {
+      var customDuty = this.stockHeading.quantity_per_inv / this.stockHeading.custom_duty;
+      var freight = this.stockHeading.quantity_per_inv / this.stockHeading.freight;
+
+      if (freight >= 0 && customDuty >= 0 && freight != 'Infinity' && customDuty != 'Infinity') {
+        for (var i in this.detailSection) {
+          this.detailSection[i].total_cost = (parseFloat(this.detailSection[i].price_aed) + parseFloat(customDuty) + parseFloat(freight)).toFixed(2);
+        }
+      }
+    },
     dateFormatter: function dateFormatter(date) {
       return moment(date).format('YYYY-MM-DD');
     },
@@ -5327,7 +4959,219 @@ __webpack_require__.r(__webpack_exports__);
       this.fetchList(_search, this, name, serialNo);
     },
     fetchList: _.throttle(function (search, vm, name, serialNo) {
-      console.log(search);
+      fetch("/search?q=".concat(escape(search), "&table=").concat(escape(name))).then(function (res) {
+        if (serialNo === false) {
+          res.json().then(function (json) {
+            return vm[name].options = json.items;
+          });
+          vm[name].spinner = false;
+        } else {
+          res.json().then(function (json) {
+            return vm[name][serialNo].options = json.items;
+          });
+          vm[name][serialNo].spinner = false;
+        }
+      });
+    }, 10),
+    has: function has(field) {
+      return this.errors.hasOwnProperty(field);
+    },
+    get: function get(field) {
+      if (this.errors[field]) {
+        return this.errors[field][0];
+      }
+    },
+    onSubmitStock: function onSubmitStock() {
+      var _this = this;
+
+      this.loadingForm = true;
+      axios.post("/stock/".concat(this.id, "/update"), {
+        'heading': this.stockHeading,
+        'detail': this.detailSection,
+        'local_imported': this.local_imported
+      }).then(function (response) {
+        _this.showUploadForm = true;
+        _this.loadingForm = false;
+        window.location.href = '/stock';
+      })["catch"](function (errors) {
+        this.errors = Object.assign({}, this.errors, errors.response.data.errors);
+        this.loadingForm = false;
+      }.bind(this));
+    },
+    cancelForm: function cancelForm() {
+      this.showUploadForm = true;
+    }
+  },
+  mounted: function mounted() {
+    var id = this.id;
+    axios.get("/fetch-stock/".concat(id)).then(function (response) {
+      this.loading = false;
+      this.fileName = 'Choose File';
+      this.showUploadForm = false;
+      this.mapResponseToHeading(response.data.heading);
+      this.local_imported.selected = response.data.local_imported;
+      var detailData = Object.keys(response.data.detail);
+      var makeModels = [];
+      var make = [];
+      var color = [];
+      var grade = [];
+      var capacity = [];
+      var bankDeal = [];
+
+      for (var i = 0; i < detailData.length; i++) {
+        makeModels[detailData[i]] = {
+          options: [],
+          spinner: false
+        };
+        make[detailData[i]] = {
+          options: [],
+          spinner: false
+        };
+        color[detailData[i]] = {
+          options: [],
+          spinner: false
+        };
+        grade[detailData[i]] = {
+          options: [],
+          spinner: false
+        };
+        capacity[detailData[i]] = {
+          options: [],
+          spinner: false
+        };
+        bankDeal[detailData[i]] = {
+          options: [],
+          spinner: false
+        };
+      }
+
+      this.make_models = Object.assign({}, this.make_models, makeModels);
+      this.make = Object.assign({}, this.make, make);
+      this.colors = Object.assign({}, this.colors, color);
+      this.grades = Object.assign({}, this.grades, grade);
+      this.capacities = Object.assign({}, this.capacities, capacity);
+      this.bank_deals = Object.assign({}, this.bank_deals, bankDeal);
+      this.detailSection = response.data.detail;
+    }.bind(this))["catch"](function (errors) {
+      this.loading = false;
+      this.uploadPercentage = 0;
+      this.errors = errors.response.data.errors;
+    }.bind(this));
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./resources/js/components/stock/stock.js?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/js/components/stock/stock.js?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _stockHeadingModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stockHeadingModel */ "./resources/js/components/stock/stockHeadingModel.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loadingForm: false,
+      errors: {},
+      showUploadForm: true,
+      fileName: 'Choose file',
+      file: '',
+      uploadPercentage: 0,
+      loading: false,
+      detailSection: [],
+      stockHeading: new _stockHeadingModel__WEBPACK_IMPORTED_MODULE_0__["stockHeadingModel"]().heading(),
+      suppliers: {
+        options: [],
+        spinner: false
+      },
+      regions: {
+        options: [],
+        spinner: false
+      },
+      ship_to: {
+        options: [],
+        spinner: false
+      },
+      bill_to: {
+        options: [],
+        spinner: false
+      },
+      make_models: {
+        options: [],
+        spinner: false
+      },
+      make: {
+        options: [],
+        spinner: false
+      },
+      colors: {
+        options: [],
+        spinner: false
+      },
+      grades: {
+        options: [],
+        spinner: false
+      },
+      capacities: {
+        options: [],
+        spinner: false
+      },
+      bank_deals: {
+        options: [],
+        spinner: false
+      },
+      local_imported: {
+        options: [{
+          'title': 'Local',
+          'id': 'local'
+        }, {
+          'title': 'Imported',
+          'id': 'imported'
+        }],
+        selected: ''
+      }
+    };
+  },
+  methods: {
+    calculateTotalPrice: function calculateTotalPrice() {
+      var customDuty = this.stockHeading.quantity_per_inv / this.stockHeading.custom_duty;
+      var freight = this.stockHeading.quantity_per_inv / this.stockHeading.freight;
+
+      if (freight >= 0 && customDuty >= 0 && freight != 'Infinity' && customDuty != 'Infinity') {
+        for (var i in this.detailSection) {
+          this.detailSection[i].total_cost = (parseFloat(this.detailSection[i].price_aed) + parseFloat(customDuty) + parseFloat(freight)).toFixed(2);
+        }
+      }
+    },
+    dateFormatter: function dateFormatter(date) {
+      return moment(date).format('YYYY-MM-DD');
+    },
+    mapResponseToHeading: function mapResponseToHeading(heading) {
+      for (var field in this.stockHeading) {
+        this.stockHeading[field] = heading[field];
+      }
+    },
+    fileHandle: function fileHandle() {
+      this.file = this.$refs.file.files[0];
+      this.fileName = this.file.name;
+    },
+    search: function search(name, _search) {
+      var serialNo = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+      if (serialNo === false) {
+        this[name].spinner = true;
+      } else {
+        this[name][serialNo].spinner = true;
+      }
+
+      this.fetchList(_search, this, name, serialNo);
+    },
+    fetchList: _.throttle(function (search, vm, name, serialNo) {
       fetch("/search?q=".concat(escape(search), "&table=").concat(escape(name))).then(function (res) {
         if (serialNo === false) {
           res.json().then(function (json) {
@@ -5392,8 +5236,7 @@ __webpack_require__.r(__webpack_exports__);
             options: [],
             spinner: false
           };
-        } //console.log(makeModels);
-
+        }
 
         this.make_models = Object.assign({}, this.make_models, makeModels);
         this.make = Object.assign({}, this.make, make);
@@ -5403,7 +5246,6 @@ __webpack_require__.r(__webpack_exports__);
         this.bank_deals = Object.assign({}, this.bank_deals, bankDeal);
         this.detailSection = response.data.detail;
       }.bind(this))["catch"](function (errors) {
-        console.log(this.errors);
         this.loading = false;
         this.uploadPercentage = 0;
         this.errors = errors.response.data.errors;
@@ -5413,8 +5255,6 @@ __webpack_require__.r(__webpack_exports__);
       return this.errors.hasOwnProperty(field);
     },
     get: function get(field) {
-      console.log(field);
-
       if (this.errors[field]) {
         return this.errors[field][0];
       }
@@ -46774,7 +46614,7 @@ var render = function() {
               attrs: {
                 uri: "/get-stock",
                 title: "Stock",
-                showEditIcon: "false"
+                "edit-url": "/stock/edit/id"
               }
             })
           ],
@@ -46813,43 +46653,6 @@ var render = function() {
                           _c("hr"),
                           _vm._v(" "),
                           _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-2" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _c("label", [_vm._v("Invoice Number")]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.stockHeading.invoice_no,
-                                      expression: "stockHeading.invoice_no"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: {
-                                    type: "text",
-                                    placeholder: "Invoice Number"
-                                  },
-                                  domProps: {
-                                    value: _vm.stockHeading.invoice_no
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.stockHeading,
-                                        "invoice_no",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ]),
-                            _vm._v(" "),
                             _c("div", { staticClass: "col-2" }, [
                               _c("div", { staticClass: "form-group" }, [
                                 _c("label", [_vm._v("Declaration Number")]),
@@ -47496,6 +47299,74 @@ var render = function() {
                                       _vm.$set(
                                         _vm.stockHeading,
                                         "quantity_per_inv",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("label", [_vm._v("Custom Duty")]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.stockHeading.custom_duty,
+                                      expression: "stockHeading.custom_duty"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "0.00" },
+                                  domProps: {
+                                    value: _vm.stockHeading.custom_duty
+                                  },
+                                  on: {
+                                    keyup: _vm.calculateTotalPrice,
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.stockHeading,
+                                        "custom_duty",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("label", [_vm._v("Freight")]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.stockHeading.freight,
+                                      expression: "stockHeading.freight"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "0.00" },
+                                  domProps: { value: _vm.stockHeading.freight },
+                                  on: {
+                                    keyup: _vm.calculateTotalPrice,
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.stockHeading,
+                                        "freight",
                                         $event.target.value
                                       )
                                     }
@@ -48750,130 +48621,6 @@ var render = function() {
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-2" }, [
                                       _c("div", { staticClass: "form-group" }, [
-                                        _c("label", [_vm._v("Custom Duty")]),
-                                        _vm._v(" "),
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value:
-                                                _vm.detailSection[serialNo][
-                                                  "custom_duty"
-                                                ],
-                                              expression:
-                                                "detailSection[serialNo]['custom_duty']"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: {
-                                            type: "text",
-                                            placeholder: "Serial Number"
-                                          },
-                                          domProps: {
-                                            value:
-                                              _vm.detailSection[serialNo][
-                                                "custom_duty"
-                                              ]
-                                          },
-                                          on: {
-                                            input: function($event) {
-                                              if ($event.target.composing) {
-                                                return
-                                              }
-                                              _vm.$set(
-                                                _vm.detailSection[serialNo],
-                                                "custom_duty",
-                                                $event.target.value
-                                              )
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _vm.has(
-                                          "detail." + serialNo + ".custom_duty"
-                                        )
-                                          ? _c("span", {
-                                              staticClass:
-                                                "error invalid-feedback",
-                                              domProps: {
-                                                textContent: _vm._s(
-                                                  _vm.get(
-                                                    "detail." +
-                                                      serialNo +
-                                                      ".custom_duty"
-                                                  )
-                                                )
-                                              }
-                                            })
-                                          : _vm._e()
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "col-2" }, [
-                                      _c("div", { staticClass: "form-group" }, [
-                                        _c("label", [_vm._v("Freight")]),
-                                        _vm._v(" "),
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value:
-                                                _vm.detailSection[serialNo][
-                                                  "freight"
-                                                ],
-                                              expression:
-                                                "detailSection[serialNo]['freight']"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: {
-                                            type: "text",
-                                            placeholder: "Make"
-                                          },
-                                          domProps: {
-                                            value:
-                                              _vm.detailSection[serialNo][
-                                                "freight"
-                                              ]
-                                          },
-                                          on: {
-                                            input: function($event) {
-                                              if ($event.target.composing) {
-                                                return
-                                              }
-                                              _vm.$set(
-                                                _vm.detailSection[serialNo],
-                                                "freight",
-                                                $event.target.value
-                                              )
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _vm.has(
-                                          "detail." + serialNo + ".freight"
-                                        )
-                                          ? _c("span", {
-                                              staticClass:
-                                                "error invalid-feedback",
-                                              domProps: {
-                                                textContent: _vm._s(
-                                                  _vm.get(
-                                                    "detail." +
-                                                      serialNo +
-                                                      ".freight"
-                                                  )
-                                                )
-                                              }
-                                            })
-                                          : _vm._e()
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "col-2" }, [
-                                      _c("div", { staticClass: "form-group" }, [
                                         _c("label", [_vm._v("Total Cost")]),
                                         _vm._v(" "),
                                         _c("input", {
@@ -48892,7 +48639,8 @@ var render = function() {
                                           staticClass: "form-control",
                                           attrs: {
                                             type: "text",
-                                            placeholder: "Model"
+                                            placeholder: "0.00",
+                                            disabled: true
                                           },
                                           domProps: {
                                             value:
@@ -48926,6 +48674,68 @@ var render = function() {
                                                     "detail." +
                                                       serialNo +
                                                       ".total_cost"
+                                                  )
+                                                )
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-2" }, [
+                                      _c("div", { staticClass: "form-group" }, [
+                                        _c("label", [_vm._v("Invoice Number")]),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.detailSection[serialNo][
+                                                  "invoice_no"
+                                                ],
+                                              expression:
+                                                "detailSection[serialNo]['invoice_no']"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            type: "text",
+                                            placeholder: "3RGTT#$"
+                                          },
+                                          domProps: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "invoice_no"
+                                              ]
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "invoice_no",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.has(
+                                          "detail." + serialNo + ".invoice_no"
+                                        )
+                                          ? _c("span", {
+                                              staticClass:
+                                                "error invalid-feedback",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  _vm.get(
+                                                    "detail." +
+                                                      serialNo +
+                                                      ".invoice_no"
                                                   )
                                                 )
                                               }
@@ -48999,6 +48809,2146 @@ var staticRenderFns = [
       )
     ])
   },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Stock Form")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/stock/StockEditComponent.vue?vue&type=template&id=54e58aa1&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/stock/StockEditComponent.vue?vue&type=template&id=54e58aa1& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return !_vm.showUploadForm
+    ? _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c(
+              "div",
+              { staticClass: "card card-primary" },
+              [
+                _vm.loadingForm ? _c("loading") : _vm._e(),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    attrs: { role: "form" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.onSubmitStock($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("div", { staticClass: "head-section" }, [
+                        _c("h4", [_vm._v("Stock Head")]),
+                        _vm._v(" "),
+                        _c("hr"),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-2" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Declaration Number")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.stockHeading.declaration_no,
+                                    expression: "stockHeading.declaration_no"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "Declaration"
+                                },
+                                domProps: {
+                                  value: _vm.stockHeading.declaration_no
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.stockHeading,
+                                      "declaration_no",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-2" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", [_vm._v("SO Date")]),
+                                _vm._v(" "),
+                                _c("datepicker", {
+                                  staticClass: "v-datepicker-custom",
+                                  attrs: {
+                                    format: _vm.dateFormatter,
+                                    value: _vm.stockHeading.so_date,
+                                    name: "so_date"
+                                  },
+                                  model: {
+                                    value: _vm.stockHeading.so_date,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.stockHeading, "so_date", $$v)
+                                    },
+                                    expression: "stockHeading.so_date"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-2" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("SO Number")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.stockHeading.so_number,
+                                    expression: "stockHeading.so_number"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "So Number"
+                                },
+                                domProps: { value: _vm.stockHeading.so_number },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.stockHeading,
+                                      "so_number",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-2" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", [_vm._v("Region")]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: _vm.regions.spinner,
+                                        expression: "regions.spinner"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "spinner-border v-select-spinner spinner-grow-sm",
+                                    attrs: { role: "status" }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v("Loading...")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  attrs: { options: _vm.regions.options },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "search",
+                                        fn: function(ref) {
+                                          var attributes = ref.attributes
+                                          var events = ref.events
+                                          return [
+                                            _c(
+                                              "input",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "vs__search",
+                                                    attrs: {
+                                                      required: !_vm
+                                                        .stockHeading.region
+                                                    },
+                                                    on: {
+                                                      keypress: function(
+                                                        $event
+                                                      ) {
+                                                        return _vm.search(
+                                                          "regions",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  "input",
+                                                  attributes,
+                                                  false
+                                                ),
+                                                events
+                                              )
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    false,
+                                    1698254799
+                                  ),
+                                  model: {
+                                    value: _vm.stockHeading.region,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.stockHeading, "region", $$v)
+                                    },
+                                    expression: "stockHeading.region"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-2" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", [_vm._v("Local/Imported")]),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  attrs: {
+                                    options: _vm.local_imported.options,
+                                    label: "title"
+                                  },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "search",
+                                        fn: function(ref) {
+                                          var attributes = ref.attributes
+                                          var events = ref.events
+                                          return [
+                                            _c(
+                                              "input",
+                                              _vm._g(
+                                                _vm._b(
+                                                  { staticClass: "vs__search" },
+                                                  "input",
+                                                  attributes,
+                                                  false
+                                                ),
+                                                events
+                                              )
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    false,
+                                    411681397
+                                  ),
+                                  model: {
+                                    value: _vm.local_imported.selected,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.local_imported,
+                                        "selected",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "local_imported.selected"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.has("local_imported.selected")
+                                  ? _c("span", {
+                                      staticClass: "error invalid-feedback",
+                                      domProps: {
+                                        textContent: _vm._s(
+                                          _vm.get("local_imported.selected")
+                                        )
+                                      }
+                                    })
+                                  : _vm._e()
+                              ],
+                              1
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-2" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", [_vm._v("Invoice Date")]),
+                                _vm._v(" "),
+                                _c("datepicker", {
+                                  staticClass: "v-datepicker-custom",
+                                  attrs: {
+                                    format: _vm.dateFormatter,
+                                    value: _vm.stockHeading.invoice_date,
+                                    name: "invoice_date"
+                                  },
+                                  model: {
+                                    value: _vm.stockHeading.invoice_date,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.stockHeading,
+                                        "invoice_date",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "stockHeading.invoice_date"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-2" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Tracking Number")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.stockHeading.tracking_no,
+                                    expression: "stockHeading.tracking_no"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "Tracking Number"
+                                },
+                                domProps: {
+                                  value: _vm.stockHeading.tracking_no
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.stockHeading,
+                                      "tracking_no",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", [_vm._v("Bill To")]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: _vm.bill_to.spinner,
+                                        expression: "bill_to.spinner"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "spinner-border v-select-spinner spinner-grow-sm",
+                                    attrs: { role: "status" }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v("Loading...")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  attrs: { options: _vm.bill_to.options },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "search",
+                                        fn: function(ref) {
+                                          var attributes = ref.attributes
+                                          var events = ref.events
+                                          return [
+                                            _c(
+                                              "input",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "vs__search",
+                                                    attrs: {
+                                                      required: !_vm
+                                                        .stockHeading.bill_to
+                                                    },
+                                                    on: {
+                                                      keypress: function(
+                                                        $event
+                                                      ) {
+                                                        return _vm.search(
+                                                          "bill_to",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  "input",
+                                                  attributes,
+                                                  false
+                                                ),
+                                                events
+                                              )
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    false,
+                                    1394824412
+                                  ),
+                                  model: {
+                                    value: _vm.stockHeading.bill_to,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.stockHeading, "bill_to", $$v)
+                                    },
+                                    expression: "stockHeading.bill_to"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", [_vm._v("Ship To")]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: _vm.ship_to.spinner,
+                                        expression: "ship_to.spinner"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "spinner-border v-select-spinner spinner-grow-sm",
+                                    attrs: { role: "status" }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v("Loading...")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  attrs: { options: _vm.ship_to.options },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "search",
+                                        fn: function(ref) {
+                                          var attributes = ref.attributes
+                                          var events = ref.events
+                                          return [
+                                            _c(
+                                              "input",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "vs__search",
+                                                    attrs: {
+                                                      required: !_vm
+                                                        .stockHeading.ship_to
+                                                    },
+                                                    on: {
+                                                      keypress: function(
+                                                        $event
+                                                      ) {
+                                                        return _vm.search(
+                                                          "ship_to",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  "input",
+                                                  attributes,
+                                                  false
+                                                ),
+                                                events
+                                              )
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    false,
+                                    4038580956
+                                  ),
+                                  model: {
+                                    value: _vm.stockHeading.ship_to,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.stockHeading, "ship_to", $$v)
+                                    },
+                                    expression: "stockHeading.ship_to"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-2" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", [_vm._v("Supplier")]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: _vm.suppliers.spinner,
+                                        expression: "suppliers.spinner"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "spinner-border v-select-spinner spinner-grow-sm",
+                                    attrs: { role: "status" }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v("Loading...")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  attrs: { options: _vm.suppliers.options },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "search",
+                                        fn: function(ref) {
+                                          var attributes = ref.attributes
+                                          var events = ref.events
+                                          return [
+                                            _c(
+                                              "input",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "vs__search",
+                                                    attrs: {
+                                                      required: !_vm
+                                                        .stockHeading.supplier
+                                                    },
+                                                    on: {
+                                                      keypress: function(
+                                                        $event
+                                                      ) {
+                                                        return _vm.search(
+                                                          "suppliers",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  "input",
+                                                  attributes,
+                                                  false
+                                                ),
+                                                events
+                                              )
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    false,
+                                    473689039
+                                  ),
+                                  model: {
+                                    value: _vm.stockHeading.supplier,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.stockHeading,
+                                        "supplier",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "stockHeading.supplier"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-2" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Quantity Per Invoice")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.stockHeading.quantity_per_inv,
+                                    expression: "stockHeading.quantity_per_inv"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "Quantity Per Invoice",
+                                  disabled: true
+                                },
+                                domProps: {
+                                  value: _vm.stockHeading.quantity_per_inv
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.stockHeading,
+                                      "quantity_per_inv",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-2" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Custom Duty")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.stockHeading.custom_duty,
+                                    expression: "stockHeading.custom_duty"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text", placeholder: "0.00" },
+                                domProps: {
+                                  value: _vm.stockHeading.custom_duty
+                                },
+                                on: {
+                                  keyup: _vm.calculateTotalPrice,
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.stockHeading,
+                                      "custom_duty",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-2" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v("Freight")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.stockHeading.freight,
+                                    expression: "stockHeading.freight"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text", placeholder: "0.00" },
+                                domProps: { value: _vm.stockHeading.freight },
+                                on: {
+                                  keyup: _vm.calculateTotalPrice,
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.stockHeading,
+                                      "freight",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "detail-section mt-5" },
+                        [
+                          _c("h4", [_vm._v("Stock Detail")]),
+                          _vm._v(" "),
+                          _c("hr"),
+                          _vm._v(" "),
+                          _vm._l(_vm.detailSection, function(item, serialNo) {
+                            return _c(
+                              "div",
+                              {
+                                key: serialNo,
+                                staticClass: "detail-section-row mt-2"
+                              },
+                              [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Sys ID")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "sys_id"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['sys_id']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Sys ID"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "sys_id"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "sys_id",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.has("detail." + serialNo + ".sys_id")
+                                        ? _c("span", {
+                                            staticClass:
+                                              "error invalid-feedback",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.get(
+                                                  "detail." +
+                                                    serialNo +
+                                                    ".sys_id"
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e()
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("IMEI Number")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "imei"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['imei']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "IMEI Number"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo]["imei"]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "imei",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.has("detail." + serialNo + ".imei")
+                                        ? _c("span", {
+                                            staticClass:
+                                              "error invalid-feedback",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.get(
+                                                  "detail." + serialNo + ".imei"
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e()
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Serial Number")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "serial_no"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['serial_no']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Serial Number",
+                                          disabled: true
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "serial_no"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "serial_no",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.has(
+                                        "detail." + serialNo + ".serial_no"
+                                      )
+                                        ? _c("span", {
+                                            staticClass:
+                                              "error invalid-feedback",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.get(
+                                                  "detail." +
+                                                    serialNo +
+                                                    ".serial_no"
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e()
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Make")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.make[serialNo]
+                                                  ? _vm.make[serialNo].spinner
+                                                  : _vm.make.spinner,
+                                                expression:
+                                                  "make[serialNo] ? make[serialNo].spinner : make.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.make[serialNo]
+                                              ? _vm.make[serialNo].options
+                                              : _vm.make.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["make"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "make",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "make"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "make",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['make']"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.has("detail." + serialNo + ".make")
+                                          ? _c("span", {
+                                              staticClass:
+                                                "error invalid-feedback",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  _vm.get(
+                                                    "detail." +
+                                                      serialNo +
+                                                      ".make"
+                                                  )
+                                                )
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Model")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.make_models[serialNo]
+                                                  ? _vm.make_models[serialNo]
+                                                      .spinner
+                                                  : _vm.make_models.spinner,
+                                                expression:
+                                                  "make_models[serialNo] ? make_models[serialNo].spinner : make_models.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.make_models[serialNo]
+                                              ? _vm.make_models[serialNo]
+                                                  .options
+                                              : _vm.make_models.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["model"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "make_models",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "model"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "model",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['model']"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.has("detail." + serialNo + ".model")
+                                          ? _c("span", {
+                                              staticClass:
+                                                "error invalid-feedback",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  _vm.get(
+                                                    "detail." +
+                                                      serialNo +
+                                                      ".model"
+                                                  )
+                                                )
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Bank Deal#")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.bank_deals[serialNo]
+                                                  ? _vm.bank_deals[serialNo]
+                                                      .spinner
+                                                  : _vm.bank_deals.spinner,
+                                                expression:
+                                                  "bank_deals[serialNo] ? bank_deals[serialNo].spinner : bank_deals.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.bank_deals[serialNo]
+                                              ? _vm.bank_deals[serialNo].options
+                                              : _vm.bank_deals.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "bank_deals",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "bank_deal_no"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "bank_deal_no",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['bank_deal_no']"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.has(
+                                          "detail." + serialNo + ".bank_deal_no"
+                                        )
+                                          ? _c("span", {
+                                              staticClass:
+                                                "error invalid-feedback",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  _vm.get(
+                                                    "detail." +
+                                                      serialNo +
+                                                      ".bank_deal_no"
+                                                  )
+                                                )
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Color")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.colors[serialNo]
+                                                  ? _vm.colors[serialNo].spinner
+                                                  : _vm.colors.spinner,
+                                                expression:
+                                                  "colors[serialNo] ? colors[serialNo].spinner : colors.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.colors[serialNo]
+                                              ? _vm.colors[serialNo].options
+                                              : _vm.colors.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["color"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "colors",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "color"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "color",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['color']"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.has("detail." + serialNo + ".color")
+                                          ? _c("span", {
+                                              staticClass:
+                                                "error invalid-feedback",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  _vm.get(
+                                                    "detail." +
+                                                      serialNo +
+                                                      ".color"
+                                                  )
+                                                )
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Grade")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.grades[serialNo]
+                                                  ? _vm.grades[serialNo].spinner
+                                                  : _vm.grades.spinner,
+                                                expression:
+                                                  "grades[serialNo] ? grades[serialNo].spinner : grades.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.grades[serialNo]
+                                              ? _vm.grades[serialNo].options
+                                              : _vm.grades.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["grade"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "grades",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "grade"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "grade",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['grade']"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.has("detail." + serialNo + ".grade")
+                                          ? _c("span", {
+                                              staticClass:
+                                                "error invalid-feedback",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  _vm.get(
+                                                    "detail." +
+                                                      serialNo +
+                                                      ".grade"
+                                                  )
+                                                )
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group" },
+                                      [
+                                        _c("label", [_vm._v("Capacity")]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: _vm.capacities[serialNo]
+                                                  ? _vm.capacities[serialNo]
+                                                      .spinner
+                                                  : _vm.capacities.spinner,
+                                                expression:
+                                                  "capacities[serialNo] ? capacities[serialNo].spinner : capacities.spinner"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "spinner-border v-select-spinner spinner-grow-sm",
+                                            attrs: { role: "status" }
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "sr-only" },
+                                              [_vm._v("Loading...")]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-select", {
+                                          key: serialNo,
+                                          attrs: {
+                                            options: _vm.capacities[serialNo]
+                                              ? _vm.capacities[serialNo].options
+                                              : _vm.capacities.options
+                                          },
+                                          scopedSlots: _vm._u(
+                                            [
+                                              {
+                                                key: "search",
+                                                fn: function(ref) {
+                                                  var attributes =
+                                                    ref.attributes
+                                                  var events = ref.events
+                                                  return [
+                                                    _c(
+                                                      "input",
+                                                      _vm._g(
+                                                        _vm._b(
+                                                          {
+                                                            staticClass:
+                                                              "vs__search",
+                                                            attrs: {
+                                                              required: !_vm
+                                                                .detailSection[
+                                                                serialNo
+                                                              ]["capacity"]
+                                                            },
+                                                            on: {
+                                                              keypress: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.search(
+                                                                  "capacities",
+                                                                  $event.target
+                                                                    .value,
+                                                                  serialNo
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          "input",
+                                                          attributes,
+                                                          false
+                                                        ),
+                                                        events
+                                                      )
+                                                    )
+                                                  ]
+                                                }
+                                              }
+                                            ],
+                                            null,
+                                            true
+                                          ),
+                                          model: {
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "capacity"
+                                              ],
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.detailSection[serialNo],
+                                                "capacity",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "detailSection[serialNo]['capacity']"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.has(
+                                          "detail." + serialNo + ".capacity"
+                                        )
+                                          ? _c("span", {
+                                              staticClass:
+                                                "error invalid-feedback",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  _vm.get(
+                                                    "detail." +
+                                                      serialNo +
+                                                      ".capacity"
+                                                  )
+                                                )
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-3" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Part No")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "part_no"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['part_no']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Make"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "part_no"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "part_no",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm.has("detail." + serialNo + ".part_no")
+                                      ? _c("span", {
+                                          staticClass: "error invalid-feedback",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.get(
+                                                "detail." +
+                                                  serialNo +
+                                                  ".part_no"
+                                              )
+                                            )
+                                          }
+                                        })
+                                      : _vm._e()
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-3" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Stock ID")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "stock_id"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['stock_id']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Model"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "stock_id"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "stock_id",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.has(
+                                        "detail." + serialNo + ".stock_id"
+                                      )
+                                        ? _c("span", {
+                                            staticClass:
+                                              "error invalid-feedback",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.get(
+                                                  "detail." +
+                                                    serialNo +
+                                                    ".stock_id"
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e()
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Price AED")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "price_aed"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['price_aed']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Price AED"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "price_aed"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "price_aed",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.has(
+                                        "detail." + serialNo + ".price_aed"
+                                      )
+                                        ? _c("span", {
+                                            staticClass:
+                                              "error invalid-feedback",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.get(
+                                                  "detail." +
+                                                    serialNo +
+                                                    ".price_aed"
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e()
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Price USD")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "price_usd"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['price_usd']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Price USD",
+                                          disabled: true
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "price_usd"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "price_usd",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm.has("detail." + serialNo + ".price_usd")
+                                      ? _c("span", {
+                                          staticClass: "error invalid-feedback",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.get(
+                                                "detail." +
+                                                  serialNo +
+                                                  ".price_usd"
+                                              )
+                                            )
+                                          }
+                                        })
+                                      : _vm._e()
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Total Cost")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "total_cost"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['total_cost']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Model",
+                                          disabled: true
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "total_cost"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "total_cost",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.has(
+                                        "detail." + serialNo + ".total_cost"
+                                      )
+                                        ? _c("span", {
+                                            staticClass:
+                                              "error invalid-feedback",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.get(
+                                                  "detail." +
+                                                    serialNo +
+                                                    ".total_cost"
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e()
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-2" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Invoice Number")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.detailSection[serialNo][
+                                                "invoice_no"
+                                              ],
+                                            expression:
+                                              "detailSection[serialNo]['invoice_no']"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "3RGTT#$"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.detailSection[serialNo][
+                                              "invoice_no"
+                                            ]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.detailSection[serialNo],
+                                              "invoice_no",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.has(
+                                        "detail." + serialNo + ".invoice_no"
+                                      )
+                                        ? _c("span", {
+                                            staticClass:
+                                              "error invalid-feedback",
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.get(
+                                                  "detail." +
+                                                    serialNo +
+                                                    ".invoice_no"
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e()
+                                    ])
+                                  ])
+                                ])
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Submit")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-default",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.cancelForm($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Cancel")]
+                      )
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -65867,7 +67817,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _StockComponent_vue_vue_type_template_id_657f538b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StockComponent.vue?vue&type=template&id=657f538b& */ "./resources/js/components/stock/StockComponent.vue?vue&type=template&id=657f538b&");
-/* harmony import */ var _StockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StockComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/stock/StockComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _stock_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stock.js?vue&type=script&lang=js& */ "./resources/js/components/stock/stock.js?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -65877,7 +67827,7 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _StockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _stock_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _StockComponent_vue_vue_type_template_id_657f538b___WEBPACK_IMPORTED_MODULE_0__["render"],
   _StockComponent_vue_vue_type_template_id_657f538b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -65891,20 +67841,6 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/stock/StockComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/stock/StockComponent.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/stock/StockComponent.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./StockComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/stock/StockComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StockComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -65923,6 +67859,137 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StockComponent_vue_vue_type_template_id_657f538b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/stock/StockEditComponent.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/stock/StockEditComponent.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _StockEditComponent_vue_vue_type_template_id_54e58aa1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StockEditComponent.vue?vue&type=template&id=54e58aa1& */ "./resources/js/components/stock/StockEditComponent.vue?vue&type=template&id=54e58aa1&");
+/* harmony import */ var _stock_edit_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stock-edit.js?vue&type=script&lang=js& */ "./resources/js/components/stock/stock-edit.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _stock_edit_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StockEditComponent_vue_vue_type_template_id_54e58aa1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _StockEditComponent_vue_vue_type_template_id_54e58aa1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/stock/StockEditComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/stock/StockEditComponent.vue?vue&type=template&id=54e58aa1&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/stock/StockEditComponent.vue?vue&type=template&id=54e58aa1& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StockEditComponent_vue_vue_type_template_id_54e58aa1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./StockEditComponent.vue?vue&type=template&id=54e58aa1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/stock/StockEditComponent.vue?vue&type=template&id=54e58aa1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StockEditComponent_vue_vue_type_template_id_54e58aa1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StockEditComponent_vue_vue_type_template_id_54e58aa1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/stock/stock-edit.js?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/stock/stock-edit.js?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_stock_edit_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!./stock-edit.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./resources/js/components/stock/stock-edit.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_stock_edit_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/stock/stock.js?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/stock/stock.js?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_stock_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!./stock.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./resources/js/components/stock/stock.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_stock_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/stock/stockHeadingModel.js":
+/*!************************************************************!*\
+  !*** ./resources/js/components/stock/stockHeadingModel.js ***!
+  \************************************************************/
+/*! exports provided: stockHeadingModel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stockHeadingModel", function() { return stockHeadingModel; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var stockHeadingModel =
+/*#__PURE__*/
+function () {
+  function stockHeadingModel() {
+    _classCallCheck(this, stockHeadingModel);
+  }
+
+  _createClass(stockHeadingModel, [{
+    key: "heading",
+    value: function heading() {
+      return {
+        declaration_no: '',
+        supplier: '',
+        bill_to: '',
+        region: '',
+        tracking_no: '',
+        invoice_date: '',
+        so_number: '',
+        so_date: '',
+        quantity_per_inv: '',
+        custom_duty: '',
+        freight: '',
+        ship_to: ''
+      };
+    }
+  }]);
+
+  return stockHeadingModel;
+}();
 
 /***/ }),
 
@@ -65967,6 +68034,7 @@ Vue.component('role-select', __webpack_require__(/*! ./components/selects/RoleSe
 Vue.component('customer-select', __webpack_require__(/*! ./components/selects/CustomerSelect.vue */ "./resources/js/components/selects/CustomerSelect.vue")["default"]); // app components
 
 Vue.component('stock-component', __webpack_require__(/*! ./components/stock/StockComponent.vue */ "./resources/js/components/stock/StockComponent.vue")["default"]);
+Vue.component('stock-edit-component', __webpack_require__(/*! ./components/stock/StockEditComponent.vue */ "./resources/js/components/stock/StockEditComponent.vue")["default"]);
 Vue.component('login-component', __webpack_require__(/*! ./components/LoginComponent.vue */ "./resources/js/components/LoginComponent.vue")["default"]);
 Vue.component('register-component', __webpack_require__(/*! ./components/RegisterComponent.vue */ "./resources/js/components/RegisterComponent.vue")["default"]);
 Vue.component('update-profile-component', __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue")["default"]);

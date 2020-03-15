@@ -9,10 +9,10 @@ class StockHead extends Model
     protected $table = 'stock_heads';
 
     protected $fillable = [
-        'quantity_invoice', 'declaration_number', 'so_date', 'so_number', 'invoice_date', 'invoice_number', 'tracking_number','bill_to', 'ship_to', 'supplier_id', 'region_id'
+        'freight', 'custom_duty', 'quantity_invoice', 'declaration_number', 'so_date', 'so_number', 'invoice_date', 'tracking_number','bill_to', 'ship_to', 'supplier_id', 'region_id'
     ];
 
-    public function BillTo()
+    public function billTo()
     {
         return $this->belongsTo(ShippingBilling::class, 'bill_to');
     }

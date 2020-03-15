@@ -22,8 +22,11 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::get( '/stock', 'StockController@index' )->name( 'stock.index' );
     Route::post( '/process-excel', 'StockController@processExcel' )->name( 'stock.excel' );
     Route::post( '/stock', 'StockController@store' )->name( 'stock.store' );
+    Route::post( '/stock/{id}/update', 'StockController@update' )->name( 'stock.update' );
     Route::get( '/search', 'AttributesController@search' )->name( 'attribute.search' );
     Route::get( '/get-stock', 'StockController@getStock' )->name( 'get.stock' );
+    Route::get( '/stock/edit/{id}', 'StockController@edit' )->name( 'edit.stock' );
+    Route::get( '/fetch-stock/{id}', 'StockController@fetchStock' )->name( 'fetch.stock' );
 
     Route::get( '/sales/get', 'SalesController@get' )->name( 'sales.get' );
     Route::get( '/search/imei', 'SalesController@searchImei' )->name( 'search.imei' );
