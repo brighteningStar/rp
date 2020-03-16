@@ -12,6 +12,7 @@ Vue.component('user-component', require('./components/UserComponent.vue').defaul
 Vue.component('loading', require('./components/Loading.vue').default);
 Vue.component('modal', require('./components/Modal.vue').default);
 Vue.component('table-vue', require('./components/Table.vue').default);
+Vue.component('search-imei', require('./components/SearchImei.vue').default);
 
 // form components
 Vue.component('color-component', require('./components/forms/ColorComponent.vue').default);

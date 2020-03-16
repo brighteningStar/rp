@@ -18,6 +18,9 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::post( 'update-profile/{id}', 'UsersController@updateProfile' )->name( 'profile.update' );
     Route::post( 'update-password/{id}', 'UsersController@updatePassword' )->name( 'password.update' );
 
+    Route::get('search-by-imei', 'SearchController@searchByIMEI')->name('imei-search');
+
+
 
     Route::get( '/stock', 'StockController@index' )->name( 'stock.index' );
     Route::post( '/process-excel', 'StockController@processExcel' )->name( 'stock.excel' );
