@@ -37,7 +37,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/make-models/get" title="Models" delete-url="/forms/make-models/id"></table-vue>
+            <table-vue uri="/forms/make-models/get" title="Models" delete-url="/forms/make-models/id" cant-view="1"></table-vue>
         </div>
     </section>
 </template>

@@ -117,10 +117,10 @@ class SupplierCreditService extends ServiceAbstract
         return $result;
     }
 
-//    public function getDetails($id, $columns = array('*')){
-//        $rmaItems = $this->model->with('stockDetails')->where('id',$id)->first();
-//        return $rmaItems;
-//    }
+    public function getDetails($id, $columns = array('*')){
+        $creditItems = $this->model->with('stockDetails')->where('id',$id)->first();
+        return $creditItems;
+    }
 
 
 }

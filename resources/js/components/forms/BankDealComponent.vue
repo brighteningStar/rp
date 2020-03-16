@@ -45,7 +45,7 @@
                 <!-- /.modal-dialog -->
             </div>
             <div class="mt-4 col-md-12"></div>
-            <table-vue uri="/forms/bank-deals/get" title="Bank Deals" delete-url="/forms/bank-deals/id"></table-vue>
+            <table-vue uri="/forms/bank-deals/get" title="Bank Deals" delete-url="/forms/bank-deals/id" cant-view="1"></table-vue>
         </div>
     </section>
 </template>

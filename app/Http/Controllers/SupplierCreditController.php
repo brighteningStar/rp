@@ -24,17 +24,17 @@ class SupplierCreditController extends Controller
     public function create(){
         return view('supplier-credit.create');
     }
-//
-//    public function edit($id){
-//        $item = $this->service->find($id);
-//        if(isset($item)){
-//            return view('rma.edit')->with('id',$id);
-//        }
-//        else {
-//            return abort(404);
-//        }
-//
-//    }
+
+    public function view($id){
+        $item = $this->service->find($id);
+        if(isset($item)){
+            return view('supplier-credit.view')->with('id',$id);
+        }
+        else {
+            return abort(404);
+        }
+
+    }
 
 
     public function store(Request $request)
@@ -53,12 +53,12 @@ class SupplierCreditController extends Controller
         $this->service->create($request->all());
 
     }
-//
-//
-//    public function show($id)
-//    {
-//        return $this->service->getDetails($id);
-//    }
+
+
+    public function show($id)
+    {
+        return $this->service->getDetails($id);
+    }
 
 
 //    public function update(Request $request, $id)
