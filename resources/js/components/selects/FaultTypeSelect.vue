@@ -1,18 +1,23 @@
 <template>
     <loading  v-if="load" ></loading>
     <div v-else="">
-        <v-select :value="fault_type" :reduce="name => name.id" label="name" :options="items" @input="updateValue"></v-select>
+        <v-select :value="fault_type" :reduce="name => name.id" label="name" :options="items" @input="updateValue" :disabled="isDisabled"></v-select>
     </div>
 </template>
 
 <script>
     module.exports = {
-        props: ['value'],
+        props: ['value', 'disabled'],
         data(){
             return{
                 load: false,
                 items:[],
                 fault_type:'',
+            }
+        },
+        computed: {
+            isDisabled(){
+                return this.disabled?true:false;
             }
         },
         methods: {

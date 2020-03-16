@@ -55,8 +55,10 @@ Vue.component('create-sales-item', require('./components/sales/CreateSalesItem.v
 //rma components
 Vue.component('rma-component', require('./components/rma/RMAComponent.vue').default);
 Vue.component('create-rma-item', require('./components/rma/CreateRMAItem.vue').default);
+Vue.component('view-rma-item', require('./components/rma/ViewRMAItem.vue').default);
 
 
 //supplier credit components
 Vue.component('supplier-credit-component', require('./components/supplier-credit/SupplierCreditComponent.vue').default);
 Vue.component('create-supplier-credit-item', require('./components/supplier-credit/CreateSupplierCredit.vue').default);
+Vue.component('view-supplier-credit-item', require('./components/supplier-credit/ViewSupplierCredit.vue').default);

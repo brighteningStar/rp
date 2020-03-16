@@ -31,6 +31,7 @@
                                     <a v-else="" :href="updateEditUrl(item.id)"><i class="fas fa-pencil-alt mr-1" aria-hidden="true"></i></a>
                                 </span>
                                 <a v-if="!cantDelete" @click.prevent="prepareToRemove(item)" href="#"><i class="fas fa-times cross-del" aria-hidden="true"></i></a>
+                                <a v-if="!cantView" :href="updateViewUrl(item.id)"><i class="fas fa-eye mr-1" aria-hidden="true"></i></a>
                             </td>
 
                         </tr>
@@ -61,7 +62,7 @@
 <script>
     import Swal from 'sweetalert2'
     export default {
-        props: ['uri', 'title', 'editUrl', 'showEditIcon','deleteUrl', 'cantDelete', 'cantEdit'],
+        props: ['uri', 'title', 'editUrl', 'showEditIcon','deleteUrl', 'cantDelete', 'cantEdit', 'viewUrl', 'cantView'],
 
         data() {
             return {
@@ -141,6 +142,15 @@
 
             updateEditUrl(id){
                 return this.editUrl.replace("id", id);
+            },
+
+            updateViewUrl(id){
+                if(this.viewUrl){
+                    return this.viewUrl.replace("id", id);
+                }
+                else
+                    return '#';
+
             },
 
             prepareToRemove(item){

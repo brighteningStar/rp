@@ -25,6 +25,17 @@ class RMAController extends Controller
         return view('rma.create');
     }
 
+    public function view($id){
+        $item = $this->service->find($id);
+        if(isset($item)){
+            return view('rma.view')->with('id',$id);
+        }
+        else {
+            return abort(404);
+        }
+
+    }
+
     public function edit($id){
         $item = $this->service->find($id);
         if(isset($item)){

@@ -36,10 +36,12 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::resource( 'sales', 'SalesController' );
 
     Route::get( '/rma/get', 'RMAController@get' )->name( 'rma.get' );
+    Route::get( '/rma/{id}/view', 'RMAController@view' )->name( 'rma.view' );
     Route::get( '/rma/search/imei', 'RMAController@searchImei' )->name( 'rma.search.imei' );
     Route::resource( 'rma', 'RMAController' );
 
     Route::get( '/supplier-credit/get', 'SupplierCreditController@get' )->name( 'supplier-credit.get' );
+    Route::get( '/supplier-credit/{id}/view', 'SupplierCreditController@view' )->name( 'supplier-credit.view' );
     Route::get( '/supplier-credit/search/imei', 'SupplierCreditController@searchImei' )->name( 'supplier-credit.search.imei' );
     Route::resource( 'supplier-credit', 'SupplierCreditController' );
 
