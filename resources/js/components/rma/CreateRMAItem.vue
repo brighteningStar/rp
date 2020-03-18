@@ -52,9 +52,9 @@
                                                     <div  v-if="row.spinner" class="spinner-border v-select-spinner spinner-grow-sm" role="status">
                                                         <span class="sr-only">Loading...</span>
                                                     </div>
-                                                    <v-select :value="row.imei" :options="row.imeis" v-on:input="setImeiDetails($event, row)" :disabled="isDisabled">
+                                                    <v-select :value="row.imei" :options="row.imeis" v-on:input="setImeiDetails($event, row); addRow($event);" :disabled="isDisabled">
                                                         <template #search="{attributes, events}">
-                                                            <input class="vs__search" v-bind="attributes" v-on="events" @blur="addRow" @keyup="searchImei(row, $event.target.value)"/>
+                                                            <input class="vs__search" v-bind="attributes" v-on="events" @keyup="searchImei(row, $event.target.value)"/>
                                                         </template>
                                                     </v-select>
                                                     <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.imei')" v-text="form.errors.get('details.'+index+'.imei')"></span>
@@ -90,7 +90,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button style="float:right; margin-top:10px;" @click.prevent="addRow" class="btn btn-success">Add</button>
                                 </div>
 
                             </div>
@@ -161,7 +160,10 @@
 
             },
 
-            addRow(){
+            addRow(event){
+                if(event==null){
+                    return;
+                }
                 this.form.details.push({
                     imei:'',
                     detail_id:'',

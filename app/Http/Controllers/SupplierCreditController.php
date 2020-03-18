@@ -61,33 +61,6 @@ class SupplierCreditController extends Controller
     }
 
 
-//    public function update(Request $request, $id)
-//    {
-//        $request->validate([
-//            'rma_no' => 'required|unique:rma_heads,rma_number,'.$id,
-//            'rma_date' => 'required',
-//            'customer_id' => 'required|integer',
-//            'details.*.imei' => 'required',
-//            'details.*.fault_type_id' => 'required',
-//            'details.*.fault' => 'required',
-//            'details.*.sale_price' => 'required',
-//            'details.*.location_id' => 'required',
-//        ],
-//            [
-//                'details.*.imei.required' => 'IMEI is required',
-//                'details.*.fault_type_id.required' => 'Fault Type is required',
-//                'details.*.fault.required' => 'Fault is required',
-//                'details.*.sale_price.required' => 'Sale Price is required',
-//                'details.*.location_id.required' => 'Location is required',
-//            ]);
-//
-//        $where = array('id'=>$id);
-//        $this->service->update($request, $where);
-//
-//
-//    }
-//
-//
     public function destroy($id)
     {
         //

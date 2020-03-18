@@ -1,7 +1,7 @@
 <template>
     <loading  v-if="load" ></loading>
     <div v-else="">
-        <v-select :value="location" :reduce="name => name.id" label="name" :options="items" @input="updateValue" :disabled="isDisabled"></v-select>
+        <v-select :value="value" :reduce="name => name.id" label="name" :options="items" @input="updateValue" :disabled="isDisabled"></v-select>
     </div>
 </template>
 

@@ -36,6 +36,17 @@ class SalesController extends Controller
 
     }
 
+    public function view($id){
+        $item = $this->service->find($id);
+        if(isset($item)){
+            return view('sales.view')->with('id',$id);
+        }
+        else {
+            return abort(404);
+        }
+
+    }
+
 
     public function store(Request $request)
     {
@@ -43,7 +54,7 @@ class SalesController extends Controller
             'invoice_no' => 'required|unique:sales_heads,invoice_no',
             'sale_date' => 'required',
             'customer_id' => 'required|integer',
-            'details.*.imei' => ['required', new IMEIValid($request)],
+            'details.*.imei' => 'required',
             'details.*.price_aed' => 'required',
             'details.*.freight' => 'required',
             'details.*.unit_price' => 'required',
@@ -112,10 +123,8 @@ class SalesController extends Controller
     public function searchImei(Request $request){
 
         $imei = $request->get('imei');
-        $grade = $request->get('grade');
-        $color = $request->get('color');
-        $capacity = $request->get('capacity');
-        $model = $request->get('model');
-        return $this->service->fetchStockDetails($imei, $grade, $color, $capacity, $model);
+        $filters = $request->get('filters');
+        $details = $request->get('details');
+        return $this->service->fetchStockDetails($imei, $filters, $details);
     }
 }
