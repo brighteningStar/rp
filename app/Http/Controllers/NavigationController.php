@@ -59,6 +59,14 @@ class NavigationController extends Controller
                 'icon' => 'fas fa-box-open',
                 'children' => null,
             ),
+            'reports' => array(
+                'route' => route('report.index'),
+                'routes_to_active' => route('report.index'),
+                'permission' => 'view_reports',
+                'title' => 'Reports',
+                'icon' => 'fas fa-chart-bar',
+                'children' => null,
+            ),
             'forms' => array(
                 'route' => null,
                 'routes_to_active' => null,
