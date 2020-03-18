@@ -4371,6 +4371,256 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/report/ReportComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/report/ReportComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loading: false,
+      showSelectionForm: false,
+      tableHasData: true,
+      errorMessage: '',
+      checkedNames: [],
+      items: [],
+      columns: [],
+      start_date: moment('2020-01-01').startOf('month').format('YYYY-MM-DD'),
+      end_date: moment().endOf('month').format('YYYY-MM-DD'),
+      report_type: {
+        options: [{
+          'title': 'In Stock',
+          'id': 'in_stock'
+        }, {
+          'title': 'Sold',
+          'id': 'sold'
+        }, {
+          'title': 'RMA',
+          'id': 'rma'
+        }, {
+          'title': 'Supplier Credit',
+          'id': 'supplier_credit'
+        }],
+        selected: [{
+          'title': 'In Stock',
+          'id': 'in_stock'
+        }]
+      }
+    };
+  },
+  methods: {
+    dateFormatter: function dateFormatter(date) {
+      return moment(date).format('YYYY-MM-DD');
+    },
+    loadForm: function loadForm() {
+      this.showSelectionForm = false;
+    },
+    onGenerateReport: function onGenerateReport() {
+      var _this = this;
+
+      this.loading = true;
+      this.showSelectionForm = true;
+      axios.get('/fetch-report', {
+        'params': {
+          'check_list': this.checkedNames,
+          'report_type': this.report_type.selected.id,
+          'start_date': moment(this.start_date).format('YYYY-MM-DD'),
+          'end_date': moment(this.end_date).format('YYYY-MM-DD')
+        }
+      }).then(function (response) {
+        _this.loading = false;
+        _this.tableHasData = true;
+        _this.items = response.data.items;
+        _this.columns = response.data.columns;
+      })["catch"](function (errors) {
+        this.loading = false;
+        this.tableHasData = false;
+        this.errorMessage = errors.response.data.message;
+      }.bind(this));
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/rma/CreateRMAItem.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/rma/CreateRMAItem.vue?vue&type=script&lang=js& ***!
@@ -50305,6 +50555,1134 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/report/ReportComponent.vue?vue&type=template&id=75b2a839&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/report/ReportComponent.vue?vue&type=template&id=75b2a839& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "content" }, [
+    _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c(
+            "div",
+            { staticClass: "card card-primary" },
+            [
+              _vm.loading ? _c("loading") : _vm._e(),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              !_vm.showSelectionForm
+                ? _c(
+                    "form",
+                    {
+                      attrs: { role: "form" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.onGenerateReport($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("div", { staticClass: "head-section" }, [
+                          _c("h4", [_vm._v("Selectors")]),
+                          _vm._v(" "),
+                          _c("hr"),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-4" }, [
+                              _c(
+                                "div",
+                                { staticClass: "form-group" },
+                                [
+                                  _c("label", [_vm._v("Report Type")]),
+                                  _vm._v(" "),
+                                  _c("v-select", {
+                                    attrs: {
+                                      label: "title",
+                                      options: _vm.report_type.options
+                                    },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "search",
+                                          fn: function(ref) {
+                                            var attributes = ref.attributes
+                                            var events = ref.events
+                                            return [
+                                              _c(
+                                                "input",
+                                                _vm._g(
+                                                  _vm._b(
+                                                    {
+                                                      staticClass: "vs__search"
+                                                    },
+                                                    "input",
+                                                    attributes,
+                                                    false
+                                                  ),
+                                                  events
+                                                )
+                                              )
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      null,
+                                      false,
+                                      411681397
+                                    ),
+                                    model: {
+                                      value: _vm.report_type.selected,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.report_type,
+                                          "selected",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "report_type.selected"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", {
+                                    staticClass: "error invalid-feedback"
+                                  })
+                                ],
+                                1
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-4" }, [
+                              _c(
+                                "div",
+                                { staticClass: "form-group" },
+                                [
+                                  _c("label", [_vm._v("Start Date")]),
+                                  _vm._v(" "),
+                                  _c("datepicker", {
+                                    staticClass: "v-datepicker-custom",
+                                    attrs: { format: _vm.dateFormatter },
+                                    model: {
+                                      value: _vm.start_date,
+                                      callback: function($$v) {
+                                        _vm.start_date = $$v
+                                      },
+                                      expression: "start_date"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-4" }, [
+                              _c(
+                                "div",
+                                { staticClass: "form-group" },
+                                [
+                                  _c("label", [_vm._v("End Date")]),
+                                  _vm._v(" "),
+                                  _c("datepicker", {
+                                    staticClass: "v-datepicker-custom",
+                                    attrs: { format: _vm.dateFormatter },
+                                    model: {
+                                      value: _vm.end_date,
+                                      callback: function($$v) {
+                                        _vm.end_date = $$v
+                                      },
+                                      expression: "end_date"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("h4", [_vm._v("Columns")]),
+                          _vm._v(" "),
+                          _c("hr"),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "tracking_number"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "tracking_number"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "tracking_number",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Tracking Number")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "supplier_id"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "supplier_id"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "supplier_id",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Supplier")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "so_number"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "so_number"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "so_number",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" SO Number")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "so_date"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(_vm.checkedNames, "so_date") >
+                                          -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "so_date",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" So Date")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "declaration_number"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "declaration_number"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "declaration_number",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Declaration Number")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "bill_to"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(_vm.checkedNames, "bill_to") >
+                                          -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "bill_to",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Bill To")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "ship_to"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(_vm.checkedNames, "ship_to") >
+                                          -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "ship_to",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Ship To")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "make_id"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(_vm.checkedNames, "make_id") >
+                                          -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "make_id",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Maker")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "model_id"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(_vm.checkedNames, "model_id") >
+                                          -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "model_id",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Model")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "capacity_id"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "capacity_id"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "capacity_id",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Capacity")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "grade_id"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(_vm.checkedNames, "grade_id") >
+                                          -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "grade_id",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Grade")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "price_usd"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "price_usd"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "price_usd",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Price (USD)")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "price_aed"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "price_aed"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "price_aed",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Price (AED)")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "total_cost"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "total_cost"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "total_cost",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Total Cost")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "local_imported"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "local_imported"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "local_imported",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Local/Imported")
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("div", { staticClass: "checkbox" }, [
+                                _c("label", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.checkedNames,
+                                        expression: "checkedNames"
+                                      }
+                                    ],
+                                    attrs: {
+                                      type: "checkbox",
+                                      value: "stock_number"
+                                    },
+                                    domProps: {
+                                      checked: Array.isArray(_vm.checkedNames)
+                                        ? _vm._i(
+                                            _vm.checkedNames,
+                                            "stock_number"
+                                          ) > -1
+                                        : _vm.checkedNames
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$a = _vm.checkedNames,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = "stock_number",
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.checkedNames = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.checkedNames = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.checkedNames = $$c
+                                        }
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" Stock Number")
+                                ])
+                              ])
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(1)
+                    ]
+                  )
+                : _vm._e()
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.showSelectionForm
+        ? _c(
+            "div",
+            {
+              staticClass: "card-body table-responsive p-0",
+              staticStyle: { "max-height": "500px" }
+            },
+            [
+              _vm.tableHasData
+                ? _c(
+                    "table",
+                    {
+                      staticClass:
+                        "table table-head-fixed text-nowrap table-striped table-bordered"
+                    },
+                    [
+                      _c("thead", [
+                        _c(
+                          "tr",
+                          _vm._l(_vm.columns, function(column, index) {
+                            return _c(
+                              "th",
+                              { key: index, attrs: { scope: "col" } },
+                              [_vm._v(" " + _vm._s(column))]
+                            )
+                          }),
+                          0
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.items, function(item, index) {
+                          return _c(
+                            "tr",
+                            { key: index },
+                            _vm._l(_vm.columns, function(column, indexColumn) {
+                              return _c("td", { key: indexColumn }, [
+                                _vm._v(_vm._s(item[column]))
+                              ])
+                            }),
+                            0
+                          )
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.tableHasData
+                ? _c("div", { staticClass: "alert alert-danger" }, [
+                    _c("span", {
+                      domProps: { textContent: _vm._s(_vm.errorMessage) }
+                    })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary mt-2",
+                  attrs: { type: "button" },
+                  on: { click: _vm.loadForm }
+                },
+                [_vm._v("View More Report")]
+              )
+            ]
+          )
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Report")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Generate Report")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/rma/CreateRMAItem.vue?vue&type=template&id=f386b90e&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/rma/CreateRMAItem.vue?vue&type=template&id=f386b90e& ***!
@@ -74709,6 +76087,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/report/ReportComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/report/ReportComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ReportComponent_vue_vue_type_template_id_75b2a839___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReportComponent.vue?vue&type=template&id=75b2a839& */ "./resources/js/components/report/ReportComponent.vue?vue&type=template&id=75b2a839&");
+/* harmony import */ var _ReportComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReportComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/report/ReportComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ReportComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReportComponent_vue_vue_type_template_id_75b2a839___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ReportComponent_vue_vue_type_template_id_75b2a839___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/report/ReportComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/report/ReportComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/report/ReportComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ReportComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/report/ReportComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/report/ReportComponent.vue?vue&type=template&id=75b2a839&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/report/ReportComponent.vue?vue&type=template&id=75b2a839& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportComponent_vue_vue_type_template_id_75b2a839___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ReportComponent.vue?vue&type=template&id=75b2a839& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/report/ReportComponent.vue?vue&type=template&id=75b2a839&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportComponent_vue_vue_type_template_id_75b2a839___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReportComponent_vue_vue_type_template_id_75b2a839___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/rma/CreateRMAItem.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/components/rma/CreateRMAItem.vue ***!
@@ -76298,7 +77745,9 @@ Vue.component('view-sales-item', __webpack_require__(/*! ./components/sales/View
 
 Vue.component('rma-component', __webpack_require__(/*! ./components/rma/RMAComponent.vue */ "./resources/js/components/rma/RMAComponent.vue")["default"]);
 Vue.component('create-rma-item', __webpack_require__(/*! ./components/rma/CreateRMAItem.vue */ "./resources/js/components/rma/CreateRMAItem.vue")["default"]);
-Vue.component('view-rma-item', __webpack_require__(/*! ./components/rma/ViewRMAItem.vue */ "./resources/js/components/rma/ViewRMAItem.vue")["default"]); //supplier credit components
+Vue.component('view-rma-item', __webpack_require__(/*! ./components/rma/ViewRMAItem.vue */ "./resources/js/components/rma/ViewRMAItem.vue")["default"]); //report
+
+Vue.component('report-component', __webpack_require__(/*! ./components/report/ReportComponent.vue */ "./resources/js/components/report/ReportComponent.vue")["default"]); //supplier credit components
 
 Vue.component('supplier-credit-component', __webpack_require__(/*! ./components/supplier-credit/SupplierCreditComponent.vue */ "./resources/js/components/supplier-credit/SupplierCreditComponent.vue")["default"]);
 Vue.component('create-supplier-credit-item', __webpack_require__(/*! ./components/supplier-credit/CreateSupplierCredit.vue */ "./resources/js/components/supplier-credit/CreateSupplierCredit.vue")["default"]);
@@ -76324,8 +77773,8 @@ Vue.component('view-supplier-credit-item', __webpack_require__(/*! ./components/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/stock/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/stock/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/adda/Projects/stock/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/adda/Projects/stock/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
