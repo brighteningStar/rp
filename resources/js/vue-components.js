@@ -51,6 +51,7 @@ Vue.component('update-password-component', require('./components/ChangePassword.
 //sales components
 Vue.component('sales-component', require('./components/sales/SalesComponent.vue').default);
 Vue.component('create-sales-item', require('./components/sales/CreateSalesItem.vue').default);
+Vue.component('view-sales-item', require('./components/sales/ViewSalesItem.vue').default);
 
 //rma components
 Vue.component('rma-component', require('./components/rma/RMAComponent.vue').default);

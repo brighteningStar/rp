@@ -48,13 +48,23 @@ class SalesService extends ServiceAbstract
             'customer_id' => $data['customer_id'],
             'sale_date' => $data['sale_date'],
             'invoice_no' => $data['invoice_no'],
-            'search_model_id' => $data['filters']['model'],
-            'search_color_id' => $data['filters']['color'],
-            'search_capacity_id' => $data['filters']['capacity'],
-            'search_grade_id' => $data['filters']['grade'],
         );
         $head = $this->model->create($sales_head);
+        $filterArr = array();
         $detailsArr = array();
+
+        foreach ($data['filters'] as $filter){
+            $filterItem = array(
+                'search_model_id' => $filter['model'],
+                'search_capacity_id' => $filter['capacity'],
+                'search_color_id' => $filter['color'],
+                'search_grade_id' => $filter['grade'],
+                'quantity' => $filter['quantity'],
+            );
+            array_push($filterArr, $filterItem);
+        }
+        $head->filters()->createMany($filterArr);
+
         foreach ($data['details'] as $detail){
             $detailItem = array(
                 'stock_details_id' => $detail['detail_id'],
@@ -68,45 +78,79 @@ class SalesService extends ServiceAbstract
         $head->details()->createMany($detailsArr);
     }
 
-    public function update(Request $request, array $where)
-    {
-        $item = $this->model->where($where)->first();
-        $data = $request->all();
-        $data['sale_date'] = Carbon::parse($data['sale_date']);
-        $sales_head = array(
-            'customer_id' => $data['customer_id'],
-            'sale_date' => $data['sale_date'],
-            'invoice_no' => $data['invoice_no'],
-        );
-        $item->update($sales_head);
+//    public function update(Request $request, array $where)
+//    {
+//        $item = $this->model->where($where)->first();
+//        $data = $request->all();
+//        $data['sale_date'] = Carbon::parse($data['sale_date']);
+//        $sales_head = array(
+//            'customer_id' => $data['customer_id'],
+//            'sale_date' => $data['sale_date'],
+//            'invoice_no' => $data['invoice_no'],
+//        );
+//        $item->update($sales_head);
+//
+//        $stockDetails = $item->stockDetails;
+//        foreach ($stockDetails as $stockDetail){
+//            $stockDetail->update(['stock_status'=>'in_stock']);
+//        }
+//        $item->stockDetails()->detach();
+//
+//        $detailsArr = array();
+//        foreach ($data['details'] as $detail){
+//            $detailItem = array(
+//                'stock_details_id' => $detail['detail_id'],
+//                'unit_price' => $detail['unit_price'],
+//                'discount' => $detail['discount'],
+//                'amount' => $detail['amount'],
+//            );
+//            array_push($detailsArr, $detailItem);
+//            StockHeadDetail::find($detail['detail_id'])->update(['stock_status'=>'sold']);
+//        }
+//        $item->details()->createMany($detailsArr);
+//
+//    }
 
-        $stockDetails = $item->stockDetails;
-        foreach ($stockDetails as $stockDetail){
-            $stockDetail->update(['stock_status'=>'in_stock']);
-        }
-        $item->stockDetails()->detach();
-
-        $detailsArr = array();
-        foreach ($data['details'] as $detail){
-            $detailItem = array(
-                'stock_details_id' => $detail['detail_id'],
-                'unit_price' => $detail['unit_price'],
-                'discount' => $detail['discount'],
-                'amount' => $detail['amount'],
-            );
-            array_push($detailsArr, $detailItem);
-            StockHeadDetail::find($detail['detail_id'])->update(['stock_status'=>'sold']);
-        }
-        $item->details()->createMany($detailsArr);
-
-    }
-
-    public function fetchStockDetails($imei, $grade, $color, $capacity, $model){
+    public function fetchStockDetails($imei, $filters, $details){
 
         $result = array();
         if($imei==null){
             return $result;
         }
+
+        $selectedImeis = [];
+        foreach ($details as $detail){
+            if(!is_null($detail['imei'])){
+                array_push($selectedImeis, $detail['imei']);
+            }
+        }
+
+        foreach ($filters as $index=>$filter) {
+            $available = $this->getAvailableIMEICountForFilter($details, $filter);
+            if($available>0){
+                $imeis = $this->getIMEIS($filter, $imei, $selectedImeis);
+                $result = array_merge($result, $imeis);
+            }
+        }
+        return $result;
+    }
+
+    public function getAvailableIMEICountForFilter($details, $filter){
+        $result = array_filter($details, function($value, $key) use ($filter) {
+           return $value['filter_id']===$filter['unique_key'];
+        }, ARRAY_FILTER_USE_BOTH);
+        $resultCount = sizeof($result);
+        $filterCount = intval($filter['quantity']);
+        return $filterCount-$resultCount;
+    }
+
+    public function getIMEIS($filter, $imei, $selectedImeis){
+
+        $model = $filter['model'];
+        $grade = $filter['grade'];
+        $capacity = $filter['capacity'];
+        $color = $filter['color'];
+        $imeiArr = array();
         $query = StockHeadDetail::select('stock_details.id as id', 'stock_details.imei_no as imei_no', 'stock_details.price_aed as price_aed','stock_heads.freight as freight')
             ->join('stock_heads', 'stock_heads.id', '=', 'stock_details.stock_head_id')
             ->whereRaw( "imei_no like ?", "%$imei%" )
@@ -115,18 +159,21 @@ class SalesService extends ServiceAbstract
             ->where('color_id',$color)
             ->where('capacity_id',$capacity)
             ->where('model_id',$model)
+            ->whereNotIn('imei_no', $selectedImeis)
             ->get();
+
         foreach ($query as $item){
             $obj = new \stdClass();
             $obj->label = $item->imei_no;
+            $obj->filter_key = $filter['unique_key'];
             $obj->value = $item;
-            array_push($result,$obj);
+            array_push($imeiArr,$obj);
         }
-        return $result;
+        return $imeiArr;
     }
 
     public function getDetails($id, $columns = array('*')){
-        $salesItem = $this->model->with('stockDetails')->where('id',$id)->first();
+        $salesItem = $this->model->with('stockDetails', 'filters')->where('id',$id)->first();
         return $salesItem;
     }
 

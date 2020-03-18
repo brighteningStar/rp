@@ -32,7 +32,8 @@ Route::group(['middleware' => ["auth"]], function () {
     Route::get( '/fetch-stock/{id}', 'StockController@fetchStock' )->name( 'fetch.stock' );
 
     Route::get( '/sales/get', 'SalesController@get' )->name( 'sales.get' );
-    Route::get( '/sales/search/imei', 'SalesController@searchImei' )->name( 'sales.search.imei' );
+    Route::get( '/sales/{id}/view', 'SalesController@view' )->name( 'sales.view' );
+    Route::post( '/sales/search/imei', 'SalesController@searchImei' )->name( 'sales.search.imei' );
     Route::resource( 'sales', 'SalesController' );
 
     Route::get( '/rma/get', 'RMAController@get' )->name( 'rma.get' );

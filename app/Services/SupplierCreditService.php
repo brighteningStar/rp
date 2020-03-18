@@ -12,7 +12,6 @@ namespace App\Services;
 use App\Models\StockHeadDetail;
 use App\Models\SupplierCreditHead;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class SupplierCreditService extends ServiceAbstract
 {
@@ -61,39 +60,6 @@ class SupplierCreditService extends ServiceAbstract
         }
         $head->details()->createMany($detailsArr);
     }
-
-//    public function update(Request $request, array $where)
-//    {
-//        $item = $this->model->where($where)->first();
-//        $data = $request->all();
-//        $data['rma_date'] = Carbon::parse($data['rma_date']);
-//        $rma_head = array(
-//            'customer_id' => $data['customer_id'],
-//            'rma_date' => $data['rma_date'],
-//            'rma_number' => $data['rma_no'],
-//        );
-//        $item->update($rma_head);
-//
-//        $stockDetails = $item->stockDetails;
-//        foreach ($stockDetails as $stockDetail){
-//            $stockDetail->update(['stock_status'=>'in_stock']);
-//        }
-//        $item->stockDetails()->detach();
-//        $detailsArr = array();
-//        foreach ($data['details'] as $detail){
-//            $detailItem = array(
-//                'stock_details_id' => $detail['detail_id'],
-//                'fault_type_id' => $detail['fault_type_id'],
-//                'location_id' => $detail['location_id'],
-//                'fault' => $detail['fault'],
-//                'sale_price' => $detail['sale_price'],
-//            );
-//            array_push($detailsArr, $detailItem);
-//            StockHeadDetail::find($detail['detail_id'])->update(['stock_status'=>'rma']);
-//        }
-//        $item->details()->createMany($detailsArr);
-//
-//    }
 
     public function fetchStockDetails($imei, $supplier_id){
 

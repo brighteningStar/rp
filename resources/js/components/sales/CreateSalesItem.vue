@@ -36,48 +36,62 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <hr>
+                                <br>
+
+                                <!-- filters for imei -->
+                                <div class="head-section">
+                                    <h4>Filters For IMEI</h4>
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h4>Filters For IMEI</h4>
-                                        </div>
+                                    <div class="detail-section-row mt-2" v-for="(filter, index) in form.filters">
+                                        <div class="row" >
+                                            <a href="#" @click.prevent="deleteFilterRow(index)" class="delete-detail-row"><i class="far fa-times-circle"></i></a>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Select Model</label>
+                                                    <model-select v-model.sync="filter.model"></model-select>
+                                                    <!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
+                                                </div>
+                                            </div>
 
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Select Color</label>
+                                                    <color-select v-model.sync="filter.color"></color-select>
+                                                    <!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Select Capacity</label>
+                                                    <capacity-select v-model.sync="filter.capacity"></capacity-select>
+                                                    <!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Select Grade</label>
+                                                    <grade-select v-model.sync="filter.grade"></grade-select>
+                                                    <!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Quantity</label>
+                                                    <input type="text" class="form-control" v-model="filter.quantity">
+                                                    <!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!-- filters for imei -->
 
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label>Select Model</label>
-                                                <model-select v-model.sync="form.filters.model"></model-select>
-<!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label>Select Color</label>
-                                                <color-select v-model.sync="form.filters.color"></color-select>
-<!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label>Select Capacity</label>
-                                                <capacity-select v-model.sync="form.filters.capacity"></capacity-select>
-<!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
-                                            </div>
-                                        </div>
-
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label>Select Grade</label>
-                                                <grade-select v-model.sync="form.filters.grade"></grade-select>
-<!--                                                <span class="error invalid-feedback" v-if="form.errors.has('customer_id')" v-text="form.errors.get('customer_id')"></span>-->
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <br>
+                                    <button class="btn btn-success" @click.prevent="addFilterRow">Add New Filter</button>
                                 </div>
 
                                 <div class="detail-section mt-5">
@@ -92,9 +106,9 @@
                                                     <div  v-if="row.spinner" class="spinner-border v-select-spinner spinner-grow-sm" role="status">
                                                         <span class="sr-only">Loading...</span>
                                                     </div>
-                                                    <v-select :value="row.imei" :options="row.imeis" v-on:input="setImeiDetails($event, row)" :disabled="isDisabled">
+                                                    <v-select :value="row.imei" :options="row.imeis" v-on:input="setImeiDetails($event, row); addRow($event)" :disabled="isDisabled">
                                                         <template #search="{attributes, events}">
-                                                            <input class="vs__search" v-bind="attributes" v-on="events" @blur="addRow" @keyup="searchImei(row, $event.target.value)" />
+                                                            <input class="vs__search" v-bind="attributes" v-on="events" @keyup="searchImei(row, $event.target.value)" />
                                                         </template>
                                                     </v-select>
                                                     <span class="error invalid-feedback" v-if="form.errors.has('details.'+index+'.imei')" v-text="form.errors.get('details.'+index+'.imei')"></span>
@@ -137,7 +151,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button style="float:right; margin-top:10px;" @click.prevent="addRow" class="btn btn-success">Add</button>
+                                    <br>
+                                    <button @click.prevent="addRow(1)" class="btn btn-success" style="float:right">Add Row</button>
                                 </div>
 
                             </div>
@@ -154,6 +169,7 @@
 
 <script>
     import {Form} from "../../Form"
+    import Swal from 'sweetalert2'
     export default {
         props: ['id'],
         data() {
@@ -163,12 +179,6 @@
                     sale_date: '',
                     invoice_no: '',
                     loading:false,
-                    filters:{
-                        'model' :null,
-                        'capacity' :null,
-                        'color' :null,
-                        'grade' :null,
-                    },
                     details:[{
                         detail_id:'',
                         imei:'',
@@ -179,6 +189,15 @@
                         amount:'',
                         imeis:[],
                         spinner:false,
+                        filter_id:null,
+                    }],
+                    filters:[{
+                        'model' :null,
+                        'capacity' :null,
+                        'color' :null,
+                        'grade' :null,
+                        'quantity': 0,
+                        'unique_key':Date.now()
                     }],
                 }),
             };
@@ -186,10 +205,13 @@
 
         computed: {
             isDisabled(){
-                if(this.form.filters.model==null || this.form.filters.capacity==null || this.form.filters.color==null || this.form.filters.grade==null)
-                    return true;
-                else
-                    return false;
+                let ret = false;
+                this.form.filters.forEach(function(item){
+                    if(item.model==null || item.capacity==null || item.color==null || item.grade==null){
+                        ret = true;
+                    }
+                });
+                return ret;
             }
         },
 
@@ -199,6 +221,16 @@
             },
 
             onSubmitForm(){
+
+                if(!this.eligibleForSave()){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Save is not allowed as criteria is not yet met',
+                    });
+                    return;
+                }
+
                 if(this.id) {
                     this.form.put('/sales/'+this.id)
                         .then(function (response) {
@@ -208,14 +240,37 @@
                 } else {
                     this.form.post('/sales')
                         .then(function (response) {
-                            window.location.replace("/sales");
+                            // window.location.replace("/sales");
                         })
                         .catch(errors => console.log(errors));
                 }
 
             },
 
-            addRow(){
+            eligibleForSave(){
+                let self = this;
+                let res = true;
+                this.form.filters.forEach(function(filter){
+                    let unique_key = filter.unique_key;
+                    let quantity = filter.quantity;
+                    let count = 0;
+                    self.form.details.forEach(function(detail){
+                        if(detail.filter_id==unique_key){
+                            count++;
+                        }
+
+                    });
+                    if(count!=quantity){
+                        res = false;
+                    }
+                });
+                return res;
+            },
+
+            addRow(event){
+                if(event==null){
+                    return;
+                }
                 this.form.details.push({
                     imei:'',
                     detail_id:'',
@@ -226,7 +281,43 @@
                     amount:'',
                     imeis:[],
                     spinner:false,
+                    filter_id:null,
                 });
+            },
+
+            addFilterRow(){
+                this.form.filters.push({
+                    'model' :null,
+                    'capacity' :null,
+                    'color' :null,
+                    'grade' :null,
+                    'quantity': 0,
+                    'unique_key':Date.now()
+                })
+            },
+
+            deleteFilterRow(index){
+                let unique_key = this.form.filters[index]['unique_key'];
+                let i = 0;
+                this.form.details.forEach(function(item, ind){
+                    if(item.filter_id==unique_key){
+                        i++;
+                    }
+                });
+
+                for(let j=0;j<i;j++){
+                    let myindex = null;
+                    this.form.details.forEach(function(item, ind){
+                        if(item.filter_id==unique_key){
+                            myindex = ind;
+                        }
+                    });
+                    if(myindex!=null){
+                        this.form.details.splice(myindex, 1);
+                    }
+                }
+
+                this.form.filters.splice(index, 1);
             },
 
             deleteRow(index){
@@ -236,14 +327,11 @@
             searchImei(row, imei){
 
                 row.spinner=true;
-                axios.get('/sales/search/imei',{
-                    params: {
-                        imei: imei,
-                        color: this.form.filters.color,
-                        grade: this.form.filters.grade ,
-                        capacity: this.form.filters.capacity,
-                        model: this.form.filters.model,
-                    },
+
+                axios.post('/sales/search/imei', {
+                    imei: imei,
+                    filters: this.form.filters,
+                    details: this.form.details,
                 })
                     .then(function (response) {
                         row.imeis = response.data;
@@ -259,16 +347,19 @@
             },
 
             setImeiDetails(event, row){
+
                 if(event==null){
                     row.imei = '';
                     row.detail_id ='';
                     row.price_aed = '';
                     row.freight = '';
+                    row.filter_id = null;
                 } else {
                     row.imei = event.value.imei_no;
                     row.detail_id = event.value.id;
                     row.price_aed = event.value.price_aed;
                     row.freight = event.value.freight;
+                    row.filter_id = event.filter_key;
                 }
 
             },
