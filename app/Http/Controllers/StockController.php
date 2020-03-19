@@ -103,8 +103,8 @@ class StockController extends Controller
                 'detail.*.bank_deal_no'   => 'required',
                 'detail.*.imei'           => 'required|unique:stock_details,imei_no',
                 'detail.*.price_aed'      => 'required',
-                'heading.freight'         => 'required',
-                'heading.custom_duty'     => 'required',
+                'heading.freight'         => 'sometimes',
+                'heading.custom_duty'     => 'sometimes',
                 'local_imported.selected' => 'required',
             ],
             [
@@ -248,8 +248,8 @@ class StockController extends Controller
                 'detail.*.bank_deal_no'   => 'required',
                 'detail.*.imei'           => 'required|unique:stock_details,stock_head_id,'.$stockID,
                 'detail.*.price_aed'      => 'required',
-                'heading.freight'         => 'required',
-                'heading.custom_duty'     => 'required',
+                'heading.freight'         => 'sometimes',
+                'heading.custom_duty'     => 'sometimes',
                 'local_imported.selected' => 'required',
             ],
             [
