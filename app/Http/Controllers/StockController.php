@@ -98,7 +98,7 @@ class StockController extends Controller
         $request->validate(
             [
                 'detail.*.invoice_no'     => 'required',
-                'detail.*.sys_id'         => 'required|integer|unique:stock_details',
+                'detail.*.sys_id'         => 'required|unique:stock_details',
                 'detail.*.total_cost'     => 'required',
                 'detail.*.bank_deal_no'   => 'required',
                 'detail.*.imei'           => 'required|unique:stock_details,imei_no',
