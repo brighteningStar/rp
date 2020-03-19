@@ -112,7 +112,6 @@ class StockController extends Controller
                 'detail.*.bank_deal_no.required'   => 'Bank Deal Number is required',
                 'detail.*.imei.required'           => 'IMEI is required',
                 'detail.*.imei.unique'             => 'IMEI should be unique',
-                'detail.*.sys_id.integer'          => 'SYS id should be a number',
                 'detail.*.sys_id.required'         => 'SYS id field is required',
                 'detail.*.sys_id.unique'           => 'SYS id should be unique',
                 'detail.*.price_aed.required'      => 'AED Price is required',
@@ -244,7 +243,7 @@ class StockController extends Controller
         $request->validate(
             [
                 'detail.*.invoice_no'     => 'required',
-                'detail.*.sys_id'         => 'required|integer|unique:stock_details,stock_head_id,'.$stockID,
+                'detail.*.sys_id'         => 'required|unique:stock_details,stock_head_id,'.$stockID,
                 'detail.*.total_cost'     => 'required',
                 'detail.*.bank_deal_no'   => 'required',
                 'detail.*.imei'           => 'required|unique:stock_details,stock_head_id,'.$stockID,
@@ -258,13 +257,13 @@ class StockController extends Controller
                 'detail.*.bank_deal_no.required'   => 'Bank Deal Number is required',
                 'detail.*.imei.required'           => 'IMEI is required',
                 'detail.*.imei.unique'             => 'IMEI should be unique',
-                'detail.*.sys_id.integer'          => 'SYS id should be a number',
                 'detail.*.sys_id.required'         => 'SYS id field is required',
                 'detail.*.sys_id.unique'           => 'SYS id should be unique',
                 'detail.*.price_aed.required'      => 'AED Price is required',
                 'heading.freight.required'         => 'Freight is required',
                 'heading.custom_duty.required'     => 'custom Duty is required',
                 'local_imported.selected.required' => 'Local Imported field is required',
+                'detail.*.total_cost'              => 'Total Cost field is required',
             ]
         );
 
