@@ -68,8 +68,8 @@ class StockController extends Controller
                     $serialNo                           = preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['serial_no']);
                     $processedData['heading']           = $this->service->builtHeadSection($result, $quantity);
                     $processedData['detail'][$serialNo] = [
-                        'sys_id'       => '',
-                        'imei'         => '',
+                        'sys_id'       => trim($result['sys_id']),
+                        'imei'         => trim($result['imei_no']),
                         'serial_no'    => $serialNo,
                         'make'         => $maker,
                         'model'        => $makeModel,
@@ -81,7 +81,7 @@ class StockController extends Controller
                         'part_no'      => trim($result['part_no']),
                         'price_usd'    => number_format($result['price_usd'], 2),
                         'price_aed'    => trim($result['price_aed']),
-                        'total_cost'   => '',
+                        'total_cost'   => trim($result['total_cost']),
                         'bank_deal_no' => $bankDeal['bank_deal'],
                     ];
                 }
@@ -119,6 +119,7 @@ class StockController extends Controller
                 'heading.freight.required'         => 'Freight is required',
                 'heading.custom_duty.required'     => 'custom Duty is required',
                 'local_imported.selected.required' => 'Local Imported field is required',
+                'detail.*.total_cost'              => 'Total Cost field is required',
             ]
         );
 
@@ -212,7 +213,7 @@ class StockController extends Controller
             'custom_duty'      => $dataQuery->custom_duty,
             'freight'          => $dataQuery->freight,
         ];
-        
+
         foreach ($dataQuery->details as $detail) {
             $stock['local_imported']             = [ 'title' => ucfirst( $detail->local_imported), 'id' => $detail->local_imported];
             $stock['detail'][$detail->serial_no] = [
