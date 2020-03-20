@@ -99,7 +99,7 @@ class StockController extends Controller
             [
                 'detail.*.invoice_no'     => 'required',
                 'detail.*.sys_id'         => 'required|unique:stock_details',
-                'detail.*.total_cost'     => 'required',
+                'detail.*.total_cost'     => 'sometimes',
                 'detail.*.bank_deal_no'   => 'required',
                 'detail.*.imei'           => 'required|unique:stock_details,imei_no',
                 'detail.*.price_aed'      => 'required',
@@ -118,7 +118,6 @@ class StockController extends Controller
                 'heading.freight.required'         => 'Freight is required',
                 'heading.custom_duty.required'     => 'custom Duty is required',
                 'local_imported.selected.required' => 'Local Imported field is required',
-                'detail.*.total_cost'              => 'Total Cost field is required',
             ]
         );
 
@@ -244,7 +243,7 @@ class StockController extends Controller
             [
                 'detail.*.invoice_no'     => 'required',
                 'detail.*.sys_id'         => 'required|unique:stock_details,stock_head_id,'.$stockID,
-                'detail.*.total_cost'     => 'required',
+                'detail.*.total_cost'     => 'sometimes',
                 'detail.*.bank_deal_no'   => 'required',
                 'detail.*.imei'           => 'required|unique:stock_details,stock_head_id,'.$stockID,
                 'detail.*.price_aed'      => 'required',
@@ -263,7 +262,6 @@ class StockController extends Controller
                 'heading.freight.required'         => 'Freight is required',
                 'heading.custom_duty.required'     => 'custom Duty is required',
                 'local_imported.selected.required' => 'Local Imported field is required',
-                'detail.*.total_cost'              => 'Total Cost field is required',
             ]
         );
 
