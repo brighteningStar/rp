@@ -18,7 +18,8 @@ class SearchController extends Controller
     public function searchByIMEI(Request $request)
     {
         $imei = $request->get('imei');
-        $this->service->searchByIMEI($imei);
+        
+        return $this->service->searchByIMEI($imei);
 
     }
 
