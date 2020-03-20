@@ -98,13 +98,13 @@ class StockController extends Controller
         $request->validate(
             [
                 'detail.*.invoice_no'     => 'required',
-                'detail.*.sys_id'         => 'required|integer|unique:stock_details',
-                'detail.*.total_cost'     => 'required',
+                'detail.*.sys_id'         => 'required|unique:stock_details',
+                'detail.*.total_cost'     => 'sometimes',
                 'detail.*.bank_deal_no'   => 'required',
                 'detail.*.imei'           => 'required|unique:stock_details,imei_no',
                 'detail.*.price_aed'      => 'required',
-                'heading.freight'         => 'required',
-                'heading.custom_duty'     => 'required',
+                'heading.freight'         => 'sometimes',
+                'heading.custom_duty'     => 'sometimes',
                 'local_imported.selected' => 'required',
             ],
             [
@@ -112,7 +112,6 @@ class StockController extends Controller
                 'detail.*.bank_deal_no.required'   => 'Bank Deal Number is required',
                 'detail.*.imei.required'           => 'IMEI is required',
                 'detail.*.imei.unique'             => 'IMEI should be unique',
-                'detail.*.sys_id.integer'          => 'SYS id should be a number',
                 'detail.*.sys_id.required'         => 'SYS id field is required',
                 'detail.*.sys_id.unique'           => 'SYS id should be unique',
                 'detail.*.price_aed.required'      => 'AED Price is required',
@@ -212,7 +211,7 @@ class StockController extends Controller
             'custom_duty'      => $dataQuery->custom_duty,
             'freight'          => $dataQuery->freight,
         ];
-        
+
         foreach ($dataQuery->details as $detail) {
             $stock['local_imported']             = [ 'title' => ucfirst( $detail->local_imported), 'id' => $detail->local_imported];
             $stock['detail'][$detail->serial_no] = [
@@ -243,13 +242,13 @@ class StockController extends Controller
         $request->validate(
             [
                 'detail.*.invoice_no'     => 'required',
-                'detail.*.sys_id'         => 'required|integer|unique:stock_details,stock_head_id,'.$stockID,
-                'detail.*.total_cost'     => 'required',
+                'detail.*.sys_id'         => 'required|unique:stock_details,stock_head_id,'.$stockID,
+                'detail.*.total_cost'     => 'sometimes',
                 'detail.*.bank_deal_no'   => 'required',
                 'detail.*.imei'           => 'required|unique:stock_details,stock_head_id,'.$stockID,
                 'detail.*.price_aed'      => 'required',
-                'heading.freight'         => 'required',
-                'heading.custom_duty'     => 'required',
+                'heading.freight'         => 'sometimes',
+                'heading.custom_duty'     => 'sometimes',
                 'local_imported.selected' => 'required',
             ],
             [
@@ -257,7 +256,6 @@ class StockController extends Controller
                 'detail.*.bank_deal_no.required'   => 'Bank Deal Number is required',
                 'detail.*.imei.required'           => 'IMEI is required',
                 'detail.*.imei.unique'             => 'IMEI should be unique',
-                'detail.*.sys_id.integer'          => 'SYS id should be a number',
                 'detail.*.sys_id.required'         => 'SYS id field is required',
                 'detail.*.sys_id.unique'           => 'SYS id should be unique',
                 'detail.*.price_aed.required'      => 'AED Price is required',

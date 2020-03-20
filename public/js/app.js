@@ -54528,7 +54528,8 @@ var render = function() {
                 uri: "/get-stock",
                 title: "Stock",
                 "edit-url": "/stock/edit/id",
-                "cant-view": "1"
+                "cant-view": "1",
+                "cant-delete": "1"
               }
             })
           ],
@@ -77773,8 +77774,8 @@ Vue.component('view-supplier-credit-item', __webpack_require__(/*! ./components/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/adda/Projects/stock/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/adda/Projects/stock/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/stock/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/stock/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <table-vue uri="/get-stock" title="Stock" edit-url="/stock/edit/id" cant-view="1"></table-vue>
+            <table-vue uri="/get-stock" title="Stock" edit-url="/stock/edit/id" cant-view="1" cant-delete="1"></table-vue>
         </div>
         <div v-if="! showUploadForm" class="container-fluid">
             <div class="row">
