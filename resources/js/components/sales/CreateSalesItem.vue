@@ -240,7 +240,7 @@
                 } else {
                     this.form.post('/sales')
                         .then(function (response) {
-                            // window.location.replace("/sales");
+                            window.location.replace("/sales");
                         })
                         .catch(errors => console.log(errors));
                 }

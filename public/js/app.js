@@ -5335,7 +5335,8 @@ __webpack_require__.r(__webpack_exports__);
           return console.log(errors);
         });
       } else {
-        this.form.post('/sales').then(function (response) {// window.location.replace("/sales");
+        this.form.post('/sales').then(function (response) {
+          window.location.replace("/sales");
         })["catch"](function (errors) {
           return console.log(errors);
         });
