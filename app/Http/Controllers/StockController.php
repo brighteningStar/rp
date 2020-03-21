@@ -58,30 +58,30 @@ class StockController extends Controller
                         continue;
                     }
 
-                    $maker     = $this->service->maker(trim($result['make']));
-                    $makeModel = $this->service->makeModel(trim($result['model']));
-                    $color     = $this->service->color(trim($result['color']));
-                    $grade     = $this->service->grade(trim($result['grade']));
-                    $capacity  = $this->service->capacity(trim($result['capacity']));
-                    $bankDeal  = $this->service->bankDeal(trim($result['bank_deal_no']));
+                    $maker     = $this->service->maker(preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['make']));
+                    $makeModel = $this->service->makeModel(preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['model']));
+                    $color     = $this->service->color(preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['color']));
+                    $grade     = $this->service->grade(preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['grade']));
+                    $capacity  = $this->service->capacity(preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['capacity']));
+                    $bankDeal  = $this->service->bankDeal(preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['bank_deal_no']));
 
                     $serialNo                           = preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['serial_no']);
                     $processedData['heading']           = $this->service->builtHeadSection($result, $quantity);
                     $processedData['detail'][$serialNo] = [
-                        'sys_id'       => trim($result['sys_id']),
-                        'imei'         => trim($result['imei_no']),
+                        'sys_id'       => preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['sys_id']),
+                        'imei'         => preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['imei_no']),
                         'serial_no'    => $serialNo,
                         'make'         => $maker,
                         'model'        => $makeModel,
                         'capacity'     => $capacity,
                         'color'        => $color,
                         'grade'        => $grade,
-                        'invoice_no'   => trim($result['inv_no']),
-                        'stock_id'     => trim($result['stock_id']),
-                        'part_no'      => trim($result['part_no']),
+                        'invoice_no'   => preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['inv_no']),
+                        'stock_id'     => preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['stock_id']),
+                        'part_no'      => preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['part_no']),
                         'price_usd'    => number_format($result['price_usd'], 2),
-                        'price_aed'    => trim($result['price_aed']),
-                        'total_cost'   => trim($result['total_cost']),
+                        'price_aed'    => preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['price_aed']),
+                        'total_cost'   => preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $result['total_cost']),
                         'bank_deal_no' => $bankDeal['bank_deal'],
                     ];
                 }
@@ -148,9 +148,9 @@ class StockController extends Controller
                 StockHeadDetail::create([
                     'invoice_number'   => $detail['invoice_no'],
                     'stock_head_id'    => $stockHeadID->id,
-                    'sys_id'           => $detail['sys_id'],
-                    'imei_no'          => $detail['imei'],
-                    'serial_no'        => $detail['serial_no'],
+                    'sys_id'           => (string) $detail['sys_id'],
+                    'imei_no'          => (string) $detail['imei'],
+                    'serial_no'        => (string) $detail['serial_no'],
                     'make_id'          => $detail['make']['id'],
                     'model_id'         => $detail['model']['id'],
                     'capacity_id'      => $detail['capacity']['id'],
@@ -289,10 +289,11 @@ class StockController extends Controller
             StockHead::where('id', $stockID)->update($stockHead);
 
             foreach ($details as $serialNo => $detail) {
-                StockHeadDetail::where('stock_head_id', $stockID)->where('serial_no', $serialNo)->update([
+                
+                StockHeadDetail::where('stock_head_id', $stockID)->where('serial_no', (string)$serialNo)->update([
                     'invoice_number'   => $detail['invoice_no'],
-                    'sys_id'           => $detail['sys_id'],
-                    'imei_no'          => $detail['imei'],
+                    'sys_id'           => (string)$detail['sys_id'],
+                    'imei_no'          => (string)$detail['imei'],
                     'make_id'          => $detail['make']['id'],
                     'model_id'         => $detail['model']['id'],
                     'capacity_id'      => $detail['capacity']['id'],

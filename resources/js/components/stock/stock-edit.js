@@ -130,8 +130,8 @@ export default {
             this.loadingForm = true;
             axios.post(`/stock/${this.id}/update`, {'heading': this.stockHeading, 'detail': this.detailSection, 'local_imported': this.local_imported})
                 .then(response => {
-                    this.showUploadForm = true;
-                    this.loadingForm = false;
+                    this.showUploadForm  = true;
+                    this.loadingForm     = false;
                     window.location.href = '/stock';
                 })
                 .catch(function (errors) {
