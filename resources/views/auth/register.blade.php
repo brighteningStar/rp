@@ -3,5 +3,7 @@
     <title>Register</title>
 @endsection
 @section('content')
-    <register-component></register-component>
+    <error-boundry>
+        <register-component></register-component>
+    </error-boundry>
 @endsection

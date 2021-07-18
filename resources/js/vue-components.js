@@ -6,6 +6,14 @@ Vue.component('datepicker', Datepicker);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+// base
+Vue.component('error-boundry', require('./components/ErrorBoundry.vue').default);
+
+// auth
+Vue.component('login-component', require('./components/LoginComponent.vue').default);
+Vue.component('register-component', require('./components/RegisterComponent.vue').default);
+
+
 // element components
 Vue.component('app-navigation', require('./components/Navigation.vue').default);
 Vue.component('user-component', require('./components/UserComponent.vue').default);
@@ -43,8 +51,6 @@ Vue.component('supplier-select', require('./components/selects/SupplierSelect.vu
 // app components
 Vue.component('stock-component', require('./components/stock/StockComponent.vue').default);
 Vue.component('stock-edit-component', require('./components/stock/StockEditComponent.vue').default);
-Vue.component('login-component', require('./components/LoginComponent.vue').default);
-Vue.component('register-component', require('./components/RegisterComponent.vue').default);
 Vue.component('update-profile-component', require('./components/Profile.vue').default);
 Vue.component('update-password-component', require('./components/ChangePassword.vue').default);
 
