@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Resources\RolesResource;
-use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
@@ -12,7 +12,7 @@ class RolesController extends Controller
 
     public function get()
     {
-        $allRoles = Role::whereNotIn('guard_name', self::EXCLUDE_ROLES)->get();
+        $allRoles = Role::whereNotIn('name', self::EXCLUDE_ROLES)->get();
 
         return RolesResource::collection($allRoles);
     }

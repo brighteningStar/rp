@@ -25,7 +25,7 @@
                 <div class="input-group mb-3">
                     <select type="role" class="form-control no-border" placeholder="Role" name="role_id" v-model="form.role_id">
                         <option value="">Select Role</option>
-                        <option v-for="(role, index) in allRoles" :key="index" :value="role.id">{{role.name}}</option>
+                        <option v-for="(role, index) in allRoles" :key="index" :value="role.id">{{role.label}}</option>
                     </select>
                     <span class="error invalid-feedback" v-if="form.errors.has('role_id')" v-text="form.errors.get('role_id')"></span>
                 </div>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSupplierCreditHeadsTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateSupplierCreditHeadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('supplier_credit_heads', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->dateTime('supplier_credit_date');
-            $table->string('supplier_credit_invoice_no');
-            $table->bigInteger('supplier_id')->unsigned();
+            $table->string('name');
+            $table->string('label');
             $table->timestamps();
-
-            $table->foreign('supplier_id')->references('id')->on('suppliers');
         });
     }
 
@@ -31,6 +28,6 @@ class CreateSupplierCreditHeadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supplier_credit_heads');
+        Schema::dropIfExists('roles');
     }
 }
