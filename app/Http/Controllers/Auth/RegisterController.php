@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        $user->assignRole($data['role_id']);
+        $user->roles()->attach($data['role_id']);
         return $user;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 
 class RolesSeeder extends Seeder
 {
@@ -12,29 +12,26 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-        Role::create([
-            'name' => 'Super Admin',
-            'guard_name' => 'super_admin'
-        ]);
+        $rolesArray = [
+            [
+                'label' => 'Super Admin',
+                'name' => 'super_admin'
+            ],[
+                'label' => 'Asset Manager',
+                'name' => 'asset_manager'
+            ],[
+                'label' => 'Man Power Manager',
+                'name' => 'man_power_manager'
+            ],[
+                'label' => 'IT Service Provider',
+                'name' => 'it_service_provider'
+            ],[
+                'label' => 'Investor',
+                'name' => 'investor'
+            ]
+        ];
+       
 
-        Role::create([
-            'name' => 'Asset Manager',
-            'guard_name' => 'asset_manager'
-        ]);
-
-        Role::create([
-            'name' => 'Man Power Manager',
-            'guard_name' => 'man_power_manager'
-        ]);
-
-        Role::create([
-            'name' => 'IT Service Provide',
-            'guard_name' => 'it_service_provider'
-        ]);
-
-        Role::create([
-            'name' => 'Investor',
-            'guard_name' => 'investor'
-        ]);
+        Role::insert($rolesArray);
     }
 }
