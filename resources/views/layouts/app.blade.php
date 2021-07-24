@@ -23,7 +23,7 @@
 <div id="app">
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>KoolLinks</b>Mobile</a>
+            <a href="#"><b>RP</b></a>
         </div>
         <!-- /.login-logo -->
         @yield('content')
