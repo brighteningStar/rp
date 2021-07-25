@@ -1,6 +1,6 @@
 <template>
-    <div class="overlay d-flex justify-content-center align-items-center">
-        <i class="fas fa-2x fa-sync fa-spin"></i>
+    <div class="fa-3x loader">
+        <i class="fas fa-stroopwafel fa-spin"></i>
     </div>
 </template>
 <style>
@@ -11,3 +11,11 @@
 
     }
 </script>
+<style scoped>
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 99;
+}
+</style>
