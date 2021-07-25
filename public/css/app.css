@@ -10849,3 +10849,8 @@ a.text-dark:focus {
   border: 1px solid #ced4da;
 }
 
+.logo-img{
+    width: 120px;
+    position: absolute;
+}
+

@@ -9,7 +9,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark t10">
         <div class="container">
-            <a class="navbar-brand" href="#"><img width="200px" src="/images/logo3.png"></a>
+            <a class="navbar-brand" href="#"><img class="logo-img" src="/images/logo3.png"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -95,20 +95,20 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <div class="card light-blue-shade">
+                <div class="card dark-blue-shade special-card">
                     <div class="card-body">
                         <img src="images/cup.png" />
-                        <h3 class="card-subtitle mb-2 text-muted">Intuitive Interface</h3>
-                        <p class="card-text">Access your data with effortless controls. Our robust API lets you focus on.</p>
+                        <h3 class="card-subtitle mb-2 text-muted white">Intuitive Interface</h3>
+                        <p class="card-text white">Access your data with effortless controls. Our robust API lets you focus on.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card light-blue-shade">
+                <div class="card dark-blue-shade special-card">
                     <div class="card-body">
                         <img src="images/shield.png" />
-                        <h3 class="card-subtitle mb-2 text-muted">Superior Integration</h3>
-                        <p class="card-text">Access your data with effortless controls. Our robust API lets you focus on.</p>
+                        <h3 class="card-subtitle mb-2 text-muted white">Superior Integration</h3>
+                        <p class="card-text white">Access your data with effortless controls. Our robust API lets you focus on.</p>
 
                     </div>
                 </div>
@@ -124,11 +124,11 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card light-blue-shade">
+                <div class="card dark-blue-shade special-card">
                     <div class="card-body">
                         <img src="images/shield-icon.png" />
-                        <h3 class="card-subtitle mb-2 text-muted">Total <br> Security</h3>
-                        <p class="card-text">Access your data with effortless controls. Our robust API lets you focus on.</p>
+                        <h3 class="card-subtitle mb-2 text-muted white">Total <br> Security</h3>
+                        <p class="card-text white">Access your data with effortless controls. Our robust API lets you focus on.</p>
 
                     </div>
                 </div>
