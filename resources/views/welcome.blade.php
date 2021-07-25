@@ -14,7 +14,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark t10">
         <div class="container">
-            <a class="navbar-brand" href="#">RP</a>
+            <a class="navbar-brand" href="#"><img style="width: 200px" src="/images/logo.jpg"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

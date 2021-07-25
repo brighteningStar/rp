@@ -13,10 +13,10 @@
                             <input type="text" class="form-control f14" placeholder="" name="email" v-model="form.email" />
                             <span class="error invalid-field" v-if="this.form.errors.has('email')" v-text="form.errors.get('email')"></span>
 
-                            <select type="role" class="form-control input-select" placeholder="Role" name="role_id" v-model="form.role_id">
-                                <option value="">Select Role</option>
-                                <option v-for="(role, index) in allRoles" :key="index" :value="role.id">{{role.label}}</option>
-                            </select>
+<!--                            <select type="role" class="form-control input-select" placeholder="Role" name="role_id" v-model="form.role_id">-->
+<!--                                <option value="">Select Role</option>-->
+<!--                                <option v-for="(role, index) in allRoles" :key="index" :value="role.id">{{role.label}}</option>-->
+<!--                            </select>-->
                             <span class="error invalid-field" v-if="this.form.errors.has('role_id')" v-text="form.errors.get('role_id')"></span>
 
                             <input type="password" class="form-control mt-2 f14" placeholder="Password" name="password" v-model="form.password"/>
@@ -80,7 +80,7 @@
                     window.location = '/dashboard' // redirect to dashboard
                 } catch(errors) {
                     console.error('cannot make login')
-                } 
+                }
             },
 
             async fetchRoles() {
@@ -89,7 +89,7 @@
                 } catch(errors) {
                     console.error('cannot load roles')
                 }
-                
+
             }
         },
 
