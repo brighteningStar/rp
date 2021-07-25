@@ -25,6 +25,7 @@
 
                             <input type="text" class="form-control mt-2 f14" v-model="form.cnic" placeholder="CNIC 12345-1234567-1" name="cnic" />
                             <span class="error invalid-field" v-if="this.form.errors.has('cnic')" v-text="form.errors.get('cnic')"></span>
+                            
 
                             <input type="text" class="form-control mt-2 f14" v-model="form.mobile_no" placeholder="923XX XXXXXXX" name="mobile_no" />
                             <span class="error invalid-field" v-if="this.form.errors.has('mobile_no')" v-text="form.errors.get('mobile_no')"></span>
