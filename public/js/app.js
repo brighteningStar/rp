@@ -2098,6 +2098,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Form */ "./resources/js/Form.js");
+/* harmony import */ var _services_Role__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/Role */ "./resources/js/services/Role.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2145,14 +2146,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      service: new Role(),
+      service: new _services_Role__WEBPACK_IMPORTED_MODULE_2__["Role"](),
       form: new _Form__WEBPACK_IMPORTED_MODULE_1__["Form"]({
         email: '',
-        password: ''
+        password: '',
+        role_id: ''
       }),
       allRoles: []
     };
@@ -2160,6 +2169,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     disableForm: function disableForm() {
       return !!this.form.errors.any();
+    },
+    isLoading: function isLoading() {
+      return !!(this.form.loading || this.loading);
     }
   },
   methods: {
@@ -2169,19 +2181,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var loggedIn;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _context.prev = 0;
+                _context.next = 3;
                 return _this.form.post('/login');
 
-              case 2:
+              case 3:
+                loggedIn = _context.sent;
+                window.location = '/dashboard'; // redirect to dashboard
+
+                _context.next = 10;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.error('cannot make login');
+
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 7]]);
       }))();
     },
     fetchRoles: function fetchRoles() {
@@ -2511,6 +2537,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2542,6 +2569,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var registered;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2551,20 +2579,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.form.post('/register');
 
               case 3:
-                _context.next = 8;
+                registered = _context.sent;
+                window.location.href = '/dashboard'; // redirect to dashboard
+
+                _context.next = 10;
                 break;
 
-              case 5:
-                _context.prev = 5;
+              case 7:
+                _context.prev = 7;
                 _context.t0 = _context["catch"](0);
                 console.error(_this.form.errors.has('email'));
 
-              case 8:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 5]]);
+        }, _callee, null, [[0, 7]]);
       }))();
     },
     fetchRoles: function fetchRoles() {
@@ -12013,7 +12044,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".no-border[data-v-51f045bf] {\n  border-right: 1px solid #ccc !important;\n}\n.invalid-field[data-v-51f045bf] {\n  display: block;\n  width: 100%;\n  margin-top: 0.25rem;\n  font-size: 80%;\n  color: #dc3545;\n  text-align: left;\n}\n.input-select[data-v-51f045bf] {\n  margin-top: 10px;\n  height: 45px;\n}\n.input-select[data-v-51f045bf]:focus {\n  box-shadow: none;\n  border: 1px solid #ced4da;\n}", ""]);
+exports.push([module.i, ".no-border[data-v-51f045bf] {\n  border-right: 1px solid #ccc !important;\n}", ""]);
 
 // exports
 
@@ -47767,11 +47798,189 @@ var render = function() {
     _c(
       "div",
       { staticClass: "card dt-pull-up" },
-      [_vm.isLoading ? _c("loading") : _vm._e(), _vm._v(" "), _vm._m(0)],
+      [
+        _vm.isLoading ? _c("loading") : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "h5",
+            { staticClass: "card-title dati-account-title text-center" },
+            [_vm._v("Sign in to your account")]
+          ),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              staticClass: "text-center mt-30 login-form",
+              attrs: { action: "#", method: "POST" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.onSubmit($event)
+                },
+                keydown: function($event) {
+                  return _vm.form.errors.clear($event.target.name)
+                }
+              }
+            },
+            [
+              _c("div", {
+                staticClass: "alert alert-success dt-success-msg d-none f12"
+              }),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "alert alert-danger dt-error-msg d-none f12"
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c(
+                    "label",
+                    { staticClass: "login-email", attrs: { for: "email" } },
+                    [_vm._v("Email address *")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.email,
+                        expression: "form.email"
+                      }
+                    ],
+                    staticClass: "form-control f14",
+                    attrs: { type: "text", placeholder: "", name: "email" },
+                    domProps: { value: _vm.form.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "email", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  this.form.errors.has("email")
+                    ? _c("span", {
+                        staticClass: "error invalid-field",
+                        domProps: {
+                          textContent: _vm._s(_vm.form.errors.get("email"))
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.role_id,
+                          expression: "form.role_id"
+                        }
+                      ],
+                      staticClass: "form-control input-select",
+                      attrs: {
+                        type: "role",
+                        placeholder: "Role",
+                        name: "role_id"
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "role_id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "" } }, [
+                        _vm._v("Select Role")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.allRoles, function(role, index) {
+                        return _c(
+                          "option",
+                          { key: index, domProps: { value: role.id } },
+                          [_vm._v(_vm._s(role.label))]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  this.form.errors.has("role_id")
+                    ? _c("span", {
+                        staticClass: "error invalid-field",
+                        domProps: {
+                          textContent: _vm._s(_vm.form.errors.get("role_id"))
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.password,
+                        expression: "form.password"
+                      }
+                    ],
+                    staticClass: "form-control mt-2 f14",
+                    attrs: {
+                      type: "password",
+                      placeholder: "Password",
+                      name: "password"
+                    },
+                    domProps: { value: _vm.form.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "password", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  this.form.errors.has("password")
+                    ? _c("span", {
+                        staticClass: "error invalid-field",
+                        domProps: {
+                          textContent: _vm._s(_vm.form.errors.get("password"))
+                        }
+                      })
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(1)
+        ])
+      ],
       1
     ),
     _vm._v(" "),
-    _vm._m(1)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -47779,83 +47988,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("h5", { staticClass: "card-title dati-account-title text-center" }, [
-        _vm._v("Sign in to your account")
-      ]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "text-center mt-30 login-form",
-          attrs: { action: "/login", method: "POST" }
-        },
-        [
-          _c("div", {
-            staticClass: "alert alert-success dt-success-msg d-none f12"
-          }),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "alert alert-danger dt-error-msg d-none f12"
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" }, [
-              _c(
-                "label",
-                { staticClass: "login-email", attrs: { for: "email" } },
-                [_vm._v("Email address *")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control f14",
-                attrs: { type: "text", placeholder: "", name: "email" }
-              }),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  staticClass: "form-control input-select",
-                  attrs: { name: "", id: "" }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [
-                    _vm._v("Super Admin")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control mt-2 f14",
-                attrs: {
-                  type: "password",
-                  placeholder: "Password",
-                  name: "password"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row mt-20" }, [
-            _c("div", { staticClass: "col-md-12 text-left" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary login-btn",
-                  attrs: { type: "submit" }
-                },
-                [_vm._v("Sign in")]
-              )
-            ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "row login-form mt-30" }, [
-        _c("div", { staticClass: "col-md-12 p-md-0 text-center" }, [
-          _c("a", { staticClass: "forgot-pass-text", attrs: { href: "#" } }, [
-            _vm._v("Forgot Password?")
-          ])
+    return _c("div", { staticClass: "row mt-20" }, [
+      _c("div", { staticClass: "col-md-12 text-left" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary login-btn",
+            attrs: { type: "submit" }
+          },
+          [_vm._v("Sign in")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row login-form mt-30" }, [
+      _c("div", { staticClass: "col-md-12 p-md-0 text-center" }, [
+        _c("a", { staticClass: "forgot-pass-text", attrs: { href: "#" } }, [
+          _vm._v("Forgot Password?")
         ])
       ])
     ])
@@ -48358,7 +48511,7 @@ var render = function() {
                     staticClass: "form-control mt-2 f14",
                     attrs: {
                       type: "text",
-                      placeholder: "CNIC 12345-1234567-1",
+                      placeholder: "CNIC 1234512345671",
                       name: "cnic"
                     },
                     domProps: { value: _vm.form.cnic },

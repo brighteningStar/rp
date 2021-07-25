@@ -23,7 +23,7 @@
                             </select>
                             <span class="error invalid-field" v-if="this.form.errors.has('role_id')" v-text="form.errors.get('role_id')"></span>
 
-                            <input type="text" class="form-control mt-2 f14" v-model="form.cnic" placeholder="CNIC 12345-1234567-1" name="cnic" />
+                            <input type="text" class="form-control mt-2 f14" v-model="form.cnic" placeholder="CNIC 1234512345671" name="cnic" />
                             <span class="error invalid-field" v-if="this.form.errors.has('cnic')" v-text="form.errors.get('cnic')"></span>
                             
 
@@ -90,7 +90,8 @@ export default {
     methods: {
         async onSubmit() {
             try {
-                await this.form.post('/register')
+                const registered = await this.form.post('/register')
+                window.location.href = '/dashboard' // redirect to dashboard
             } catch (errors) {
                 console.error(this.form.errors.has('email'))
             }
@@ -114,24 +115,5 @@ export default {
 <style lang="scss" scoped>
 .no-border {
     border-right: 1px solid #ccc !important;
-}
-
-.invalid-field {
-    display: block;
-    width: 100%;
-    margin-top: .25rem;
-    font-size: 80%;
-    color: #dc3545;
-    text-align: left;
-}
-
-.input-select {
-    margin-top: 10px;
-    height: 45px;
-
-    &:focus {
-        box-shadow: none;
-        border: 1px solid #ced4da;
-    }
 }
 </style>

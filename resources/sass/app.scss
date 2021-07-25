@@ -7,3 +7,22 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.invalid-field {
+    display: block;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+    text-align: left;
+}
+
+.input-select {
+    margin-top: 10px;
+    height: 45px;
+
+    &:focus {
+        box-shadow: none;
+        border: 1px solid #ced4da;
+    }
+}

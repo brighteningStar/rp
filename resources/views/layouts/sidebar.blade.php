@@ -4,7 +4,7 @@
     <a href="#" class="brand-link">
         <img src="{{url('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light">KoolLinksMobile</span>
+        <span class="brand-text font-weight-light">RP</span>
     </a>
 
     <!-- Sidebar -->
@@ -21,7 +21,6 @@
 
         <!-- Sidebar Menu -->
         <app-navigation></app-navigation>
-{{--        <example-component></example-component>--}}
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
