@@ -10,8 +10,8 @@
                     <div class="alert alert-danger dt-error-msg d-none f12"></div>
                     <div class="row form-field">
                         <div class="col-md-12">
-                            <label for="email" class="login-email">Full name</label>
-                            <input type="text" class="form-control f14" placeholder="" name="name" v-model="form.name"/>
+
+                            <input type="text" class="form-control mt-2 f14" placeholder="Full Name" name="name" v-model="form.name"/>
                             <span class="error invalid-field" v-if="this.form.errors.has('name')" v-text="form.errors.get('name')"></span>
 
                             <input type="text" class="form-control mt-2 f14" v-model="form.email" placeholder="Email address" name="email" />
@@ -25,7 +25,7 @@
 
                             <input type="text" class="form-control mt-2 f14" v-model="form.cnic" placeholder="CNIC 1234512345671" name="cnic" />
                             <span class="error invalid-field" v-if="this.form.errors.has('cnic')" v-text="form.errors.get('cnic')"></span>
-                            
+
 
                             <input type="text" class="form-control mt-2 f14" v-model="form.mobile_no" placeholder="923XX XXXXXXX" name="mobile_no" />
                             <span class="error invalid-field" v-if="this.form.errors.has('mobile_no')" v-text="form.errors.get('mobile_no')"></span>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="row mt-20">
                         <div class="col-md-12 text-left">
-                            <button class="btn btn-primary login-btn ">Sign up with Email</button>
+                            <button class="btn btn-primary login-btn ">Sign up</button>
                         </div>
                     </div>
                 </form>

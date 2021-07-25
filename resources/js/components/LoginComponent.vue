@@ -9,8 +9,7 @@
                     <div class="alert alert-danger dt-error-msg d-none f12"></div>
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="email" class="login-email">Email address &#42;</label>
-                            <input type="text" class="form-control f14" placeholder="" name="email" v-model="form.email" />
+                            <input type="text" class="form-control f14" placeholder="Email" name="email" v-model="form.email" />
                             <span class="error invalid-field" v-if="this.form.errors.has('email')" v-text="form.errors.get('email')"></span>
 
 <!--                            <select type="role" class="form-control input-select" placeholder="Role" name="role_id" v-model="form.role_id">-->

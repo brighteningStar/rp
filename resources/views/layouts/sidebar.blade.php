@@ -20,7 +20,7 @@
         </div>
 
         <!-- Sidebar Menu -->
-        <app-navigation></app-navigation>
+{{--        <app-navigation></app-navigation>--}}
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

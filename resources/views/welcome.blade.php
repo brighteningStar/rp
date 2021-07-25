@@ -2,11 +2,6 @@
 @section('title')
     <title>RP</title>
 @endsection
-<section class="msg-bar-color">
-    <div class="msg-bar-text text-center justify-content-center" style="top: 20px;color: #fff;position: relative;font-size: 14px;">
-        <span style="font-weight: 500;">Test our free demo</span> <span>Our intuitive control panel, simple pricing packages and adaptable tools means our services grow along with you.</span>
-    </div>
-</section>
 
 <section class="main-bg mb-60">
     <div class="contact-btn">
@@ -14,7 +9,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark t10">
         <div class="container">
-            <a class="navbar-brand" href="#"><img style="width: 200px" src="/images/logo.jpg"></a>
+            <a class="navbar-brand" href="#"><img width="200px" src="/images/logo3.png"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

@@ -2198,7 +2198,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48261,12 +48260,6 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-md-12" }, [
-                  _c(
-                    "label",
-                    { staticClass: "login-email", attrs: { for: "email" } },
-                    [_vm._v("Email address *")]
-                  ),
-                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -48277,7 +48270,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control f14",
-                    attrs: { type: "text", placeholder: "", name: "email" },
+                    attrs: {
+                      type: "text",
+                      placeholder: "Email",
+                      name: "email"
+                    },
                     domProps: { value: _vm.form.email },
                     on: {
                       input: function($event) {
@@ -48739,12 +48736,6 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "row form-field" }, [
                 _c("div", { staticClass: "col-md-12" }, [
-                  _c(
-                    "label",
-                    { staticClass: "login-email", attrs: { for: "email" } },
-                    [_vm._v("Full name")]
-                  ),
-                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -48754,8 +48745,12 @@ var render = function() {
                         expression: "form.name"
                       }
                     ],
-                    staticClass: "form-control f14",
-                    attrs: { type: "text", placeholder: "", name: "name" },
+                    staticClass: "form-control mt-2 f14",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Full Name",
+                      name: "name"
+                    },
                     domProps: { value: _vm.form.name },
                     on: {
                       input: function($event) {
@@ -49059,7 +49054,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row mt-20" }, [
       _c("div", { staticClass: "col-md-12 text-left" }, [
         _c("button", { staticClass: "btn btn-primary login-btn " }, [
-          _vm._v("Sign up with Email")
+          _vm._v("Sign up")
         ])
       ])
     ])
