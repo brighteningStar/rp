@@ -17,7 +17,7 @@
                             <span class="white f14">Already have an account?</span>
                         </li>
                         <li class="nav-item">
-                            <a href="/login" class="f14 btn btn-lg btn-white btn-icon ml-3 nav-btn header-signup-btn">Sign in</a>
+                            <a href="/" class="f14 btn btn-lg btn-white btn-icon ml-3 nav-btn header-signup-btn">Sign in</a>
                         </li>
                     </ul>
                 </div>
